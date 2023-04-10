@@ -1,4 +1,4 @@
-function SoloNumeros(evt)
+function SoloNumeros(evt, input, max)
 {
 if(window.event){
 keynum = evt.keyCode;
@@ -7,9 +7,18 @@ else{
 keynum = evt.which;
 }
 
-if((keynum > 47 && keynum < 58) || keynum == 8 || keynum== 13)
-{
-return true;
+if((keynum > 47 && keynum < 58) || keynum == 8 || keynum== 13){
+
+
+
+    var valueBC = $('#'+input).val();
+
+    if (valueBC.length > max-1) {
+        console.log(valueBC);
+        return false;
+    } else {
+        return true;
+    }
 }
 else
 {
@@ -155,14 +164,6 @@ if(letras.indexOf(tecla) == -1 && !tecla_especial)
 }
 }
 
-function ValidarEspacio(parametros){
- var patron = /^\s+$/;
- if(patron.test(parametro)){
-     return false;
- } else {
-     return true;
- }
-}
 
 function ValidarNotEspacios(e)
 {
@@ -185,3 +186,11 @@ if(letraespecial.indexOf(tecla) == -1 && !tecla_especial)
  return false;
 }
 }
+
+
+function maxLen(max, input)
+{
+
+
+}
+

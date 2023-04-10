@@ -61,11 +61,24 @@ $metodos = $conexion->query($sql);
         </thead>
         <tbody>
         <?php while($row = $metodos->fetch_assoc()){ ?>
-               <tr>
-                 <td><?= $row['tmpag_idmetd'] ?></td>
-                 <td><?= $row['tmpag_namemt'] ?></td>
-                 <td><?= $row['tmpag_status'] ?></td>
-                 <td>
+              <tr>
+                <td><?= $row['tmpag_idmetd'] ?></td>
+                <td><?= $row['tmpag_namemt'] ?></td>
+                <td>
+
+                <?php if($row['tmpag_status']): ?>
+                
+                Activo
+
+                <?php else: ?>
+                
+                Inactivo
+                
+                <?php endif; ?>
+                
+                </td>
+
+                <td>
 
                   <a href="#" class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#editaModal" data-bs-id="<?= $row['tmpag_idmetd']; ?>"><i class="fa-solid fa-pencil"></i> Editar</a>
 

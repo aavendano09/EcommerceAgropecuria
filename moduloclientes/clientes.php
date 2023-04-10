@@ -22,7 +22,7 @@ $clientes = $conexion->query($sql);
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
     <!-- ========================================================= -->
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
-    
+    <script src="validaciones.js"></script>
 </head>
 <body>
 
@@ -37,7 +37,7 @@ $clientes = $conexion->query($sql);
         </div>
       </div><!-- /.container-fluid -->
     </section>
-   
+
     <!-- Main content -->
     <section class="content">
       <div class="row">

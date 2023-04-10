@@ -2,8 +2,10 @@
 
 require_once('conexion.php');
 
-$sql = "SELECT tcuba_idcuBa, tcuba_nameba, tcuba_Nocuba, tcuba_identi, tcuba_tpcuba FROM tcuba_tme;";
+$sql = "SELECT tcuba_idcuBa, tcuba_nameba, tcuba_Nocuba, tcuba_identi, tcuba_tpcuba, tcuba_rifba FROM tcuba_tme;";
 $cuentas = $conexion->query($sql);
+
+
 
 ?>
 
@@ -22,7 +24,7 @@ $cuentas = $conexion->query($sql);
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
     <!-- ========================================================= -->
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
-    
+    <script src="validaciones.js"></script>
 </head>
 <body>
 
@@ -63,11 +65,12 @@ $cuentas = $conexion->query($sql);
         </thead>
         <tbody>
         <?php while($row_cuentas = $cuentas->fetch_assoc()){ ?>
+
                <tr>
                  <td><?= $row_cuentas['tcuba_idcuBa'] ?></td>
                  <td><?= $row_cuentas['tcuba_nameba'] ?></td>
                  <td><?= $row_cuentas['tcuba_Nocuba'] ?></td>
-                 <td><?= $row_cuentas['tcuba_identi'] ?></td>
+                 <td><?= $row_cuentas['tcuba_rifba'] . "-" .number_format($row_cuentas['tcuba_identi'], 0, ",", ".") ?></td>
                  <td><?= $row_cuentas['tcuba_tpcuba'] ?></td>
                  <td>
 
@@ -159,8 +162,10 @@ $cuentas = $conexion->query($sql);
 
         let inputId = editaModal.querySelector('.modal-body #id')
         let inputNombre = editaModal.querySelector('.modal-body #nombre')
-        let inputnumero = editaModal.querySelector('.modal-body #numero')
-        let inputidentificacion = editaModal.querySelector('.modal-body #identificacion')
+        let inputnumero = editaModal.querySelector('.modal-body #edinumero')
+        let inputhidenumero = editaModal.querySelector('.modal-body #hidenumero')
+        let inputidentificacion = editaModal.querySelector('.modal-body #ediidentificacion')
+        let inputcedrif = editaModal.querySelector('.modal-body #cedrif')
         let inputtipocuenta = editaModal.querySelector('.modal-body #tipocuenta')
 
         let url = "modulocuentasbancarias/getMoneda.php"
@@ -176,7 +181,9 @@ $cuentas = $conexion->query($sql);
             inputId.value = data.tcuba_idcuBa
             inputNombre.value = data.tcuba_nameba
             inputnumero.value = data.tcuba_Nocuba
+            inputhidenumero.value = data.tcuba_Nocuba
             inputidentificacion.value = data.tcuba_identi
+            inputcedrif.value = data.tcuba_rifba
             inputtipocuenta.value = data.tcuba_tpcuba
 
         }).catch(err => console.log(err))
