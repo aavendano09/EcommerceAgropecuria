@@ -12,7 +12,7 @@ $correo = $conexion->real_escape_string($_POST['correo']);
 
 
 
-$sqlidCliente = "SELECT tclie_idclie FROM tclic_tme WHERE tclie_idclie = '$i'";
+$sqlidCliente = "SELECT tclie_idclie FROM tclic_tme WHERE tclie_idclie = '$id'";
 
 $request = $conexion->query($sqlidCliente);
 

@@ -2,7 +2,7 @@
 
 require_once('conexion.php');
 
-$sql = "SELECT tprov_idprov, tprov_Rifpro, tprov_Razsoc, tprov_direpr, tprov_telepr, tprov_emailp, tprov_status FROM tdprv_tme WHERE tprov_status = 'activo';";
+$sql = "SELECT tprov_idprov, tprov_Rifpro, tprov_Razsoc, tprov_direpr, tprov_telepr, tprov_emailp, tprov_status, tprov_tiprif FROM tdprv_tme WHERE tprov_status = '1';";
 $proveedores = $conexion->query($sql);
 
 ?>
@@ -22,6 +22,7 @@ $proveedores = $conexion->query($sql);
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
     <!-- ========================================================= -->
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <script src="validaciones.js"></script>
     
 </head>
 <body>
@@ -67,12 +68,25 @@ $proveedores = $conexion->query($sql);
         <?php while($row_proveedores = $proveedores->fetch_assoc()){ ?>
                <tr>
                  <td><?= $row_proveedores['tprov_idprov'] ?></td>
-                 <td><?= $row_proveedores['tprov_Rifpro'] ?></td>
+                 <td><?= $row_proveedores['tprov_tiprif']."-".$row_proveedores['tprov_Rifpro'] ?></td>
                  <td><?= $row_proveedores['tprov_Razsoc'] ?></td>
                  <td><?= $row_proveedores['tprov_direpr'] ?></td>
                  <td><?= $row_proveedores['tprov_telepr'] ?></td>
                  <td><?= $row_proveedores['tprov_emailp'] ?></td>
-                 <td><?= $row_proveedores['tprov_status'] ?></td>
+                 <td>
+                  
+                 <?php if($row_proveedores['tprov_status']): ?>
+                
+                Activo
+
+                <?php else: ?>
+                
+                Inactivo
+                
+                <?php endif; ?>
+                
+                 
+                </td>
                  <td>
 
                   <a href="#" class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#editaModal" data-bs-id="<?= $row_proveedores['tprov_idprov']; ?>"><i class="fa-solid fa-pencil"></i> Editar</a>
@@ -160,11 +174,14 @@ editaModal.addEventListener('show.bs.modal', event => {
    let id = button.getAttribute('data-bs-id')
 
    let inputId = editaModal.querySelector('.modal-body #id')
-   let inputIdentificacion = editaModal.querySelector('.modal-body #rif')
+   let inputIdentificacion = editaModal.querySelector('.modal-body #edirif')
+   let inputIdentificacionHide = editaModal.querySelector('.modal-body #edirifHide')
+   let inputTiprif= editaModal.querySelector('.modal-body #tiprif')
    let inputNombre = editaModal.querySelector('.modal-body #nombre')
    let inputDireccion = editaModal.querySelector('.modal-body #direccion')
    let inputTelefono = editaModal.querySelector('.modal-body #telefono')
    let inputCorreo = editaModal.querySelector('.modal-body #correo')
+   let inputCorreoHide = editaModal.querySelector('.modal-body #correoHide')
    let inputEstado = editaModal.querySelector('.modal-body #estado')
 
    let url = "moduloproveedores/getMoneda.php"
@@ -179,10 +196,13 @@ editaModal.addEventListener('show.bs.modal', event => {
 
        inputId.value = data.tprov_idprov
        inputIdentificacion.value = data.tprov_Rifpro
+       inputIdentificacionHide.value = data.tprov_Rifpro
+       inputTiprif.value = data.tprov_tiprif
        inputNombre.value = data.tprov_Razsoc
        inputDireccion.value = data.tprov_direpr
        inputTelefono.value = data.tprov_telepr
        inputCorreo.value = data.tprov_emailp
+       inputCorreoHide.value = data.tprov_emailp
        inputEstado.value = data.tprov_status
        
    }).catch(err => console.log(err))

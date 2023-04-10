@@ -13,12 +13,18 @@
                  <input type="text" name="id" id="id" class="form-control" readonly="readonly">
             </div>
             <div class="mb-3">
-                 <label for="nombre" class="form-label">Rif:</label>
-                 <input type="text" name="rif" id="rif" class="form-control" required>
-            </div>
+            <label for="nombre" class="form-label d-block">Rif:</label>
+                 <select name="tiprif" id="tiprif" class="form-select col-1 d-inline mx-3" required>
+                  <option value="G">G</option>
+                  <option value="J">J</option>
+                 </select>
+                 -
+                 <input placeholder="28654455" onkeypress="return SoloNumeros(event, 'edirif', 8);" type="text" name="edirif" id="edirif" class="form-control col-10 d-inline ml-3" required>
+                 <input type="text" name="edirifHide" id="edirifHide" class="form-control d-none col-10 d-inline ml-3" hidden>
+               </div>
             <div class="mb-3">
                  <label for="nombre" class="form-label">Razon Social:</label>
-                 <input type="text" name="nombre" id="nombre" class="form-control" required>
+                 <input placeholder="Vendedor" onkeypress="return SoloLetras(event, true);" type="text" name="nombre" id="nombre" class="form-control" required>
             </div>
             <div class="mb-3">
                  <label for="estado" class="form-label">Direccion Fiscal: </label>
@@ -26,15 +32,20 @@
             </div>
             <div class="mb-3">
                  <label for="cambio" class="form-label">Telefono: </label>
-                 <input type="text" name="telefono" id="telefono" class="form-control" required>
+                 <input placeholder="04165026559" onkeypress="return SoloNumeros(event, 'telefono', 11);" type="text" name="telefono" id="telefono" class="form-control" required>
             </div>
             <div class="mb-3">
                  <label for="cambio" class="form-label">Correo Electronico: </label>
-                 <input type="text" name="correo" id="correo" class="form-control" required>
+                 <input placeholder="pedro@gmail.com" type="text" name="correo" id="correo" class="form-control" required>
+                 <input type="text" name="correoHide" id="correoHide" class="form-control" hidden>
             </div>
-            <div class="mb-3">
-                 <label for="cambio" class="form-label">Estado: </label>
-                 <input type="text" name="estado" id="estado" class="form-control" required>
+            <div class="form-group">
+                <label>Estado:</label>
+                <select name="estado" id="estado" class="form-select" required>
+                  <option value="">Seleccionar...</option>
+                  <option value="1">Activo</option>
+                  <option value="0">Inactivo</option>
+                </select>
             </div>
             <div class="">
                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
