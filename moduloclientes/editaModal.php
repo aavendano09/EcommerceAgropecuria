@@ -14,19 +14,21 @@
             </div>
             <div class="mb-3">
                  <label for="nombre" class="form-label">identificacion:</label>
-                 <input type="text" name="identificacion" id="identificacion" class="form-control" required>
+                 <input placeholder="28654495" onkeypress="return SoloNumeros(event, 'ediidentificacion', 8);" min="1000000" max="35000000" type="number" name="identificacion" id="ediidentificacion" class="form-control" required>
+                 <input min="1000000" max="35000000" type="number" name="identificacionHide" id="ediidentificacionHide" class="form-control" hidden>
             </div>
             <div class="mb-3">
                  <label for="estado" class="form-label">Nombre: </label>
-                 <input type="text" name="nombre" id="nombre" class="form-control" required>
+                 <input placeholder="Pedro Pérez" onkeypress="return SoloLetras(event, true);" type="text" name="nombre" id="nombre" class="form-control" required>
             </div>
             <div class="mb-3">
                  <label for="cambio" class="form-label">Telefono: </label>
-                 <input type="text" name="telefono" id="telefono" class="form-control" required>
+                 <input placeholder="04165026559" onkeypress="return SoloNumeros(event, 'editelefono', 11);" type="text" name="telefono" id="editelefono" class="form-control" required>
             </div>
             <div class="mb-3">
                  <label for="cambio" class="form-label">Correo electronico: </label>
-                 <input type="text" name="correo" id="correo" class="form-control" required>
+                 <input placeholder="pedro@gmail.com" type="text" name="correo" id="correo" class="form-control" required>
+                 <input placeholder="pedro@gmail.com" type="text" name="correoHide" id="correoHide" class="form-control" hidden>
             </div>
             <div class="">
                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>

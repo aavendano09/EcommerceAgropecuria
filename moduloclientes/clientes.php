@@ -157,10 +157,12 @@ $clientes = $conexion->query($sql);
         let id = button.getAttribute('data-bs-id')
 
         let inputId = editaModal.querySelector('.modal-body #id')
-        let inputIdentificacion = editaModal.querySelector('.modal-body #identificacion')
+        let inputIdentificacion = editaModal.querySelector('.modal-body #ediidentificacion')
+        let inputIdentificacionHide = editaModal.querySelector('.modal-body #ediidentificacionHide')
         let inputNombre = editaModal.querySelector('.modal-body #nombre')
-        let inputTelefono = editaModal.querySelector('.modal-body #telefono')
+        let inputTelefono = editaModal.querySelector('.modal-body #editelefono')
         let inputCorreo = editaModal.querySelector('.modal-body #correo')
+        let inputCorreoHide = editaModal.querySelector('.modal-body #correoHide')
 
         let url = "moduloclientes/getMoneda.php"
         let formData = new FormData()
@@ -174,9 +176,11 @@ $clientes = $conexion->query($sql);
 
             inputId.value = data.tclie_idclie
             inputIdentificacion.value = data.tclie_identc
+            inputIdentificacionHide.value = data.tclie_identc
             inputNombre.value = data.tclie_namecl
             inputTelefono.value = data.tclie_telecl
             inputCorreo.value = data.tclie_emailc
+            inputCorreoHide.value = data.tclie_emailc
 
         }).catch(err => console.log(err))
 

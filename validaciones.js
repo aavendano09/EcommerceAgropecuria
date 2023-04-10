@@ -186,11 +186,3 @@ if(letraespecial.indexOf(tecla) == -1 && !tecla_especial)
  return false;
 }
 }
-
-
-function maxLen(max, input)
-{
-
-
-}
-
