@@ -120,11 +120,11 @@ if(letraespecial.indexOf(tecla) == -1 && !tecla_especial)
 }
 }
 
-function Cedula(e)
+function NumerosConComas(e)
 {
     key = e.keyCode || e.which;
 tecla = String.fromCharCode(key).toString();
-letraespecial = "0123456789.";
+letraespecial = "0123456789,";
 
 especiales = [8,13];
 tecla_especial = false
@@ -137,7 +137,7 @@ break;
 
 if(letraespecial.indexOf(tecla) == -1 && !tecla_especial)
 {
- alert("Formato invalido ejemplo: 22.222.222");
+ alert("Formato invalido ejemplo: 9,99");
  return false;
 }
 }

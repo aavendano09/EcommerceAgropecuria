@@ -10,13 +10,12 @@ $idproducto = $conexion->real_escape_string($_POST['id']);
 
     //query delete del producto logicamente
 
-    $query_delete = mysqli_query($conexion,"UPDATE tprod_tme SET tprod_status = 0 WHERE tprod_idprod = $idproducto");
-    mysqli_close($conexion);
+    $query_delete = "UPDATE tprod_tme SET tprod_status = 0 WHERE tprod_idprod = $idproducto";
 
-    if($conexion->query($sqlmedidas)){
+    if($conexion->query($query_delete)){
     }
     
     header('Location: ../paneladmin.php?modulo=eliminaproductos');
-exit;
+
 
 ?>

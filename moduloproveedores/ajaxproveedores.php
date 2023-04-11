@@ -10,15 +10,13 @@ $idproveedor = $conexion->real_escape_string($_POST['id']);
 
     //query delete del proveedor logicamente
 
-    $query_delete = mysqli_query($conexion,"UPDATE tdprv_tme SET tprov_status = 'inactivo' WHERE tprov_idprov = $idproveedor");
-    mysqli_close($conexion);
+    $sqldelete = "UPDATE tdprv_tme SET tprov_status = '0' WHERE tprov_idprov = $idproveedor";
 
-    if($conexion->query($sqlmedidas)){
+    if($conexion->query($sqldelete)){
     }
     
     header('Location: ../paneladmin.php?modulo=eliminaproveedores');
   
 
-exit;
 
 ?>

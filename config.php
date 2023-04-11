@@ -1,5 +1,7 @@
 <?php
 
+date_default_timezone_set("America/Caracas");
+
 define('DB_SERVER', 'localhost');
 define('DB_USERNAME', 'root');
 define('DB_PASSWORD', 'kevin9570');

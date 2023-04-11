@@ -5,10 +5,10 @@ require_once('conexion.php');
 $sqltipoproducto = "SELECT ttpro_nametp FROM ttpro_tme";
 $tipoproducto = $conexion->query($sqltipoproducto);
 
-$sql = "SELECT tprod_idprod, tprod_fotopr, tprod_descpr, tprod_prespr, tprod_precic, tprod_preciv, tprod_fechve, tprod_fechin, tprod_cantpr,tprod_fktipp FROM tprod_tme WHERE tprod_status = 1;";
+$sql = "SELECT tprod_idprod, tprod_fotopr, tprod_descpr, tprod_prespr, tprod_precic, tprod_preciv, tprod_fechve, tprod_fechin, tprod_cantpr,tprod_fktipp,tprod_status FROM tprod_tme;";
 $productos = $conexion->query($sql);
 
-
+$sql2 = "SELECT tvent_idvent FROM tvenn_tts"
 ?>
 
 
@@ -28,7 +28,7 @@ $productos = $conexion->query($sql);
     <!-- ========================================================= -->
     <link href="https://cdn.datatables.net/1.13.2/css/jquery.dataTables.min.css">
     <link href="https://cdn.datatables.net/datetime/1.3.0/css/dataTables.dateTime.min.css">
-
+    <script src="validaciones.js"></script>
 </head>
 
 <body>
@@ -72,12 +72,14 @@ $productos = $conexion->query($sql);
                 <th>Tipo de Producto</th>
                 <th>Precio</th>
                 <th>Cantidad</th>
+                <th>Estado</th>
                 <th>Acciones</th>
             </tr>
         </thead>
         <tbody>
         <?php while($row_productos = $productos->fetch_assoc()){ ?>
-               <tr id="row_<?php echo $row_ventas['tvent_idvent']; ?>">
+            <!-- <tr id="row_<?php //echo $row_ventas['tvent_idvent']; ?>"> -->
+               <tr>
                  <td><?= $row_productos['tprod_idprod'] ?></td>
                  <td><img style="width: 100px;" src="data:image/jpg;base64,<?php echo base64_encode($row_productos['tprod_fotopr']) ?>" alt=""></td>
                  <td><?= $row_productos['tprod_descpr'] ?></td>
@@ -85,6 +87,20 @@ $productos = $conexion->query($sql);
                  <td><?= $row_productos['tprod_fktipp'] ?></td>
                  <td><?= $row_productos['tprod_preciv'] ?></td>
                  <td><?= $row_productos['tprod_cantpr'] ?></td>
+                 <td>
+                  
+                 <?php if($row_productos['tprod_status']): ?>
+                
+                  Activo
+
+                  <?php else: ?>
+                  
+                  Inactivo
+                  
+                  <?php endif; ?>
+                  
+                  
+                  </td>
                  <td>
 
                   <a href="#" class="btn btn-sm btn-warning mb-2 mt-2" data-bs-toggle="modal" data-bs-target="#editaModal" data-bs-id="<?= $row_productos['tprod_idprod']; ?>"><i class="fa-solid fa-pencil"></i> Editar</a>
@@ -398,6 +414,7 @@ editaModal.addEventListener('show.bs.modal', event => {
    let id = button.getAttribute('data-bs-id')
 
    let inputId = editaModal.querySelector('.modal-body #id')
+   let inputDNombre= editaModal.querySelector('.modal-body #nombre')
    let inputDescripcion = editaModal.querySelector('.modal-body #descripcion')
    let inputPresentacion = editaModal.querySelector('.modal-body #presentacion')
    let inputTipoProducto = editaModal.querySelector('.modal-body #tipoproducto')
@@ -406,6 +423,7 @@ editaModal.addEventListener('show.bs.modal', event => {
    let inputFechavencimiento = editaModal.querySelector('.modal-body #fechavencimiento')
    let inputFechaingreso = editaModal.querySelector('.modal-body #fechaingreso')
    let inputCantidad = editaModal.querySelector('.modal-body #cantidad')
+   let inputStatus= editaModal.querySelector('.modal-body #estado')
 
    let url = "moduloproductos/getProductos.php"
    let formData = new FormData()
@@ -418,6 +436,7 @@ editaModal.addEventListener('show.bs.modal', event => {
    .then(data => {
 
        inputId.value = data.tprod_idprod
+       inputDNombre.value = data.tprod_namepr
        inputDescripcion.value = data.tprod_descpr
        inputPresentacion.value = data.tprod_prespr
        inputTipoProducto.value = data.tprod_fktipp
@@ -426,6 +445,7 @@ editaModal.addEventListener('show.bs.modal', event => {
        inputFechavencimiento.value = data.tprod_fechve
        inputFechaingreso.value = data.tprod_fechin
        inputCantidad.value = data.tprod_cantpr
+       inputStatus.value = data.tprod_status
 
    }).catch(err => console.log(err))
 

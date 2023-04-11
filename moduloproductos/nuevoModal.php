@@ -23,7 +23,7 @@ $productos = $conexion->query($sql);
         <form action="moduloproductos/guarda.php" method="post" enctype="multipart/form-data">
             <div class="mb-3">
                  <label for="nombre" class="form-label">Codigo:</label>
-                 <input type="text" name="id" id="id" class="form-control" required>
+                 <input placeholder="9999" onkeypress="return SoloNumeros(event, 'id', 4);" type="text" name="id" id="id" class="form-control" required>
             </div>
             <div class="mb-3">
                  <label for="imagen" class="form-label">Imagen:</label>
@@ -31,15 +31,15 @@ $productos = $conexion->query($sql);
             </div>
             <div class="mb-3">
                  <label for="nombre" class="form-label">Nombre:</label>
-                 <input type="text" name="nombre" id="nombre" class="form-control" required>
+                 <input placeholder="Nombre de producto" type="text" name="nombre" id="nombre" class="form-control" required>
             </div>
             <div class="mb-3">
                  <label for="nombre" class="form-label">Descripcion:</label>
-                 <input type="text" name="descripcion" id="descripcion" class="form-control" required>
+                 <input placeholder="Informacion adicional" type="text" name="descripcion" id="descripcion" class="form-control" required>
             </div>
             <div class="mb-3">
                  <label for="estado" class="form-label">Presentacion:</label>
-                 <input type="text" name="presentacion" id="presentacion" class="form-control" required>
+                 <input placeholder="Sacos" type="text" name="presentacion" id="presentacion" class="form-control" required>
             </div>
             <div class="form-group">
                         <label>Tipo Producto</label>
@@ -52,23 +52,23 @@ $productos = $conexion->query($sql);
             </div>
             <div class="mb-3">
                  <label for="cambio" class="form-label">Precio Costo:</label>
-                 <input type="text" name="preciocosto" id="preciocosto" class="form-control" required>
-            </div>
+                 <input placeholder="99,99" onkeypress="return NumerosConComas(event, true);" type="text" name="preciocosto" id="preciocosto" class="form-control" required>
+            </div> 
             <div class="mb-3">
                  <label for="cambio" class="form-label">Precio Venta:</label>
-                 <input type="text" name="precioventa" id="precioventa" class="form-control" required>
+                 <input placeholder="69,99" onkeypress="return NumerosConComas(event, true);" type="text" name="precioventa" id="precioventa" class="form-control" required>
             </div>
             <div class="mb-3">
                  <label for="cambio" class="form-label">Fecha de Vencimiento:</label>
-                 <input type="text" name="fechavencimiento" id="fechavencimiento" class="form-control" required>
+                 <input type="date" name="fechavencimiento" id="fechavencimiento" class="form-control" required>
             </div>
             <div class="mb-3">
                  <label for="cambio" class="form-label">Fecha de ingreso:</label>
-                 <input type="text" name="fechaingreso" id="fechaingreso" class="form-control" required>
+                 <input type="date" name="fechaingreso" id="fechaingreso" class="form-control" required>
             </div>
             <div class="mb-3">
                  <label for="cambio" class="form-label">Cantidad:</label>
-                 <input type="text" name="cantidad" id="cantidad" class="form-control" required>
+                 <input placeholder="99" onkeypress="return SoloNumeros(event, 'cantidad', 4);" type="number" name="cantidad" id="cantidad" class="form-control" required>
             </div>
             <div class="">
                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>

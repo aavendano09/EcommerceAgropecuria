@@ -4,7 +4,7 @@ require 'conexion.php';
 
 $id = $conexion->real_escape_string($_POST['id']);
 
-$sql = "SELECT tprod_idprod, tprod_descpr, tprod_prespr, tprod_precic, tprod_preciv, tprod_fechve, tprod_fechin, tprod_cantpr, tprod_fktipp 
+$sql = "SELECT tprod_idprod, tprod_namepr, tprod_descpr, tprod_prespr, tprod_precic, tprod_preciv, tprod_fechve, tprod_fechin, tprod_cantpr, tprod_fktipp, tprod_status 
 FROM tprod_tme 
 WHERE tprod_idprod=$id LIMIT 1";
 $resultado = $conexion->query($sql);

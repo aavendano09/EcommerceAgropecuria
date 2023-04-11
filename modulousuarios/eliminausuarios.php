@@ -8,7 +8,7 @@ $sqltipousuairo = "SELECT ttusu_descus FROM ttusu_tme";
 $generos = $conexion->query($sqltipousuairo);
 
 
-$sql = "SELECT tuser_iduser, tuser_userna, tuser_emailu, tuser_fktipu FROM tuser_tme WHERE tuser_status = 'activo';";
+$sql = "SELECT tuser_iduser, tuser_userna, tuser_emailu, tuser_fktipu FROM tuser_tme WHERE tuser_status = '1';";
 $usuarios = $conexion->query($sql);
 
 ?>

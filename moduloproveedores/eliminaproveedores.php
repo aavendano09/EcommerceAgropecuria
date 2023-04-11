@@ -2,7 +2,7 @@
 
 require_once('conexion.php');
 
-$sql = "SELECT tprov_idprov, tprov_Rifpro, tprov_Razsoc, tprov_direpr, tprov_telepr, tprov_emailp, tprov_status FROM tdprv_tme WHERE tprov_status = 'activo';";
+$sql = "SELECT tprov_idprov, tprov_Rifpro, tprov_Razsoc, tprov_direpr, tprov_telepr, tprov_emailp, tprov_status FROM tdprv_tme WHERE tprov_status = '1';";
 $proveedores = $conexion->query($sql);
 
 ?>
@@ -72,8 +72,21 @@ $proveedores = $conexion->query($sql);
                  <td><?= $row_proveedores['tprov_direpr'] ?></td>
                  <td><?= $row_proveedores['tprov_telepr'] ?></td>
                  <td><?= $row_proveedores['tprov_emailp'] ?></td>
-                 <td><?= $row_proveedores['tprov_status'] ?></td>
                  <td>
+                  
+                <?php if($row_proveedores['tprov_status']): ?>
+                
+                    Activo
+
+                <?php else: ?>
+                
+                    Inactivo
+                
+                <?php endif; ?>
+                  
+                  
+                </td>
+                <td>
 
                  <a href="#" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#eliminaModal" data-bs-id="<?= $row_proveedores['tprov_idprov']; ?>"><i class="fa-solid fa-trash"></i> Eliminar</a>
 

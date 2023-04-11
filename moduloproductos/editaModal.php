@@ -16,20 +16,24 @@ $productos = $conexion->query($sqltipoproducto);
       <div class="modal-body">
         <form action="moduloproductos/actualiza.php" method="post" enctype="multipart/form-data">
         <div class="mb-3">
-                 <label for="nombre" class="form-label">Codigo:</label>
-                 <input type="text" name="id" id="id" class="form-control" readonly="readonly" required>
+          <label for="nombre" class="form-label">Codigo:</label>
+          <input type="text" name="id" id="id" class="form-control" readonly="readonly" required>
             </div>
             <div class="mb-3">
                  <label for="imagen" class="form-label">Imagen:</label>
                  <input type="file" name="imagen" id="imagen" readonly="readonly" class="form-control" required> 
             </div>
             <div class="mb-3">
+                 <label for="nombre" class="form-label">Nombre:</label>
+                 <input placeholder="Nombre de producto" type="text" name="nombre" id="nombre" class="form-control" required>
+            </div>
+            <div class="mb-3">
                  <label for="nombre" class="form-label">Descripcion:</label>
-                 <input type="text" name="descripcion" id="descripcion" class="form-control" required>
+                 <input placeholder="Informacion adicional" name="descripcion" id="descripcion" class="form-control" required>
             </div>
             <div class="mb-3">
                  <label for="estado" class="form-label">Presentacion:</label>
-                 <input type="text" name="presentacion" id="presentacion" class="form-control" required>
+                 <input placeholder="Sacos" type="text" name="presentacion" id="presentacion" class="form-control" required>
             </div>
             <div class="form-group">
                         <label>Tipo Producto</label>
@@ -42,11 +46,11 @@ $productos = $conexion->query($sqltipoproducto);
             </div>
             <div class="mb-3">
                  <label for="cambio" class="form-label">Precio Costo:</label>
-                 <input type="text" name="preciocosto" id="preciocosto" class="form-control" required>
+                 <input placeholder="99,99" onkeypress="return NumerosConComas(event, true);" type="number" name="preciocosto" id="preciocosto" class="form-control" required>
             </div>
             <div class="mb-3">
                  <label for="cambio" class="form-label">Precio Venta:</label>
-                 <input type="text" name="precioventa" id="precioventa" class="form-control" required>
+                 <input placeholder="69,99" onkeypress="return NumerosConComas(event, true);" type="number" name="precioventa" id="precioventa" class="form-control" required>
             </div>
             <div class="mb-3">
                  <label for="cambio" class="form-label">Fecha de Vencimiento:</label>
@@ -58,7 +62,15 @@ $productos = $conexion->query($sqltipoproducto);
             </div>
             <div class="mb-3">
                  <label for="cambio" class="form-label">Cantidad:</label>
-                 <input type="text" name="cantidad" id="cantidad" class="form-control" required>
+                 <input placeholder="99" onkeypress="return SoloNumeros(event, 'cantidad', 4);" type="text" name="cantidad" id="cantidad" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label>Estado:</label>
+                <select name="estado" id="estado" class="form-select" required>
+                  <option value="">Seleccionar...</option>
+                  <option value="1">Activo</option>
+                  <option value="0">Inactivo</option>
+                </select>
             </div>
             <div class="">
                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
