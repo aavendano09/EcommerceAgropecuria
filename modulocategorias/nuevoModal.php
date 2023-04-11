@@ -10,15 +10,19 @@
         <form action="modulocategorias/guarda.php" method="post" enctype="multipart/form-data">
             <div class="mb-3">
                  <label for="nombre" class="form-label">Id:</label>
-                 <input type="text" name="id" id="id" class="form-control" required>
+                 <input placeholder="9999" onkeypress="return SoloNumeros(event, 'id', 4);" type="text" name="id" id="id" class="form-control" required>
             </div>
             <div class="mb-3">
                  <label for="nombre" class="form-label">Nombre:</label>
-                 <input type="text" name="nombre" id="nombre" class="form-control" required>
+                 <input placeholder="Fertilizantes" onkeypress="return SoloLetras(event, true);" type="text" name="nombre" id="nombre" class="form-control" required>
             </div>
-            <div class="mb-3">
-                 <label for="estado" class="form-label">Estado:</label>
-                 <input type="text" name="estado" id="estado" class="form-control" required>
+            <div class="form-group">
+                <label>Estado:</label>
+                <select name="estado" id="estado" class="form-select" required>
+                  <option value="">Seleccionar...</option>
+                  <option value="1">Activo</option>
+                  <option value="0">Inactivo</option>
+                </select>
             </div>
             <div class="">
                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>

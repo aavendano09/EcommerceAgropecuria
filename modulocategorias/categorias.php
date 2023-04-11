@@ -22,7 +22,7 @@ $categorias = $conexion->query($sql);
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
     <!-- ========================================================= -->
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
-    
+    <script src="validaciones.js"></script>
 </head>
 <body>
 
@@ -64,7 +64,19 @@ $categorias = $conexion->query($sql);
                <tr>
                  <td><?= $row['tctpr_idcatg'] ?></td>
                  <td><?= $row['tctpr_namect'] ?></td>
-                 <td><?= $row['tctpr_status'] ?></td>
+                 <td>
+                <?php if($row['tctpr_status']): ?>
+                  
+                  Activo
+
+                <?php else: ?>
+                  
+                  Inactivo
+                  
+                <?php endif; ?>
+                
+                </td>
+
                  <td>
 
                   <a href="#" class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#editaModal" data-bs-id="<?= $row['tctpr_idcatg']; ?>"><i class="fa-solid fa-pencil"></i> Editar</a>
