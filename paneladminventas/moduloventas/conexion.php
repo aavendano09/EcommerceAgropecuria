@@ -1,7 +1,10 @@
 <?php
 // conectando a base de datos de forma en PROGRAMACION ORIENTADA A OBJETOS
 
-$conexion= new mysqli("localhost","root","","ecommerce_agropecuaria");
+
+include_once('config.php');
+
+$conexion= new mysqli(DB_SERVER,DB_USERNAME,DB_PASSWORD,DB_DATABASE);
 
 if($conexion->connect_errno){
 

@@ -22,6 +22,7 @@ $generos = $conexion->query($sqltipousuairo);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>login</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <script src="validaciones.js"></script>
 </head>
 
 <body>
@@ -125,22 +126,22 @@ if(isset($_REQUEST['aceptar'])){
               </div>
 
               <div class="form-outline mb-4">
-                <input type="text" id="username" class="form-control" name="username" />
-                <label class="form-label" for="form3Example4">Username</label>
+                <input placeholder="Pedro Peréz" onkeypress="return SoloLetras(event, true);" type="text" id="username" class="form-control" name="username" />
+                <label class="form-label" for="form3Example4">Nombre de usuario</label>
               </div>
                
               </div>
 
               <!-- Email input -->
               <div class="form-outline mb-4">
-                <input type="email" id="email" class="form-control" name="email" />
+                <input placeholder="pedro@gmail.com" type="email" id="email" class="form-control" name="email" />
                 <label class="form-label" for="form3Example3">Correo Electronico</label>
               </div>
 
               <!-- Password input -->
               <div class="form-outline mb-4">
-                <input type="password" id="password" class="form-control" name="password" />
-                <label class="form-label" for="form3Example4">Password</label>
+                <input placeholder="********" onkeypress="return Pass(event)" type="password" id="password" class="form-control" name="password" />
+                <label class="form-label" for="form3Example4">Contraseña</label>
               </div>
 
              

@@ -19,7 +19,7 @@
                   <option value="J">J</option>
                  </select>
                  -
-                 <input placeholder="28654495" onkeypress="return SoloNumeros(event, 'rif', 8);" type="number" min="1000000" max="35000000" name="rif" id="rif" type="text" name="rif" id="rif" class="form-control col-10 d-inline ml-3" required>
+                 <input placeholder="28654495" onkeypress="return CedRif(event, 'rif', 'tiprif');" type="number" min="100000000"  name="rif" id="rif" type="text" name="rif" id="rif" class="form-control col-10 d-inline ml-3" required>
             </div>
             <div class="mb-3">
                  <label for="nombre" class="form-label">Razon Social:</label>
@@ -27,7 +27,7 @@
             </div>
             <div class="mb-3">
                  <label for="estado" class="form-label">Direccion Fiscal: </label>
-                 <input placeholder="5ta Avenida" type="text" name="direccion" id="direccion" class="form-control" required>
+                 <input  placeholder="5ta Avenida" type="text" name="direccion" id="direccion" class="form-control" required>
             </div>
             <div class="mb-3">
                  <label for="cambio" class="form-label">Telefono: </label>
@@ -35,7 +35,7 @@
             </div>
             <div class="mb-3">
                  <label for="cambio" class="form-label">Correo Electronico: </label>
-                 <input placeholder="pedro@gmail.com" type="text" name="correo" id="correo" class="form-control" required>
+                 <input onkeypress="return ValidarNotEspacios(event)" placeholder="pedro@gmail.com" type="text" name="correo" id="correo" class="form-control" required>
             </div>
             <div class="form-group">
                 <label>Estado:</label>

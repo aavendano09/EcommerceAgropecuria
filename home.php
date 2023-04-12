@@ -1,5 +1,5 @@
 <?php
-error_reporting(0);
+
 session_start();
 
 $modulo=$_REQUEST['modulo'];
@@ -41,6 +41,7 @@ header("Refresh:0");
 
 <!-- Template Stylesheet -->
 <link href="fronted/css/style.css" rel="stylesheet">
+<script src="validaciones.js"></script>
 
 </head>
 <?php

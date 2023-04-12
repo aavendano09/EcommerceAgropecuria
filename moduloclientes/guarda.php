@@ -5,6 +5,7 @@ require 'conexion.php';
 
 $id = $conexion->real_escape_string($_POST['id']);
 $identificacion = $conexion->real_escape_string($_POST['identificacion']);
+$cedrif = $conexion->real_escape_string($_POST['cedrif']);
 $nombre = $conexion->real_escape_string($_POST['nombre']);
 $telefono = $conexion->real_escape_string($_POST['telefono']);
 $correo = $conexion->real_escape_string($_POST['correo']);
@@ -30,8 +31,8 @@ if(mysqli_num_rows($request) == 0){
     
         if(mysqli_num_rows($request) == 0){
             
-            $sqlmonedas = "INSERT INTO tclic_tme (tclie_idclie, tclie_identc, tclie_namecl, tclie_telecl, tclie_emailc) 
-            VALUES ('$id','$identificacion','$nombre','$telefono','$correo')";
+            $sqlmonedas = "INSERT INTO tclic_tme (tclie_idclie, tclie_identc, tclie_namecl, tclie_telecl, tclie_emailc, tclie_cedrif) 
+            VALUES ('$id','$identificacion','$nombre','$telefono','$correo', '$cedrif')";
     
     
             if($conexion->query($sqlmonedas)){

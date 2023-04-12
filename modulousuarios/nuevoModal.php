@@ -19,10 +19,10 @@ $generos = $conexion->query($sqltipousuairo);
         <form action="modulousuarios/guarda.php" method="post" enctype="multipart/form-data">
                     <div class="form-group">
                         <label>ID</label>
-                        <input placeholder="999" onkeypress="return SoloNumeros(event, true);" type="text" name="id" id="id" class="form-control" required="required">
+                        <input placeholder="999" onkeypress="return SoloNumeros(event, 'id', 3);" type="text" name="id" id="id" class="form-control" required="required">
                     </div>
                     <div class="form-group">
-                        <label>Username</label>
+                        <label>Nombre de usuario</label>
                         <input placeholder="Pedro Peréz" onkeypress="return SoloLetras(event, true);" type="text" name="username" id="username" class="form-control" required="required" >
                     </div>
                     <div class="form-group">
@@ -30,8 +30,8 @@ $generos = $conexion->query($sqltipousuairo);
                         <input placeholder="pedro@gmail.com" onkeypress="return ValidarNotEspacios(event);" type="email" name="email" id="email" class="form-control" required="required">
                     </div>
                     <div class="form-group">
-                        <label>Password</label>
-                        <input placeholder="********" onkeypress="return ValidarNotEspacios(event);" type="password" name="password" id="password" class="form-control" required="required" >
+                        <label>Contraseña</label>
+                        <input placeholder="********" onkeypress="return Pass(event);" type="password" name="password" id="password" class="form-control" required="required" >
                     </div>
                     <div class="form-group">
                         <label>Tipo Usuario</label>

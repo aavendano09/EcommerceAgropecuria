@@ -142,13 +142,13 @@
                         <div class="row g-3">
                             <div class="col-md-6">
                                 <div class="form-floating">
-                                    <input type="text" class="form-control" name="name" id="name" placeholder="Su nombre" required>
+                                    <input onkeypress="return SoloLetras(event, true);" type="text" class="form-control" name="name" id="name" placeholder="Su nombre" required>
                                     <label for="name">Su Nombre</label>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-floating">
-                                    <input type="number" class="form-control" name="telefono" id="telefono" placeholder="Su Apellido" required>
+                                    <input onkeypress="return SoloNumeros(event, 'telefono', 11)" type="number" class="form-control" name="telefono" id="telefono" placeholder="Su Apellido" required>
                                     <label for="apellido">Su Telefono</label>
                                 </div>
                             </div>

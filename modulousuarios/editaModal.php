@@ -22,7 +22,7 @@ $generos = $conexion->query($sqltipousuairo);
                         <input type="text" name="id" id="id" class="form-control" readonly="readonly" required="required">
                     </div>
                     <div class="form-group">
-                        <label>Username</label>
+                        <label>Nombre de usuario</label>
                         <input placeholder="Pedro Peréz" onkeypress="return SoloLetras(event, true);" type="text" name="username" id="username" class="form-control" required="required" >
                     </div>
                     <div class="form-group">
@@ -33,7 +33,7 @@ $generos = $conexion->query($sqltipousuairo);
                         <input placeholder="pedro@gmail.com" onkeypress="return ValidarNotEspacios(event);" type="email" name="emailOld" id="emailOld" class="form-control" hidden>
                     </div>
                     <div class="form-group">
-                        <label>Password</label>
+                        <label>Contraseña</label>
                         <input placeholder="********" onkeypress="return ValidarNotEspacios(event);" type="password" name="password" id="password" class="form-control" required="required" >
                     </div>
                     <div class="form-group">

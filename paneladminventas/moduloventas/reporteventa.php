@@ -179,13 +179,13 @@ $productos = $conexion->query($sql);
             <table id="example" class="table table-sm table-striped table-hover mt-4">
             <thead class="table-dark">
             <tr>
-                <th style="width: 2px;">Codigo Venta</th>
+                <th style="width: 250px;">Codigo Venta</th>
+                <th>Acciones</th>
                 <th style="width: 150px;">Nombre Cliente</th>
                 <th>Fecha / Hora</th>
                 <th style="width: 220px;">Estado</th>
                 <th>Total</th>
                 <th style="width: 50px;">Metodo</th>
-                <th>Acciones</th>
             </tr>
         </thead>
         <tbody>
@@ -203,11 +203,6 @@ $productos = $conexion->query($sql);
 
                <tr id="row_<?php echo $row_ventas['tvent_idvent']; ?>">
                  <td><?= $row_ventas['tvent_idvent'] ?></td>
-                 <td><?= $row_ventas['tclie_namecl'] ?></td>
-                 <td><?= $row_ventas['tvent_fechav'] ?></td>
-                 <td class="estado"><?php echo $estado; ?></td>
-                 <td><span>$.</span><?= $row_ventas['tvent_totalv'] ?></td>
-                 <td><?= $row_ventas['tdven_fktpmo'] ?></td>
                  <td>
                 
                      <button class="btn btn-sm btn_view view_factura btn-warning" type="button" cl="<?php echo $row_ventas['tvent_fkclie']; ?>" f="<?php echo $row_ventas['tvent_idvent']; ?>"><i class="fas fa-eye"></i></button>
@@ -232,6 +227,12 @@ $productos = $conexion->query($sql);
 
                     <?php } ?>
                  </td>
+                 <td><?= $row_ventas['tclie_namecl'] ?></td>
+                 <td><?= $row_ventas['tvent_fechav'] ?></td>
+                 <td class="estado"><?php echo $estado; ?></td>
+                 <td><span>$.</span><?= $row_ventas['tvent_totalv'] ?></td>
+                 <td><?= $row_ventas['tdven_fktpmo'] ?></td>
+                 
                </tr>
      
            <?php } ?>
@@ -560,7 +561,13 @@ $productos = $conexion->query($sql);
     .appendTo('#example_wrapper .col-md-6:eq(0)');
 
 
-     //modal para anular Ventas
+     
+
+
+//FIN DEL READY
+});
+
+//modal para anular Ventas
 
           //modal para anular
           $('.anular_factura').click(function(e){
@@ -617,9 +624,6 @@ $productos = $conexion->query($sql);
 
  });
 
-
-//FIN DEL READY
-});
 
      //generar pdf
      function generarPDF(cliente,factura){

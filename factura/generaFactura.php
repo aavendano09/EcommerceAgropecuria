@@ -4,14 +4,12 @@
 	//exit;
 	//echo base64_encode('2');
 	//exit;
-	session_start();
-	if(empty($_SESSION['tidAdmin']))
-	{
-		header('location: ../');
-	}
+	//session_start();
+	
 
 	include_once "../conexion.php";
-	require_once '../pdf/vendor/autoload.php';
+	require "../vendor/autoload.php";
+
 	use Dompdf\Dompdf;
 
 	if(empty($_REQUEST['cl']) || empty($_REQUEST['f']))
@@ -46,7 +44,12 @@
 			$no_factura = $factura['tvent_idvent'];
 
 			if($factura['tvent_status'] == 'Anulada'){
-				$anulada = '<img class="anulada" src="img/anulado.png" alt="Anulada">';
+				
+				$nombreImage =  "img/anulado.png";
+				$imageBase64 = "data:image/png;base64," . base64_encode(file_get_contents($nombreImage));
+			
+
+				$anulada = "<img class='anulada' src='$imageBase64' alt='Anulada'>";
 			}
 
 			$query_productos = mysqli_query($conexion,"SELECT p.tprod_namepr,dt.tdven_cantpr,dt.tdven_precio,(dt.tdven_cantpr * dt.tdven_precio) as precio_total
@@ -60,17 +63,22 @@
 
 			ob_start();
 			// instantiate and use the dompdf class
+		    include_once('factura.php');
+			$html = ob_get_clean();
+
+
 			$dompdf = new Dompdf();
-		    require_once('factura.php');
-			$dompdf->loadhtml(ob_get_clean());
+			$dompdf->loadhtml($html);
 			// (Optional) Setup the paper size and orientation
 			$dompdf->setPaper('letter', 'portrait');
 			// Render the HTML as PDF
 			$dompdf->render();
 			// Output the generated PDF to Browser
 			$dompdf->stream('Orden_'.$noFactura.'.pdf',array('Attachment'=>0));
-			exit;
+
+			
 		}
 	}
+			
 
 ?>

@@ -14,13 +14,13 @@
             </div>
             <div class="mb-3">
             <label for="nombre" class="form-label d-block">Rif:</label>
-                 <select name="tiprif" id="tiprif" class="form-select col-1 d-inline mx-3" required>
+                 <select name="tiprif" id="editiprif" class="form-select col-1 d-inline mx-3" required>
                   <option value="G">G</option>
                   <option value="J">J</option>
                  </select>
                  -
-                 <input placeholder="28654455" onkeypress="return SoloNumeros(event, 'edirif', 8);" type="text" name="edirif" id="edirif" class="form-control col-10 d-inline ml-3" required>
-                 <input type="text" name="edirifHide" id="edirifHide" class="form-control d-none col-10 d-inline ml-3" hidden>
+                 <input placeholder="28654455" onkeypress="return CedRif(event, 'edirif', 'editiprif');" type="number" min="100000000" name="edirif" id="edirif" class="form-control col-10 d-inline ml-3" required>
+                 <input type="text" name="edirifHide" id="edirifHide" class="form-control col-10 d-none ml-3" >
                </div>
             <div class="mb-3">
                  <label for="nombre" class="form-label">Razon Social:</label>
@@ -28,7 +28,7 @@
             </div>
             <div class="mb-3">
                  <label for="estado" class="form-label">Direccion Fiscal: </label>
-                 <input type="text" name="direccion" id="direccion" class="form-control" required>
+                 <input placeholder="5ta Avenida" type="text" name="direccion" id="direccion" class="form-control" required>
             </div>
             <div class="mb-3">
                  <label for="cambio" class="form-label">Telefono: </label>

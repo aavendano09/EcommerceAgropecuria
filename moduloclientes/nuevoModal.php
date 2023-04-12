@@ -13,8 +13,13 @@
                  <input placeholder="999" onkeypress="return SoloNumeros(event, 'id', 3);" type="text" name="id" id="id" class="form-control">
             </div>
             <div class="mb-3">
-                 <label for="nombre" class="form-label">identificacion:</label>
-                 <input placeholder="28654495" onkeypress="return SoloNumeros(event, 'identificacion', 8);" min="1000000" max="35000000" type="number" name="identificacion" id="identificacion" class="form-control" required>
+                  <label for="cambio" class="form-label d-block">Cedula/Rif: </label>
+                 <select name="cedrif" id="cedrif" class="form-select col-1 d-inline mx-3" required>
+                  <option value="V">V</option>
+                  <option value="J">J</option>
+                 </select>
+                 -
+                 <input placeholder="28654495" onkeypress="return CedRif(event, 'identificacion', 'cedrif');" min="1000000" type="number" name="identificacion" id="identificacion" class="form-control col-10 d-inline ml-3" required>
             </div>
             <div class="mb-3">
                  <label for="estado" class="form-label">Nombre: </label>
@@ -26,7 +31,7 @@
             </div>
             <div class="mb-3">
                  <label for="cambio" class="form-label">Correo electronico: </label>
-                 <input placeholder="pedro@gmail.com" type="text" name="correo" id="correo" class="form-control" required>
+                 <input onkeypress="return ValidarNotEspacios(event)" placeholder="pedro@gmail.com"type="text" name="correo" id="correo" class="form-control" required>
             </div>
             <div class="">
                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
@@ -37,3 +42,4 @@
     </div>
   </div>
 </div>
+

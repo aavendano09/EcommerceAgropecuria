@@ -106,7 +106,7 @@ if(isset($_REQUEST['aceptar'])){
               </div>
 
               <div class="form-outline mb-4">
-                <input placeholder="Pedro Peréz" onkeypress="return SoloLetras(event, true);" type="text" id="username" class="form-control" name="username" />
+                <input placeholder="Pedro Peréz" onkeypress="return SoloLetras(event, true);" type="text" id="username" class="form-control" name="username" required/>
                 <label class="form-label" for="form3Example4">Nombre y Apellido</label>
               </div>
                
@@ -114,13 +114,13 @@ if(isset($_REQUEST['aceptar'])){
 
               <!-- Email input -->
               <div class="form-outline mb-4">
-                <input placeholder="pedro@gmail.com" onkeypress="return ValidarNotEspacios(event);" type="email" id="email" class="form-control" name="email" />
+                <input placeholder="pedro@gmail.com" onkeypress="return ValidarNotEspacios(event);" type="email" id="email" class="form-control" name="email" required/>
                 <label class="form-label" for="form3Example3">Correo Electronico</label>
               </div>
 
               <!-- Password input -->
               <div class="form-outline mb-4">
-                <input placeholder="********" onkeypress="return ValidarNotEspacios(event);" type="password" id="password" class="form-control" name="password" />
+                <input placeholder="********" onkeypress="return ValidarNotEspacios(event);" type="password" id="password" class="form-control" name="password" required/>
                 <label class="form-label" for="form3Example4">Contraseña</label>
               </div>
 

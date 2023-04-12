@@ -14,7 +14,7 @@
             </div>
             <div class="mb-3">
                  <label for="nombre" class="form-label">Descripcion:</label>
-                 <input placeholder="Informacion adicional" type="text" name="descripcion" id="descripcion" class="form-control" required>
+                 <input onkeypress="return SoloLetras(event, true)" placeholder="Informacion adicional" type="text" name="descripcion" id="descripcion" class="form-control" required>
             </div>
             <div class="form-group">
                 <label>Estado:</label>

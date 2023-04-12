@@ -2,7 +2,10 @@
 
 include_once "conexion.php";
 
-$consulta = "SELECT tuser_iduser,tuser_userna FROM tuser_tme WHERE tuser_iduser='3';";
+$sqlmonedas = "SELECT tmone_idmone, tmone_namemo FROM tmone_tme WHERE tmone_status = '1'";
+$monedas = $conexion->query($sqlmonedas);
+
+$consulta = "SELECT ttusu_idtipu, ttusu_descus FROM ttusu_tme WHERE ttusu_idtipu='03';";
 $clientes = $conexion->query($consulta);
 
 ?>
@@ -45,15 +48,16 @@ $clientes = $conexion->query($consulta);
 </div>
 
 <div class="d-flex justify-content-around">
-<div class="col-md-3 position-relative mb-3">
+  <div class="col-md-3 position-relative mb-3">
     <label for="validationTooltip04" class="form-label">Seleccione el tipo de moneda a pagar al momento de retirar:</label>
     <select class="form-select" id="validationTooltip04" name="tipomoneda" required>
       <option selected disabled value="">Seleccione amigo agricultor</option>
-      <option>Bolivares Soberanos</option>
-      <option>Pesos Colombianos</option>
-      <option>Dolares</option>
+      <?php while($row_moneda = $monedas->fetch_assoc()){ ?>
+            <option value="<?php echo $row_moneda['tmone_idmone']; ?>"><?= $row_moneda['tmone_namemo'] ?></option>
+      <?php } ?>
     </select>
   </div>
+
 
   
   <div class="col-md-3 position-relative mb-3">
@@ -70,9 +74,7 @@ $clientes = $conexion->query($consulta);
     <label for="validationTooltip04" class="form-label">Seleccione el tipo de usuario:</label>
     <select class="form-select" id="validationTooltip04" name="tipocliente" required>
       <option selected disabled value="">Seleccione la opcion de cliente:</option>
-      <?php while($row_clientes = $clientes->fetch_assoc()){ ?>
-          <option value="<?php echo $row_clientes['tuser_iduser']; ?>"><?= $row_clientes['tuser_userna'] ?></option>
-      <?php } ?>
+      <option value="875">Cliente</option>
     </select>
   </div>
 </div>

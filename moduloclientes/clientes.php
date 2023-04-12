@@ -2,7 +2,7 @@
 
 require_once('conexion.php');
 
-$sql = "SELECT tclie_idclie, tclie_identc, tclie_namecl, tclie_telecl, tclie_emailc FROM tclic_tme;";
+$sql = "SELECT tclie_idclie, tclie_identc, tclie_namecl, tclie_telecl, tclie_emailc, tclie_cedrif FROM tclic_tme;";
 $clientes = $conexion->query($sql);
 
 ?>
@@ -65,7 +65,7 @@ $clientes = $conexion->query($sql);
         <?php while($row_clientes = $clientes->fetch_assoc()){ ?>
                <tr>
                  <td><?= $row_clientes['tclie_idclie'] ?></td>
-                 <td><?= $row_clientes['tclie_identc'] ?></td>
+                 <td><?= $row_clientes['tclie_cedrif'] . "-" .number_format($row_clientes['tclie_identc'], 0, ",", ".") ?></td>
                  <td><?= $row_clientes['tclie_namecl'] ?></td>
                  <td><?= $row_clientes['tclie_telecl'] ?></td>
                  <td><?= $row_clientes['tclie_emailc'] ?></td>
@@ -157,12 +157,14 @@ $clientes = $conexion->query($sql);
         let id = button.getAttribute('data-bs-id')
 
         let inputId = editaModal.querySelector('.modal-body #id')
+        let inputCedrif = editaModal.querySelector('.modal-body #edicedrif')
         let inputIdentificacion = editaModal.querySelector('.modal-body #ediidentificacion')
         let inputIdentificacionHide = editaModal.querySelector('.modal-body #ediidentificacionHide')
         let inputNombre = editaModal.querySelector('.modal-body #nombre')
         let inputTelefono = editaModal.querySelector('.modal-body #editelefono')
         let inputCorreo = editaModal.querySelector('.modal-body #correo')
         let inputCorreoHide = editaModal.querySelector('.modal-body #correoHide')
+        
 
         let url = "moduloclientes/getMoneda.php"
         let formData = new FormData()
@@ -175,17 +177,18 @@ $clientes = $conexion->query($sql);
         .then(data => {
 
             inputId.value = data.tclie_idclie
+            inputCedrif.value = data.tclie_cedrif
             inputIdentificacion.value = data.tclie_identc
             inputIdentificacionHide.value = data.tclie_identc
             inputNombre.value = data.tclie_namecl
             inputTelefono.value = data.tclie_telecl
             inputCorreo.value = data.tclie_emailc
             inputCorreoHide.value = data.tclie_emailc
-
+            console.log(inputNombre.value);
+            
         }).catch(err => console.log(err))
 
      })
-
      eliminaModal.addEventListener('shown.bs.modal', event => {
         let button = event.relatedTarget
         let id = button.getAttribute('data-bs-id')

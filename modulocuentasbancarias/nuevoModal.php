@@ -27,7 +27,7 @@
                   <option value="J">J</option>
                  </select>
                  -
-                 <input placeholder="28654495" onkeypress="return SoloNumeros(event, 'identificacion', 8);" type="number" min="1000000" max="35000000" name="identificacion" id="identificacion" class="form-control  col-10 d-inline ml-3" required>
+                 <input placeholder="28654495" onkeypress="return CedRif(event, 'identificacion', 'cedrif');" type="number" min="1000000" name="identificacion" id="identificacion" class="form-control  col-10 d-inline ml-3" required>
             </div>
 
             <div class="form-group">

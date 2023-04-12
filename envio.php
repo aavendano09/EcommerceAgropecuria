@@ -47,7 +47,7 @@ if (isset ($_SESSION['idCliente'])){
             <h3>Datos del Cliente</h3>
              <div class="form-group">
                   <label for="">Nombre</label>
-                  <input type="text" name="nombreCli" id="nombreCli" class="form-control" value="<?php echo $rowCli['tclie_namecl'] ?>">
+                  <input placeholder="Pedro Peréz" onkeypress="return SoloLetras(event, true);" type="text" name="nombreCli" id="nombreCli" class="form-control" value="<?php echo $rowCli['tclie_namecl'] ?>">
              </div>
              <div class="form-group">
                   <label for="">Email</label>
@@ -55,22 +55,22 @@ if (isset ($_SESSION['idCliente'])){
              </div>
              <div class="form-group">
                   <label for="">Direccion</label>
-                  <textarea name="direccionCli" id="direccionCli" class="form-control" row="3"><?php echo $rowCli['tclie_direcl'] ?></textarea>
+                  <textarea placeholder="Ubicacion especifica" name="direccionCli" id="direccionCli" class="form-control" row="3"><?php echo $rowCli['tclie_direcl'] ?></textarea>
              </div>
          </div>
         <div class="col-6">
             <h3>Datos de quien recibe</h3>
              <div class="form-group">
                   <label for="">Nombre</label>
-                  <input type="text" name="nombreRec" id="nombreRec" class="form-control" value="">
+                  <input placeholder="Pedro Peréz" onkeypress="return SoloLetras(event, true);" type="text" name="nombreRec" id="nombreRec" class="form-control" value="">
              </div>
              <div class="form-group">
                   <label for="">Email</label>
-                  <input type="email" name="emailRec" id="emailRec" class="form-control" value="">
+                  <input placeholder="pedro@gmail.com" type="email" type="email" name="emailRec" id="emailRec" class="form-control" value="">
              </div>
              <div class="form-group">
                   <label for="">Direccion</label>
-                  <textarea name="direccionRec" id="direccionRec" class="form-control" row="3"></textarea>
+                  <textarea placeholder="Ubicacion especifica" name="direccionRec" id="direccionRec" class="form-control" row="3"></textarea>
              </div>
              <div class="form-check">
                   <label class="form-check-label">

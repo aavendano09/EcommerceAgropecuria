@@ -15,12 +15,30 @@ $(document).ready(function () {
             llenarTablaCarrito(response);
         }
     });
+
+
+    function calcStock(){
+        $.ajax({
+            url: 'calculaStock.php',
+            type: "POST",
+            async: true,
+            data: {action:action,proveedor:rif_proveedor,tiporif:tipo_rif},
+    
+            success: function(response)
+            {
+                return 
+            }
+        });
+    
+    }
+
     function llenarTablaCarrito(response){
         $("#tablaCarrito tbody").text("");
         var TOTAL=0;
         response.forEach(element => {
             var precio= parseFloat(element['precio']);
             var totalProd=element['cantidad']*precio;
+
             TOTAL=TOTAL+totalProd;
             $("#tablaCarrito tbody").append(
                 `

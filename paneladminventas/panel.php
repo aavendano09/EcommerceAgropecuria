@@ -5,9 +5,10 @@
     header("location:../loginadminventas.php");
    }
 
-error_reporting(0);
 
 $modulo=$_REQUEST['modulo'];
+
+require '../vendor/autoload.php';
 
 ?>
 

@@ -22,6 +22,7 @@ error_reporting(0);
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
     <!-- ========================================================= -->
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <script src="validaciones.js"></script>
 </head>
 <body>
 <style>
@@ -51,29 +52,39 @@ error_reporting(0);
   <input type="hidden" name="action" value="addCliente">
   <input type="hidden" id="idcliente" name="idcliente" value="" required>
 
+  <div class="col-md-2">
+    <label class="form-label">Tipo de identificacion</label>
+    <select class="form-select" name="tipo" id="tipo">
+            <option value="">Seleccionar...</option>
+            <option value="V">V</option>
+            <option value="J">J</option>
+            <option value="G">G</option>
+    </select>
+  </div>
+
   <div class="col-md-3">
     <label class="form-label">Cedula</label>
-    <input type="text" class="form-control" name="ced_cliente" id="ced_cliente">
+    <input placeholder="28654495" onkeypress="return CedRif(event, 'ced_cliente', 'tipo');" type="text" min="1000000" class="form-control" name="ced_cliente" id="ced_cliente">
   </div>
-  <div class="col-md-4">
+  <div class="col-md-3">
     <label class="form-label">Nombre</label>
-    <input type="text" name="nom_cliente" id="nom_cliente" disabled required class="form-control">
+    <input placeholder="Pedro Pérez" onkeypress="return SoloLetras(event, true);" type="text" name="nom_cliente" id="nom_cliente" disabled required class="form-control">
   </div>
-  <div class="col-4">
+  <div class="col-3">
     <label for="inputAddress" class="form-label">Telefono</label>
-    <input type="number" name="tel_cliente" id="tel_cliente" disabled required class="form-control">
+    <input placeholder="04165026559" onkeypress="return SoloNumeros(event, 'tel_cliente', 11);" type="number" name="tel_cliente" id="tel_cliente" disabled required class="form-control">
   </div>
   <div class="col-7">
     <label class="form-label">Correo electronico</label>
-    <input type="email" name="email_cliente" id="email_cliente" disabled required class="form-control">
+    <input onkeypress="return ValidarNotEspacios(event)" placeholder="pedro@gmail.com" type="email" name="email_cliente" id="email_cliente" disabled required class="form-control">
   </div>
   <div class="col-4">
-    <label class="form-label">Contrasena</label>
-    <input type="text" name="pass_cliente" id="pass_cliente" disabled required class="form-control">
+    <label class="form-label">Contraseña</label>
+    <input placeholder="********" onkeypress="return Pass(event)" type="text" name="pass_cliente" id="pass_cliente" disabled required class="form-control">
   </div>
   <div class="col-8">
     <label class="form-label">Direccion</label>
-    <input type="text" name="dir_cliente" id="dir_cliente" disabled required class="form-control">
+    <input placeholder="La Grita estado Táchira" type="text" name="dir_cliente" id="dir_cliente" disabled required class="form-control">
   </div>
   <div id="div_registro_cliente" class="col-12">
     <button type="submit" class=" btn btn-primary btn_save"><i class="far fa-save fa-lg"></i> Guardar</button>
@@ -114,7 +125,7 @@ error_reporting(0);
       <th>Accion</th>
     </tr>
     <tr>
-      <td><input type="text" name="txt_cod_producto" id="txt_cod_producto"></td>
+      <td><input onkeypress="return SoloNumeros(event, 'txt_cod_producto', 4);" type="text" name="txt_cod_producto" id="txt_cod_producto"></td>
       <td id="txt_descripcion">-</td>
       <td id="txt_existencia">-</td>
       <td><input type="text" name="txt_cant_producto" id="txt_cant_producto" value="0" min="1" disabled></td>
@@ -147,6 +158,10 @@ error_reporting(0);
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 
 <script>
+
+$('#tipo').change(function(){
+    $('#ced_cliente').val('');
+});
  
    //funcion para mantener los registros en el detalle de orden de entrega
 
@@ -172,17 +187,32 @@ error_reporting(0);
 
     //  Buscar Cliente
 
-   $('#ced_cliente').keyup(function(e){
-     e.preventDefault();
+    
 
-     var cl = $(this).val();
+
+
+    
+  $('#ced_cliente').keyup(function(){
+    var tipo = $('#tipo').val();
+    var cl = $(this).val();
+    searchCliente(tipo,cl);
+  });
+
+  $('#tipo').change(function(){
+    var tipo = $(this).val();
+    var cl = $('#ced_cliente').val();
+    searchCliente(tipo,cl);
+  });
+
+
+   function searchCliente(tipo, cedula){
      var action = 'searchCliente';
 
-     $.ajax({
+      $.ajax({
         url: 'moduloventas/ajaxventas.php',
         type: "POST",
         async: true,
-        data: {action:action,cliente:cl},
+        data: {action:action,cliente:cedula,tipo:tipo},
 
         success: function(response)
         {
@@ -221,7 +251,8 @@ error_reporting(0);
 
         }
      });
-   });
+   };
+
 
    //Crear Cliente - Ventas
 

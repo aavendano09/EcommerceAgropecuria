@@ -9,7 +9,7 @@ $sqltipousuairo = "SELECT ttusu_descus FROM ttusu_tme";
 $generos = $conexion->query($sqltipousuairo);
 
 
-$sql = "SELECT tuser_iduser, tuser_userna, tuser_emailu, tuser_fktipu FROM tuser_tme WHERE tuser_status = '1';";
+$sql = "SELECT tuser_iduser, tuser_userna, tuser_emailu, tuser_fktipu, tuser_status FROM tuser_tme;";
 $usuarios = $conexion->query($sql);
 
 ?>
@@ -63,6 +63,7 @@ $usuarios = $conexion->query($sql);
                 <th style="width: 150px;">Nombre</th>
                 <th style="width: 350px;">Correo</th>
                 <th style="width: 300px;">Tipo de Usuario</th>
+                <th style="width: 300px;">Estado</th>
                 <th>Acciones</th>
             </tr>
         </thead>
@@ -72,6 +73,17 @@ $usuarios = $conexion->query($sql);
                  <td><?= $row['tuser_userna'] ?></td>
                  <td><?= $row['tuser_emailu'] ?></td>
                  <td><?= $row['tuser_fktipu'] ?></td>
+                 <td>
+                 <?php if($row['tuser_status']): ?>
+                
+                Activo
+
+                <?php else: ?>
+                
+                Inactivo
+                
+                <?php endif; ?>
+                 </td>
                  <td>
 
                   <a href="#" class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#editaModal" data-bs-id="<?= $row['tuser_iduser']; ?>"><i class="fa-solid fa-pencil"></i> Editar</a>

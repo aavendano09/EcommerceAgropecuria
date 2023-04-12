@@ -1,5 +1,5 @@
 <?php
-error_reporting(0);
+
 
 include_once "conexion.php";
 session_start();
@@ -7,10 +7,11 @@ session_start();
 //BUSCAR CLIENTE
 
 if($_POST['action'] == 'searchCliente'){
-    if(!empty($_POST['cliente'])){
+    if(!empty($_POST['cliente'] && !empty($_POST['tipo']))){
         $id = $_POST['cliente'];
+        $tipo = $_POST['tipo'];
 
-        $query = mysqli_query($conexion, "SELECT * FROM tclic_tme WHERE tclie_identc LIKE '$id'");
+        $query = mysqli_query($conexion, "SELECT * FROM tclic_tme WHERE tclie_identc = '$id' AND tclie_cedrif = '$tipo'");
 
         mysqli_close($conexion);
         $resultado = mysqli_num_rows($query);
@@ -65,7 +66,7 @@ if(!empty($_POST)){
 
     $query = mysqli_query($conexion, "SELECT tprod_idprod,tprod_namepr,tprod_preciv,tprod_cantpr 
     FROM tprod_tme 
-    WHERE tprod_idprod = $producto_id AND tpro_status = '1'");
+    WHERE tprod_idprod = $producto_id AND tprod_status = '1'");
 
     mysqli_close($conexion);
 

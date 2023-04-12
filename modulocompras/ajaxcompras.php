@@ -7,10 +7,11 @@ session_start();
 //BUSCAR PROVEEDOR
 
 if($_POST['action'] == 'searchProveedor'){
-    if(!empty($_POST['proveedor'])){
+    if(!empty($_POST['proveedor'] && !empty($_POST['tiporif']))){
         $id = $_POST['proveedor'];
+        $tiporif = $_POST['tiporif'];
 
-        $query = mysqli_query($conexion, "SELECT * FROM tdprv_tme WHERE tprov_Rifpro LIKE '$id'");
+        $query = mysqli_query($conexion, "SELECT * FROM tdprv_tme WHERE tprov_Rifpro = '$id' AND tprov_tiprif = '$tiporif'");
 
         mysqli_close($conexion);
         $resultado = mysqli_num_rows($query);
@@ -64,7 +65,7 @@ if(!empty($_POST)){
 
     $query = mysqli_query($conexion, "SELECT tprod_idprod,tprod_namepr,tprod_precic,tprod_cantpr 
     FROM tprod_tme 
-    WHERE tprod_idprod = $producto_id AND tpro_status = '1'");
+    WHERE tprod_idprod = $producto_id AND tprod_status = '1'");
 
     mysqli_close($conexion);
 

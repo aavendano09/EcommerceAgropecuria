@@ -116,7 +116,7 @@ if(isset($_REQUEST['aceptar'])){
               </div>
 
               <div class="form-outline mb-4">
-                <input placeholder="9999999" onkeypress="return Cedula(event)" type="text" id="cedula" class="form-control" name="cedula" required/>
+                <input placeholder="9999999" onkeypress="return SoloNumeros(event, 'cedula', 8);" type="text" id="cedula" class="form-control" name="cedula" required/>
                 <label class="form-label" for="form3Example4">Cedula</label>
               </div>
               
@@ -130,17 +130,17 @@ if(isset($_REQUEST['aceptar'])){
 
               <!-- Password input -->
               <div class="form-outline mb-4">
-                <input placeholder="********" type="password" id="password" class="form-control" name="password" required/>
+                <input placeholder="********" onkeypress="return Pass(event)" type="password" id="password" class="form-control" name="password" required/>
                 <label class="form-label" for="form3Example4">Contraseña</label>
               </div>
 
               <div class="form-outline mb-4">
-                <input placeholder="04244856984" type="text" id="telefono" class="form-control" name="telefono" required/>
+                <input onkeypress="return SoloNumeros(event, 'telefono', 11);" placeholder="04244856984" type="number" id="telefono" class="form-control" name="telefono" required/>
                 <label class="form-label" for="form3Example4">Telefono</label>
               </div>
 
               <div class="form-outline mb-4">
-                <texarea placeholder="Centro" type="text" id="direccion" class="form-control" name="direccion" required></texarea>
+                <input placeholder="Ubicacion especifica" type="text" id="direccion" class="form-control" name="direccion" required></input>
                 <label class="form-label" for="form3Example4">Direccion</label>
               </div>
 
@@ -168,6 +168,7 @@ if(isset($_REQUEST['aceptar'])){
 
 <script src="validaciones.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+<script src="assets/js/jquery-3.6.0.min.js"></script>
 </body>
 </html>
 

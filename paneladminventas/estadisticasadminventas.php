@@ -1,6 +1,6 @@
    <?php
 
-   include_once "../conexion.php";
+   include_once "conexion.php";
    
    $queryNumVentas="SELECT COUNT(tvent_idvent) AS num from tvenn_tts
    where tvent_fechav BETWEEN DATE( DATE_SUB(NOW(),INTERVAL 7 DAY) ) AND NOW(); ";
@@ -17,7 +17,7 @@
    FROM
    tvenn_tts
    INNER JOIN tdevt_tts ON tdevt_tts.tdven_fkidvt = tvenn_tts.tvent_idvent
-   GROUP BY DAY(tvenn_tts.tvent_fechav);";
+   GROUP BY (tvenn_tts.tvent_fechav);";
    $resVentasDia = mysqli_query($conexion, $queryNumVentasPorDia);
    $labelVentas = "";
    $datosVentas = "";

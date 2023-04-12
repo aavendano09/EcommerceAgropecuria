@@ -22,6 +22,7 @@ error_reporting(0);
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
     <!-- ========================================================= -->
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <script src="validaciones.js"></script>
 </head>
 <body>
 <style>
@@ -32,7 +33,7 @@ error_reporting(0);
 
 </style>
 
-<div class="content-wrapper container">
+<div class="content-wrapper container" style="width: 100%  ;">
 
     <h1 class="ms-3 mt-2"><i class="fas fa-cube"></i> Nueva Compra</h1>
 
@@ -51,25 +52,34 @@ error_reporting(0);
   <input type="hidden" name="action" value="addCliente">
   <input type="hidden" id="idproveedor" name="idproveedor" value="" required>
 
-  <div class="col-md-3">
+  <div class="col-md-1">
+    <label class="form-label">Tipo RIF</label>
+    <select class="form-select" name="tipo_rif" id="tipo_rif" required>
+            <option value="">Seleccionar...</option>
+            <option value="V">V</option>
+            <option value="J">J</option>
+            <option value="G">G</option>
+    </select>
+  </div>
+  <div class="col-md-2">
     <label class="form-label">RIF</label>
-    <input type="text" class="form-control" name="rif_proveedor" id="rif_proveedor">
+    <input placeholder="28654495" onkeypress="return CedRifE(event, 'rif_proveedor', 'tipo_rif'); " type="number" min="100000000"  type="number" class="form-control" name="rif_proveedor" id="rif_proveedor" required>
   </div>
   <div class="col-md-8">
     <label class="form-label">Razon Social</label>
-    <input type="text" name="nom_proveedor" id="nom_proveedor" disabled required class="form-control">
+    <input placeholder="Vendedor" onkeypress="return SoloLetras(event, true);" type="text" name="nom_proveedor" id="nom_proveedor" disabled required class="form-control">
   </div>
   <div class="col-4">
     <label for="inputAddress" class="form-label">Telefono</label>
-    <input type="number" name="tel_proveedor" id="tel_proveedor" disabled required class="form-control">
+    <input placeholder="04165026559" onkeypress="return SoloNumeros(event, 'tel_proveedor', 11);" type="number" name="tel_proveedor" id="tel_proveedor" disabled required class="form-control">
   </div>
   <div class="col-7">
     <label class="form-label">Correo electronico</label>
-    <input type="email" name="email_proveedor" id="email_proveedor" disabled required class="form-control">
+    <input onkeypress="return ValidarNotEspacios(event)" placeholder="pedro@gmail.com" type="email" name="email_proveedor" id="email_proveedor" disabled required class="form-control">
   </div>
   <div class="col-11">
     <label class="form-label">Direccion</label>
-    <input type="text" name="dir_proveedor" id="dir_proveedor" disabled required class="form-control">
+    <input placeholder="La Grita estado Táchira" type="text" name="dir_proveedor" id="dir_proveedor" disabled required class="form-control">
   </div>
   <div id="div_registro_proveedor" class="col-12">
     <button type="submit" class=" btn btn-primary btn_save"><i class="far fa-save fa-lg"></i> Guardar</button>
@@ -84,7 +94,7 @@ error_reporting(0);
              <div class="row">
                   <div class="col-8">
                   <label class="form-label">No. Factura</label>
-                  <input type="text" name="nofactura" id="nofactura" required class="form-control">
+                  <input onkeypress="return SoloNumeros(event, 'nofactura', 20);" type="text" name="nofactura" id="nofactura" required class="form-control">
                   </div>
               <div class="col-4">
               <label class="form-label">Acciones</label>
@@ -110,7 +120,7 @@ error_reporting(0);
       <th>Accion</th>
     </tr>
     <tr>
-      <td><input type="text" name="txt_cod_producto" id="txt_cod_producto"></td>
+      <td><input onkeypress="return SoloNumeros(event, 'txt_cod_producto', 4);" type="text" name="txt_cod_producto" id="txt_cod_producto"></td>
       <td id="txt_descripcion">-</td>
       <td id="txt_existencia">-</td>
       <td><input type="text" name="txt_cant_producto" id="txt_cant_producto" value="0" min="1" disabled></td>
@@ -167,17 +177,28 @@ error_reporting(0);
 
     //  Buscar Proveedor
 
-   $('#rif_proveedor').keyup(function(e){
-     e.preventDefault();
+  $('#rif_proveedor').keyup(function(){
+    var tRif = $('#tipo_rif').val();
+    var cl = $(this).val();
+    searchProveedor(tRif,cl);
+  });
 
-     var cl = $(this).val();
+  $('#tipo_rif').change(function(){
+    var tRif = $(this).val();
+    var cl = $('#rif_proveedor').val();
+    searchProveedor(tRif,cl);
+  });
+
+
+   function searchProveedor(tipo_rif, rif_proveedor){
+    
      var action = 'searchProveedor';
 
      $.ajax({
         url: 'modulocompras/ajaxcompras.php',
         type: "POST",
         async: true,
-        data: {action:action,proveedor:cl},
+        data: {action:action,proveedor:rif_proveedor,tiporif:tipo_rif},
 
         success: function(response)
         {
@@ -213,7 +234,7 @@ error_reporting(0);
 
         }
      });
-   });
+   };
 
    //Crear Proveedor - Compras
 

@@ -1,5 +1,6 @@
 <?php
     if($_SESSION['idCliente']==true){
+        
 
         $cantProd=count($_REQUEST['id']);
     for ($i = 0; $i < $cantProd; $i++) {
@@ -9,6 +10,8 @@
         $idcliente = $conexion->real_escape_string($_SESSION['idCliente']);
         $estadofactura = $conexion->real_escape_string($_POST['estadofactura']);
         $tipocliente = $conexion->real_escape_string($_POST['tipocliente']);
+
+
         $queryVenta = "INSERT INTO tvenn_tts (tvent_fkclie,tvent_fechav,tvent_uservt,tvent_totalv,tvent_status)
         VALUES ('$idcliente',now(),'$tipocliente','$subTotal','$estadofactura');";
 
