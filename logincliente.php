@@ -87,7 +87,7 @@ if(isset($_REQUEST['aceptar'])){
       $_SESSION['idCliente']=$row['tclie_idclie'];
       $_SESSION['emailCliente']=$row['tclie_emailc'];
       $_SESSION['usernameCliente']=$row['tclie_namecl'];
-      header("location: home.php?modulo=envio&mensaje=Usuario registrado exitosamente");
+      header("location: home.php?modulo=productos&mensaje=Usuario registrado exitosamente");
    }
    else{
 ?>

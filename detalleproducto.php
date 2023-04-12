@@ -1,3 +1,11 @@
+<?php
+
+include 'conexion.php';
+
+
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -23,6 +31,7 @@
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css" media="screen">
         <!-- Favicon -->
     <link href="fronted/img/favicon.ico" rel="icon">
+    <!-- <script src="validaciones.js"></script> -->
 
 <!-- Google Web Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -94,7 +103,7 @@ $rowProducto = mysqli_fetch_assoc($resProducto);
 
               <div class="mt-4">
                  Cantidad: 
-                  <input type="number" class="form-control" id="cantidadProducto" value="1">
+                  <input type="number" class="form-control" max="<?= $rowProducto['tprod_cantpr'] ?>" id="cantidadProducto" value="1">
               </div>
 
             </div>
@@ -128,6 +137,39 @@ $rowProducto = mysqli_fetch_assoc($resProducto);
     <script src="fronted/lib/waypoints/waypoints.min.js"></script>
     <script src="fronted/lib/owlcarousel/owl.carousel.min.js"></script>
     <script src="fronted/lib/counterup/counterup.min.js"></script>
+
+    <script>
+
+      $('#cantidadProducto').keyup(function(evt){
+        if(window.event){
+        keynum = evt.keyCode;
+        }
+        else{
+        keynum = evt.which;
+        }
+
+
+
+        if((keynum > 47 && keynum < 58) || keynum == 8 || keynum== 13){
+          max = <?=$rowProducto['tprod_cantpr']?>;
+
+            if ($(this).val() > max-1) {
+               $(this).val(max);
+                return false;
+            } else {
+                return true;
+            }
+        }
+        else
+        {
+        alert("Ingresar solo numeros");
+        $(this).val('');
+        return false;
+        }
+      });
+      
+
+    </script>
 
     <!-- Template Javascript -->
     <script src="fronted/js/main.js"></script>

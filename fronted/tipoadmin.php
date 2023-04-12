@@ -56,7 +56,7 @@ error_reporting(0);
                 <a href="../home.php?modulo=promociones" class="nav-item nav-link">Promociones</a>
                 <a href="../home.php?modulo=contacto" class="nav-item nav-link">Contactos</a>
             </div>
-            <a style="margin-top: 10px; margin-bottom: 10px;" href="fronted/tipoadmin.php" class="btn btn-primary px-3 d-none d-lg-block">Iniciar Sesion</a>
+            <a style="margin-top: 10px; margin-bottom: 10px;" href="<?php __DIR__ ?>" class="btn btn-primary px-3 d-none d-lg-block">Iniciar Sesion</a>
         </div>
         </div>
     </nav>

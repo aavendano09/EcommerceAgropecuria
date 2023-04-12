@@ -123,6 +123,9 @@ $(document).ready(function () {
             }
         });
     });
+
+
+
     $("#agregarCarrito").click(function (e) { 
         e.preventDefault();
         var id=$(this).data('id');

@@ -76,7 +76,7 @@
                  $inicio = (($pagina - 1) * $registros);
              else
                  $inicio = 0;
-             $busqueda = mysqli_query($conexion, "SELECT * FROM tprod_tme WHERE tprod_status = '1' LIMIT $inicio,$registros;");
+             $busqueda = mysqli_query($conexion, "SELECT * FROM tprod_tme WHERE tprod_status = '1' AND tprod_cantpr > '0' LIMIT $inicio,$registros;");
              $paginas = ceil($num_registros / $registros);
 
              ?>

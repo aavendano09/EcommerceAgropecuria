@@ -17,60 +17,106 @@ $(document).ready(function () {
     });
 
 
-    function calcStock(){
-        $.ajax({
-            url: 'calculaStock.php',
-            type: "POST",
-            async: true,
-            data: {action:action,proveedor:rif_proveedor,tiporif:tipo_rif},
+    // function calcStock(id){
+    //     $.ajax({
+    //         url: 'ajax/calcStock.php',
+    //         type: "POST",
+    //         async: true,
+    //         data: {id:id},
+    //         dataType: "json",
     
-            success: function(response)
-            {
-                return 
-            }
-        });
+    //         success: function(response)
+    //         {
+    //             return res = JSON.parse(response);
+    //         }
+    //     });
     
-    }
+    // }
 
     function llenarTablaCarrito(response){
         $("#tablaCarrito tbody").text("");
+        
         var TOTAL=0;
         response.forEach(element => {
-            var precio= parseFloat(element['precio']);
-            var totalProd=element['cantidad']*precio;
 
-            TOTAL=TOTAL+totalProd;
-            $("#tablaCarrito tbody").append(
-                `
-                <tr>
-                    <td>${element['nombre']}</td>
-                    <td>
-                        ${element['cantidad']}
-                        <button type="button" class="btn-xs btn-primary mas" 
-                        data-id="${element['id']}"
-                        data-tipo="mas"
-                        >+</button>
-                        <button type="button" class="btn-xs btn-danger menos" 
-                        data-id="${element['id']}"
-                        data-tipo="menos"
-                        >-</button>
-                    </td>
-                    <td>$${precio.toFixed(2)}</td>
-                    <td>$${totalProd.toFixed(2)}</td>
-                    <td><button><i class="fa fa-trash text-danger borrarProducto" data-id="${element['id']}"></i></button></td>
-                <tr>
-                `
-            );
+            $.ajax({
+                url: 'ajax/calcStock.php',
+                type: "POST",
+                async: true,
+                data: {id:element['id']},
+                dataType: "json",
+        
+                success: function(data)
+                {
+                    var cantidadMax = JSON.parse(data);
+
+                    var precio= parseFloat(element['precio']);
+                    var totalProd=element['cantidad']*precio;
+                    TOTAL=TOTAL+totalProd;
+                    if (element['cantidad'] > cantidadMax-1) {
+                        $("#tablaCarrito tbody").append(
+                            `
+                            <tr>
+                                <td>${element['nombre']}</td>
+                                <td>
+                                    ${element['cantidad']}
+                                    <button type="button" class="btn-xs btn-secondary mas" 
+                                    data-id="${element['id']}"
+                                    data-tipo="mas"
+                                    disabled>+</button>
+                                    <button type="button" class="btn-xs btn-danger menos" 
+                                    data-id="${element['id']}"
+                                    data-tipo="menos"
+                                    >-</button>
+                                </td>
+                                <td>$${precio.toFixed(2)}</td>
+                                <td>$${totalProd.toFixed(2)}</td>
+                                <td><button><i class="fa fa-trash text-danger borrarProducto" data-id="${element['id']}"></i></button></td>
+                            <tr>
+                            `
+                        );
+                    }else{
+                        $("#tablaCarrito tbody").append(
+                            `
+                            <tr>
+                                <td>${element['nombre']}</td>
+                                <td>
+                                    ${element['cantidad']}
+                                    <button type="button" class="btn-xs btn-primary mas" 
+                                    data-id="${element['id']}"
+                                    data-tipo="mas"
+                                    >+</button>
+                                    <button type="button" class="btn-xs btn-danger menos" 
+                                    data-id="${element['id']}"
+                                    data-tipo="menos"
+                                    >-</button>
+                                </td>
+                                <td>$${precio.toFixed(2)}</td>
+                                <td>$${totalProd.toFixed(2)}</td>
+                                <td><button><i class="fa fa-trash text-danger borrarProducto" data-id="${element['id']}"></i></button></td>
+                            <tr>
+                            `
+                        );
+                    }
+                    
+                    
+                    $("#tablaCarrito tbody").append(
+                        `
+                        <tr>
+                            <td colspan="3" class="text-right"><strong>Total:</strong></td>
+                            <td>$${TOTAL.toFixed(2)}</td>
+                            <td></td>
+                        <tr>
+                        `
+                    );
+                }
+            });
+
+
+            
+           
         });
-        $("#tablaCarrito tbody").append(
-            `
-            <tr>
-                <td colspan="3" class="text-right"><strong>Total:</strong></td>
-                <td>$${TOTAL.toFixed(2)}</td>
-                <td></td>
-            <tr>
-            `
-        );
+        
 
     }
 

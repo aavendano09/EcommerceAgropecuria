@@ -47,7 +47,7 @@ if (isset ($_SESSION['idCliente'])){
             <h3>Datos del Cliente</h3>
              <div class="form-group">
                   <label for="">Nombre</label>
-                  <input placeholder="Pedro Peréz" onkeypress="return SoloLetras(event, true);" type="text" name="nombreCli" id="nombreCli" class="form-control" value="<?php echo $rowCli['tclie_namecl'] ?>">
+                  <input placeholder="Pedro Peréz" onkeypress="return SoloLetras(event, true);" type="text" name="nombreCli" id="nombreCli" class="form-control" value="<?php echo $rowCli['tclie_namecl'] ?> " disabled>
              </div>
              <div class="form-group">
                   <label for="">Email</label>
@@ -55,7 +55,7 @@ if (isset ($_SESSION['idCliente'])){
              </div>
              <div class="form-group">
                   <label for="">Direccion</label>
-                  <textarea placeholder="Ubicacion especifica" name="direccionCli" id="direccionCli" class="form-control" row="3"><?php echo $rowCli['tclie_direcl'] ?></textarea>
+                  <textarea disabled placeholder="Ubicacion especifica" name="direccionCli" id="direccionCli" class="form-control" row="3"><?php echo $rowCli['tclie_direcl'] ?></textarea>
              </div>
          </div>
         <div class="col-6">
