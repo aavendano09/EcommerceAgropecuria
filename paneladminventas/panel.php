@@ -1,5 +1,5 @@
 <?php
-
+error_reporting(0);
    session_start();
    if(isset($_SESSION['idAdminVentas'])==false){
     header("location:../loginadminventas.php");
@@ -8,7 +8,6 @@
 
 $modulo=$_REQUEST['modulo'];
 
-require '../vendor/autoload.php';
 
 ?>
 

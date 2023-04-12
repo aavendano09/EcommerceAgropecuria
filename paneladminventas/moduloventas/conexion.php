@@ -2,7 +2,7 @@
 // conectando a base de datos de forma en PROGRAMACION ORIENTADA A OBJETOS
 
 
-include_once('config.php');
+include_once('C:\xampp\htdocs\EcommerceAgropecuria\config.php');
 
 $conexion= new mysqli(DB_SERVER,DB_USERNAME,DB_PASSWORD,DB_DATABASE);
 

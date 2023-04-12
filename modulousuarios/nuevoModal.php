@@ -19,7 +19,6 @@ $generos = $conexion->query($sqltipousuairo);
         <form action="modulousuarios/guarda.php" method="post" enctype="multipart/form-data">
                     <div class="form-group">
                         <label>ID</label>
-                        <input placeholder="999" onkeypress="return SoloNumeros(event, 'id', 3);" type="text" name="id" id="id" class="form-control" required="required">
                     </div>
                     <div class="form-group">
                         <label>Nombre de usuario</label>

@@ -17,21 +17,7 @@ $(document).ready(function () {
     });
 
 
-    // function calcStock(id){
-    //     $.ajax({
-    //         url: 'ajax/calcStock.php',
-    //         type: "POST",
-    //         async: true,
-    //         data: {id:id},
-    //         dataType: "json",
     
-    //         success: function(response)
-    //         {
-    //             return res = JSON.parse(response);
-    //         }
-    //     });
-    
-    // }
 
     function llenarTablaCarrito(response){
         $("#tablaCarrito tbody").text("");
@@ -192,6 +178,9 @@ $(document).ready(function () {
     });
     $("#agregarCarrito").click(async function (e) { 
         e.preventDefault();
+
+        
+
         var id=$(this).data('id');
         var nombre=$(this).data('nombre');
         var cantidad=$("#cantidadProducto").val();
@@ -203,6 +192,7 @@ $(document).ready(function () {
             asycn:true,
             dataType: "json",
             beforeSend: function() {
+                $("#badgeProducto").text(cantidad);
                 $("#badgeProducto").hide(500).show(500).hide(500).show(500).hide(500).show(500);
                 $("#iconoCarrito").click();
             },

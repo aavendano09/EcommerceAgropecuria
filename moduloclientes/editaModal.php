@@ -20,7 +20,7 @@
                  </select>
                  -
                  <input placeholder="28654495" onkeypress="return CedRif(event, 'ediidentificacion', 'edicedrif');" min="1000000" type="number" name="identificacion" id="ediidentificacion" class="form-control col-10 d-inline ml-3" required>
-                 <input  min="1000000" type="number" name="identificacion" id="ediidentificacionHide" class="form-control d-none col-10 d-inline ml-3" >
+                 <input  min="1000000" type="number" name="ediidentificacionHide" id="ediidentificacionHide" class="form-control d-none col-10 d-inline ml-3" >
             </div>
             <div class="mb-3">
                  <label for="estado" class="form-label">Nombre: </label>

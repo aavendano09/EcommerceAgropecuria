@@ -4,7 +4,7 @@ require 'conexion.php';
 
 $id = $conexion->real_escape_string($_POST['id']);
 $identificacion = $conexion->real_escape_string($_POST['identificacion']);
-$identificacionOld = $conexion->real_escape_string($_POST['identificacionHide']);
+$identificacionOld = $conexion->real_escape_string($_POST['ediidentificacionHide']);
 $nombre = $conexion->real_escape_string($_POST['nombre']);
 $telefono = $conexion->real_escape_string($_POST['telefono']);
 $correo = $conexion->real_escape_string($_POST['correo']);
@@ -39,12 +39,14 @@ if($identificacionOld == $identificacion){
     
             if($conexion->query($sqlmonedas)){
             }
+
+            
     
-            header('Location: ../paneladmin.php?modulo=clientes');
+           header('Location: ../paneladmin.php?modulo=clientes');
 
         } else {
-            echo "<script>alert('El correo electronico ingresado ya se encuentra registrado, porfavor ingrese otro'); window.location.href = '../paneladmin.php?modulo=clientes';</script>";
-    
+           echo "<script>alert('El correo electronico ingresado ya se encuentra registrado, porfavor ingrese otro'); window.location.href = '../paneladmin.php?modulo=clientes';</script>";
+           
         }
     }
 
@@ -92,16 +94,16 @@ if($identificacionOld == $identificacion){
         
                 if($conexion->query($sqlmonedas)){
                 }
-        
-                header('Location: ../paneladmin.php?modulo=clientes');
+
+               header('Location: ../paneladmin.php?modulo=clientes');
 
             } else {
-                echo "<script>alert('El correo electronico ingresado ya se encuentra registrado, porfavor ingrese otro'); window.location.href = '../paneladmin.php?modulo=clientes';</script>";
-        
+              echo "<script>alert('El correo electronico ingresado ya se encuentra registrado, porfavor ingrese otro'); window.location.href = '../paneladmin.php?modulo=clientes';</script>";
+
             }
 
         } else {
-            echo "<script>alert('La identificacion ingresada ya se encuentra registrado, porfavor ingrese otro'); window.location.href = '../paneladmin.php?modulo=clientes';</script>";
+           echo "<script>alert('La identificacion ingresada ya se encuentra registrado, porfavor ingrese otro'); window.location.href = '../paneladmin.php?modulo=clientes';</script>";
 
         }
 

@@ -56,6 +56,8 @@
                 <a href="home.php?modulo=productos" class="nav-item nav-link">Productos</a>
                 <a href="home.php?modulo=promociones" class="nav-item nav-link">Promociones</a>
                 <a href="home.php?modulo=contacto" class="nav-item nav-link">Contactos</a>
+                <a href="home.php?modulo=carrito" class="nav-item nav-link">Ver Carrito</a>
+                
                 <div>
         <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
@@ -66,7 +68,6 @@
           <span class="badge badge-danger navbar-badge" id="badgeProducto" >0</span>
         </a>
         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right" id="listaCarrito">
-
         </div>
       </li>
 
@@ -106,11 +107,14 @@
           ?>
         </div>
       </li>
+      <li>
+      <a style="margin-top: 10px; margin-bottom: 10px;" href="fronted/tipoadmin.php" class="btn btn-primary px-3  d-lg-block pt-2">Iniciar Sesion</a>
+        
+      </li>
     </ul>
     </div>
             </div>
-            <a style="margin-top: 10px; margin-bottom: 10px;" href="fronted/tipoadmin.php" class="btn btn-primary px-3 d-none d-lg-block pt-2">Iniciar Sesion</a>
-        </div>
+              </div>
         
     
       </div>

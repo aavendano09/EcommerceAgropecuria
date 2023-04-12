@@ -271,7 +271,7 @@ p, label, span, table{
     <br>
     </div>
     <div>
-        <br>11
+        <br>
         <p class="nota">Amigo productor, si presenta alguna inquietud con su orden de entrega, <br>pongase en contacto al 04147166765/02772917101</p>
         <h4 class="label_gracias">¡Gracias por su compra!</h4>
 
@@ -282,7 +282,7 @@ p, label, span, table{
 <?php $html= ob_get_clean(); ?>
 <?php
 
-require "vendor/autoload.php";
+include_once "dompdf/autoload.inc.php";
 use Dompdf\Dompdf;
 
 $pdf = new Dompdf();

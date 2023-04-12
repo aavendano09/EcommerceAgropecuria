@@ -8,8 +8,7 @@
 	
 
 	include_once "../conexion.php";
-	require "../vendor/autoload.php";
-
+	require_once '../pdf/vendor/autoload.php';
 	use Dompdf\Dompdf;
 
 	if(empty($_REQUEST['cl']) || empty($_REQUEST['f']))

@@ -294,7 +294,7 @@ $('#tipo').change(function(){
 
     $('#txt_cod_producto').keyup(function(e){
      e.preventDefault();
-
+   
      var producto = $(this).val();
      var action = 'infoProducto';
 
@@ -490,7 +490,7 @@ $('#tipo').change(function(){
          var x = parseInt((window.screen.width/2) - (ancho / 2));
          var y = parseInt((window.screen.height/2) - (alto / 2));
      
-         $url = './factura/generaFactura.php?cl='+cliente+'&f='+factura;
+         $url = '../factura/generaFactura.php?cl='+cliente+'&f='+factura;
          window.open($url, "Factura","left="+x+",top="+y+",height="+alto+",width="+ancho+",scrollbar=si,location=no,resizable=si,menubar=no")
      
      }

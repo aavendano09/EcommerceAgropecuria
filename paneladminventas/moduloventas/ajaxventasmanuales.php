@@ -96,7 +96,7 @@ if($_POST['action'] == 'addProductoDetalle'){
     }else{
         $codproducto = $_POST['producto'];
         $cantidad = $_POST['cantidad'];
-        $token = md5($_SESSION['tidAdmin']);
+        $token = md5($_SESSION['idAdminVentas']);
 
         $query_iva = mysqli_query($conexion, "SELECT tbiva_valiva FROM tbiva_tme");
         $result_iva = mysqli_num_rows($query_iva);
@@ -172,7 +172,7 @@ if($_POST['action'] == 'serchForDetalle'){
     {
         echo 'error';
     }else{
-        $token = md5($_SESSION['tidAdmin']);
+        $token = md5($_SESSION['idAdminVentas']);
         $query_tmp = mysqli_query($conexion,"SELECT tmp.tdtem_correl,
                                                     tmp.tdtem_tokuse,
                                                     tmp.tdtem_cantid,
@@ -257,7 +257,7 @@ if($_POST['action'] == 'delProductoDetalle'){
     }else{
 
         $id_detalle = $_POST['id_detalle'];
-        $token      = md5($_SESSION['tidAdmin']);
+        $token      = md5($_SESSION['idAdminVentas']);
         
         $query_iva = mysqli_query($conexion, "SELECT tbiva_valiva FROM tbiva_tts");
         $result_iva = mysqli_num_rows($query_iva);
@@ -329,7 +329,7 @@ if($_POST['action'] == 'delProductoDetalle'){
 
 if($_POST['action'] == 'anularVenta'){
 
-    $token = md5($_SESSION['tidAdmin']);
+    $token = md5($_SESSION['idAdminVentas']);
 
     $query_eliminar = mysqli_query($conexion, "DELETE FROM tdtem_tts WHERE tdtem_tokuse='$token'");
     mysqli_close($conexion);
@@ -352,8 +352,8 @@ if($_POST['action'] == 'anularVenta'){
     }
 
 
-    $token = md5($_SESSION['tidAdmin']);
-    $usuario = $_SESSION['tidAdmin'];
+    $token = md5($_SESSION['idAdminVentas']);
+    $usuario = $_SESSION['idAdminVentas'];
 
     $query_p = mysqli_query($conexion, "SELECT * FROM tdtem_tts WHERE tdtem_tokuse = '$token'");
     $resultp = mysqli_num_rows($query_p);

@@ -52,6 +52,7 @@ if(letras.indexOf(tecla) == -1 && !tecla_especial)
 {
 alert("Ingresar solo letras");
 return false;
+
 }
 }
 
