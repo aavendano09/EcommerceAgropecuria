@@ -3,6 +3,7 @@
 require 'conexion.php';
 
 $id = $conexion->real_escape_string($_POST['id']);
+$tipoced = $conexion->real_escape_string($_POST['cedrif']);
 $identificacion = $conexion->real_escape_string($_POST['identificacion']);
 $identificacionOld = $conexion->real_escape_string($_POST['ediidentificacionHide']);
 $nombre = $conexion->real_escape_string($_POST['nombre']);
@@ -20,7 +21,7 @@ if($identificacionOld == $identificacion){
     if ($correoOld == $correo) {
 
         $sqlmonedas = "UPDATE tclic_tme
-        SET tclie_identc = '$identificacion', tclie_namecl = '$nombre', tclie_telecl = '$telefono', tclie_emailc = '$correo' WHERE tclie_idclie='$id'";
+        SET tclie_identc = '$identificacion', tclie_cedrif = '$tipoced', tclie_namecl = '$nombre', tclie_telecl = '$telefono', tclie_emailc = '$correo' WHERE tclie_idclie='$id'";
 
         if($conexion->query($sqlmonedas)){
         }
@@ -35,7 +36,7 @@ if($identificacionOld == $identificacion){
         if(mysqli_num_rows($request) == 0){
 
             $sqlmonedas = "UPDATE tclic_tme
-            SET tclie_identc = '$identificacion', tclie_namecl = '$nombre', tclie_telecl = '$telefono', tclie_emailc = '$correo' WHERE tclie_idclie='$id'";
+            SET tclie_identc = '$identificacion',tclie_cedrif = '$tipoced', tclie_namecl = '$nombre', tclie_telecl = '$telefono', tclie_emailc = '$correo' WHERE tclie_idclie='$id'";
     
             if($conexion->query($sqlmonedas)){
             }
@@ -61,7 +62,7 @@ if($identificacionOld == $identificacion){
         if(mysqli_num_rows($request) == 0){
             
             $sqlmonedas = "UPDATE tclic_tme
-            SET tclie_identc = '$identificacion', tclie_namecl = '$nombre', tclie_telecl = '$telefono', tclie_emailc = '$correo' WHERE tclie_idclie='$id'";
+            SET tclie_identc = '$identificacion', tclie_cedrif = '$tipoced', tclie_namecl = '$nombre', tclie_telecl = '$telefono', tclie_emailc = '$correo' WHERE tclie_idclie='$id'";
 
             if($conexion->query($sqlmonedas)){
             }
@@ -90,7 +91,7 @@ if($identificacionOld == $identificacion){
             if(mysqli_num_rows($request) == 0){
 
                 $sqlmonedas = "UPDATE tclic_tme
-                SET tclie_identc = '$identificacion', tclie_namecl = '$nombre', tclie_telecl = '$telefono', tclie_emailc = '$correo' WHERE tclie_idclie='$id'";
+                SET tclie_identc = '$identificacion', tclie_cedrif = '$tipoced', tclie_namecl = '$nombre', tclie_telecl = '$telefono', tclie_emailc = '$correo' WHERE tclie_idclie='$id'";
         
                 if($conexion->query($sqlmonedas)){
                 }
