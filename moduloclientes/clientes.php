@@ -65,7 +65,16 @@ $clientes = $conexion->query($sql);
         <?php while($row_clientes = $clientes->fetch_assoc()){ ?>
                <tr>
                  <td><?= $row_clientes['tclie_idclie'] ?></td>
+
+                 <?php if($row_clientes['tclie_cedrif'] == 'V'): ?>
+
                  <td><?= $row_clientes['tclie_cedrif'] . "-" .number_format($row_clientes['tclie_identc'], 0, ",", ".") ?></td>
+
+                 <?php else: ?>
+
+                  <td><?= $row_clientes['tclie_cedrif'] . "-" .$row_clientes['tclie_identc'] ?></td>
+
+                 <?php endif; ?>
                  <td><?= $row_clientes['tclie_namecl'] ?></td>
                  <td><?= $row_clientes['tclie_telecl'] ?></td>
                  <td><?= $row_clientes['tclie_emailc'] ?></td>
