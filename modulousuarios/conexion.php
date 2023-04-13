@@ -1,7 +1,7 @@
 <?php
 // conectando a base de datos de forma en PROGRAMACION ORIENTADA A OBJETOS
 
-require_once('C:\xampp\htdocs\EcommerceAgropecuria\config.php');
+require_once('C:\xampp\htdocs\EcommerceAgropecuaria\config.php');
 
 $conexion = new mysqli(DB_SERVER,DB_USERNAME,DB_PASSWORD,DB_DATABASE);
 

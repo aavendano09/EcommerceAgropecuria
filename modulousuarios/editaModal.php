@@ -70,3 +70,4 @@ $generos = $conexion->query($sqltipousuairo);
     </div>
   </div>
 </div>
+

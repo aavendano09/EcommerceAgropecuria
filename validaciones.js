@@ -279,3 +279,7 @@ return false;
 }
 }
 
+function actualizaInput(input){
+
+    $('#'+input).val('');
+}
