@@ -17,7 +17,7 @@
                  <select onchange="actualizaInput('ediidentificacion');" name="cedrif" id="edicedrif" class="form-select col-1 d-inline mx-3" required>
                   <option value="V">V</option>
                   <option value="J">J</option>
-                  <option value="G">G/option>
+                  <option value="G">G</option>
                  </select>
                  -
                  <input placeholder="28654495" onkeypress="return CedRif(event, 'ediidentificacion', 'edicedrif');" min="1000000" type="number" name="identificacion" id="ediidentificacion" class="form-control col-10 d-inline ml-3" required>
