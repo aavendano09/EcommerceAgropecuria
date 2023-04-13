@@ -192,7 +192,7 @@ $(document).ready(function () {
             asycn:true,
             dataType: "json",
             beforeSend: function() {
-                $("#badgeProducto").text(cantidad);
+                $("#badgeProducto").text(1);
                 $("#badgeProducto").hide(500).show(500).hide(500).show(500).hide(500).show(500);
                 $("#iconoCarrito").click();
             },

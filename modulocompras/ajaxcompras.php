@@ -31,6 +31,7 @@ if($_POST['action'] == 'searchProveedor'){
 if ($_POST['action'] == 'addCliente') {
 
     $id = $_POST['idproveedor'];
+    $tipo = $_POST['tipo_rif'];
     $Rif = $_POST['rif_proveedor'];
     $nombre = $_POST['nom_proveedor'];
     $telefono = $_POST['tel_proveedor'];
@@ -38,8 +39,8 @@ if ($_POST['action'] == 'addCliente') {
     $direccion = $_POST['dir_proveedor'];
    
 
-    $sqlproveedor = mysqli_query($conexion, "INSERT INTO tdprv_tme (tprov_idprov, tprov_Rifpro, tprov_Razsoc, tprov_direpr, tprov_telepr, tprov_emailp) 
-    VALUES ('$id','$Rif','$nombre','$direccion','$telefono','$correo');");
+    $sqlproveedor = mysqli_query($conexion, "INSERT INTO tdprv_tme (tprov_idprov, tprov_Rifpro, tprov_Razsoc, tprov_direpr, tprov_telepr, tprov_emailp, tprov_tiprif) 
+    VALUES ('$id','$Rif','$nombre','$direccion','$telefono','$correo','$tipo');");
 
     if($sqlproveedor){
         $codProveedor = mysqli_insert_id($conexion);

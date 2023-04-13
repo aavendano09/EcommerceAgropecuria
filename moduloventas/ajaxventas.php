@@ -31,6 +31,7 @@ if($_POST['action'] == 'searchCliente'){
 if ($_POST['action'] == 'addCliente') {
 
     $id = $_POST['idcliente'];
+    $tipo = $_POST['tipo'];
     $cedula = $_POST['ced_cliente'];
     $nombre = $_POST['nom_cliente'];
     $telefono = $_POST['tel_cliente'];
@@ -39,8 +40,8 @@ if ($_POST['action'] == 'addCliente') {
     $direccion = $_POST['dir_cliente'];
    
 
-    $sqlclientes = mysqli_query($conexion, "INSERT INTO tclic_tme (tclie_idclie, tclie_identc, tclie_namecl, tclie_telecl, tclie_emailc,tclie_passcl,tclie_direcl) 
-    VALUES ('$id','$cedula','$nombre','$telefono','$correo','$contrasena','$direccion');");
+    $sqlclientes = mysqli_query($conexion, "INSERT INTO tclic_tme (tclie_idclie, tclie_identc, tclie_namecl, tclie_telecl, tclie_emailc,tclie_passcl,tclie_direcl,tclie_cedrif) 
+    VALUES ('$id','$cedula','$nombre','$telefono','$correo','$contrasena','$direccion', '$tipo');");
 
     if($sqlclientes){
         $codCliente = mysqli_insert_id($conexion);
