@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>login</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
-    <script src="validaciones.js"></script>
 </head>
 
 <body>
@@ -74,16 +73,29 @@
 
 <?php
 
-if(isset($_REQUEST['aceptar'])){
+if($_POST){
    session_start();
-   $username=$_REQUEST['username'];
-   $correo=$_REQUEST['email'];
+   $username=$_REQUEST['usuario'];
+   $correo=$_REQUEST['correo'];
    $password=$_REQUEST['password'];
    $direccion=$_REQUEST['direccion'];
    $cedula=$_REQUEST['cedula'];
    $telefono=$_REQUEST['telefono'];
    include_once "conexion.php";
-   $consulta="INSERT INTO tclic_tme (tclie_identc,tclie_namecl,tclie_telecl,tclie_emailc,tclie_passcl,tclie_direcl) VALUES ('$cedula','$username','$telefono','$correo','$password','$direccion')";
+
+  $consulta = "SELECT tclie_identc FROM tclic_tme WHERE tclie_identc = '$cedula' LIMIT 1";
+  
+  $request = $conexion->query($consulta);
+
+  if(mysqli_num_rows($request) == 0){
+
+    $consulta = "SELECT tclie_emailc FROM tclic_tme WHERE tclie_emailc = '$correo' LIMIT 1";
+  
+    $request = $conexion->query($consulta);
+
+    if(mysqli_num_rows($request) == 0){
+
+   $consulta="INSERT INTO tclic_tme (tclie_identc,tclie_namecl,tclie_telecl,tclie_emailc,tclie_passcl,tclie_direcl, tclie_cedrif) VALUES ('$cedula','$username','$telefono','$correo','$password','$direccion', 'V')";
    $resultado=mysqli_query($conexion,$consulta);
    if($resultado){
  ?>
@@ -96,68 +108,76 @@ if(isset($_REQUEST['aceptar'])){
 
    }else{
 ?>
-   <div class="alert alert-danger" role="alert">
-        Error de Registro
-   </div>
+   <div id="verif" class="alert alert-danger" role="alert">
+     <h5>Error de Registro!!!</h5>
+    </div>
+    
+    <script>
+      
+      setTimeout(() => {
+        document.getElementById('verif').style.display = "none";
+      }, 2500);
+      
+      
+      </script>
 <?php
    }
-}
+  }else{
+  ?>
+    
+    <div id="verif" class="alert alert-danger" role="alert">
+  <h5>El correo electronico ya se encuentra registrado.</h5>
+ </div>
+ 
+ <script>
+   
+   setTimeout(() => {
+     document.getElementById('verif').style.display = "none";
+   }, 2500);
+   
+   
+   </script>
+
+  <?php
+  }
+
+}else{
+  
 ?>
-            <form method="post">
-              <!-- 2 column grid layout with text inputs for the first and last names -->
-              <div class="row">
-              <div class="text-center mb-4">
-                <h3>Registrate estimado cliente</h3>
-              </div>
+  <div id="verif" class="alert alert-danger" role="alert">
+  <h5>La cedula ya se encuentra registrada.</h5>
+ </div>
+ 
+ <script>
+   
+   setTimeout(() => {
+     document.getElementById('verif').style.display = "none";
+   }, 2500);
+   
+   
+   </script>
+<?php 
+} 
+}
+require_once 'validations/Formulario.php';
+?>
 
-              <div class="form-outline mb-4">
-                <input placeholder="Pedro Peréz" onkeypress="return SoloLetras(event, true);" type="text" id="username" class="form-control" name="username" required/>
-                <label class="form-label" for="form3Example4">Nombre y Apellido</label>
-              </div>
+<?php
+  $formulario = new Formulario("", "formulario", "formulario");
+  $formulario->setHeader("Registrate estimado cliente:");
+  $formulario->setInput("text", "usuario", "Nombre de usuario", "Pedro Pérez");
+  $formulario->setInput("number", "cedula", "Cedula", "25984693");
+  $formulario->setInput("email", "correo", "Correo Electrónico", "pedro@gmail.com");
+  $formulario->setInput("number", "telefono", "Telefono", "04165026859");
+  $formulario->setInput("password", "password", "Contraseña", "********");
+  $formulario->setInput("password", "password2", "Confirmar contraseña", "********");
+  $formulario->setInput("text", "direccion", "Direccion", "La grita");
+  $formulario->setButton("Enviar", "Formulario enviado exitosamente!");
+  $formulario->setHtml(" <a href='logincliente.php' class='text-success'>Ir al Login</a>");
+  $formulario->setFoot("@Since 2021");
+  $formulario->getRender();
+?>
 
-              <div class="form-outline mb-4">
-                <input placeholder="9999999" onkeypress="return SoloNumeros(event, 'cedula', 8);" type="text" id="cedula" class="form-control" name="cedula" required/>
-                <label class="form-label" for="form3Example4">Cedula</label>
-              </div>
-              
-              </div>
-
-              <!-- Email input -->
-              <div class="form-outline mb-4">
-                <input placeholder="pedro@gmail.com" type="email" id="email" class="form-control" name="email" required/>
-                <label class="form-label" for="form3Example3">Correo Electronico</label>
-              </div>
-
-              <!-- Password input -->
-              <div class="form-outline mb-4">
-                <input placeholder="********" onkeypress="return Pass(event)" type="password" id="password" class="form-control" name="password" required/>
-                <label class="form-label" for="form3Example4">Contraseña</label>
-              </div>
-
-              <div class="form-outline mb-4">
-                <input onkeypress="return SoloNumeros(event, 'telefono', 11);" placeholder="04244856984" type="number" id="telefono" class="form-control" name="telefono" required/>
-                <label class="form-label" for="form3Example4">Telefono</label>
-              </div>
-
-              <div class="form-outline mb-4">
-                <input placeholder="Ubicacion especifica" type="text" id="direccion" class="form-control" name="direccion" required></input>
-                <label class="form-label" for="form3Example4">Direccion</label>
-              </div>
-
-              <!-- Submit button -->
-
-              <div class="d-grid gap-2 col-12 mx-auto">
-              <button type="submit" class=" btn btn-primary btn-block mb-4" name="aceptar">
-                Registrarse
-              </button>
-              <a href="logincliente.php" class="text-success">Ir a login</a>
-              </div>
-
-              <!-- Register buttons -->
-              <div class="text-center">
-                <p>@Since 2021</p>
-              </div>
-            </form>
           </div>
         </div>
       </div>

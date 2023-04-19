@@ -74,10 +74,10 @@
 
 <?php
 
-if(isset($_REQUEST['aceptar'])){
+if($_POST){
    session_start();
-   $username=$_REQUEST['username'];
-   $correo=$_REQUEST['email'];
+   $username=$_REQUEST['usuario'];
+   $correo=$_REQUEST['correo'];
    $password=$_REQUEST['password'];
    include_once "conexion.php";
    $consulta="SELECT tclie_idclie,tclie_namecl,tclie_emailc,tclie_passcl FROM tclic_tme WHERE tclie_namecl='$username' AND tclie_emailc='$correo' AND tclie_passcl='$password'";
@@ -91,53 +91,35 @@ if(isset($_REQUEST['aceptar'])){
    }
    else{
 ?>
-   <div class="alert alert-danger" role="alert">
-        Verifique los datos introducidos!!!
-   </div>
+    <div id="verif" class="alert alert-danger" role="alert">
+      <h5>Verifique los datos introducidos!!!</h5>
+    </div>
+    
+    <script>
+      
+      setTimeout(() => {
+        document.getElementById('verif').style.display = "none";
+      }, 2500);
+      
+      
+      </script>
 <?php
    }
 }
+require_once 'validations/Formulario.php';
 ?>
-            <form method="post">
-              <!-- 2 column grid layout with text inputs for the first and last names -->
-              <div class="row">
-              <div class="text-center mb-4">
-                <h3>Ingrese los siguientes datos por favor estimado cliente:</h3>
-              </div>
+<?php
+  $formulario = new Formulario("", "formulario", "formulario");
+  $formulario->setHeader("Ingrese los siguientes datos estimado cliente:");
+  $formulario->setInput("text", "usuario", "Nombre y Apellido", "Pedro Pérez");
+  $formulario->setInput("email", "correo", "Correo Electrónico", "pedro@gmail.com");
+  $formulario->setInput("password", "password", "Contraseña", "********");
+  $formulario->setButton("Enviar", "Formulario enviado exitosamente!");
+  $formulario->setHtml(" <a href='registrocliente.php' class='text-success'>Registrarse</a>");
+  $formulario->setFoot("@Since 2021");
+  $formulario->getRender();
+?>
 
-              <div class="form-outline mb-4">
-                <input placeholder="Pedro Peréz" onkeypress="return SoloLetras(event, true);" type="text" id="username" class="form-control" name="username" required/>
-                <label class="form-label" for="form3Example4">Nombre y Apellido</label>
-              </div>
-               
-              </div>
-
-              <!-- Email input -->
-              <div class="form-outline mb-4">
-                <input placeholder="pedro@gmail.com" onkeypress="return ValidarNotEspacios(event);" type="email" id="email" class="form-control" name="email" required/>
-                <label class="form-label" for="form3Example3">Correo Electronico</label>
-              </div>
-
-              <!-- Password input -->
-              <div class="form-outline mb-4">
-                <input placeholder="********" onkeypress="return ValidarNotEspacios(event);" type="password" id="password" class="form-control" name="password" required/>
-                <label class="form-label" for="form3Example4">Contraseña</label>
-              </div>
-
-              <!-- Submit button -->
-
-              <div class="d-grid gap-2 col-12 mx-auto">
-              <button type="submit" class=" btn btn-primary btn-block mb-4" name="aceptar">
-                Loguearse
-              </button>
-              <a href="registrocliente.php" class="text-success">Registrarse</a>
-              </div>
-
-              <!-- Register buttons -->
-              <div class="text-center">
-                <p>@Since 2021</p>
-              </div>
-            </form>
           </div>
         </div>
       </div>

@@ -39,6 +39,16 @@ header("Refresh:0");
 <!-- Customized Bootstrap Stylesheet -->
 <link href="fronted/css/bootstrap.min.css" rel="stylesheet">
 
+<link href="fronted/lib/animate/animate.min.css" rel="stylesheet">
+
+<link href="fronted/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+
+<!-- Customized Bootstrap Stylesheet -->
+<link href="fronted/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Template Stylesheet -->
+<link href="fronted/css/style.css" rel="stylesheet">
+
 <!-- Template Stylesheet -->
 <link href="fronted/css/style.css" rel="stylesheet">
 <script src="validaciones.js"></script>

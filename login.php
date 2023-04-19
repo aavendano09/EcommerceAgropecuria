@@ -22,7 +22,6 @@ $generos = $conexion->query($sqltipousuairo);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>login</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
-    <script src="validaciones.js"></script>
   </head>
 
 <body>
@@ -90,72 +89,118 @@ $generos = $conexion->query($sqltipousuairo);
 
 <?php
 
-if(isset($_REQUEST['aceptar'])){
-   session_start();
-   $username=$_REQUEST['username'];
-   $correo=$_REQUEST['email'];
-   $password=$_REQUEST['password'];
-   $tipousuario=$_REQUEST['tipousuario'];
-   $consulta="SELECT *
+
+
+if ($_POST) {
+
+  session_start();
+  $username=$_REQUEST['usuario'];
+  $correo=$_REQUEST['correo'];
+  $password=$_REQUEST['password'];
+  $tipousuario=$_REQUEST['tipousuario'];
+  $consulta="SELECT *
    FROM tuser_tme 
    WHERE tuser_userna='$username' AND tuser_emailu='$correo' AND tuser_passus='$password'";
    $resultado=mysqli_query($conexion,$consulta);
    $row=mysqli_fetch_assoc($resultado);
-   if($row['tuser_fktipu']=='Administrador General'){ //administrador General
+   if($row['tuser_fktipu']=='1'){ //administrador General
       $_SESSION['tidAdmin']=$row['tuser_iduser'];
       $_SESSION['email']=$row['tuser_emailu'];
       $_SESSION['username']=$row['tuser_userna'];
       $_SESSION['tipousuario']=$row['tuser_fktipu'];
       header("location: paneladmin.php?modulo=home");
-   }
-   else{
-?>
-   <div class="alert alert-danger" role="alert">
-        Verifique los datos introducidos!!!
-   </div>
+    }
+    else{
+      ?>
+   <div id="verif" class="alert alert-danger" role="alert">
+     <h5>Verifique los datos introducidos!!!</h5>
+    </div>
+    
+    <script>
+      
+      setTimeout(() => {
+        document.getElementById('verif').style.display = "none";
+      }, 2500);
+      
+      
+      </script>
+
 <?php
    }
-}
+  }
+  require_once 'validations/Formulario.php';
 ?>
-            <form method="post">
-              <!-- 2 column grid layout with text inputs for the first and last names -->
-              <div class="row">
-              <div class="text-center mb-4">
-                <h3>Ingrese los siguientes datos por favor:</h3>
-              </div>
 
-              <div class="form-outline mb-4">
-                <input placeholder="Pedro Peréz" onkeypress="return SoloLetras(event, true);" type="text" id="username" class="form-control" name="username" required/>
-                <label class="form-label" for="form3Example4">Nombre de usuario</label>
-              </div>
-               
-              </div>
 
-              <!-- Email input -->
-              <div class="form-outline mb-4">
-                <input placeholder="pedro@gmail.com" onkeypress="return ValidarNotEspacios(event)" type="email" id="email" class="form-control" name="email" required/>
-                <label class="form-label" for="form3Example3">Correo Electronico</label>
-              </div>
+<?php
 
-              <!-- Password input -->
-              <div class="form-outline mb-4">
-                <input placeholder="********" onkeypress="return Pass(event)" type="password" id="password" class="form-control" name="password" required/>
-                <label class="form-label" for="form3Example4">Contraseña</label>
-              </div>
+  $formulario = new Formulario("", "formulario", "formulario");
+  $formulario->setHeader("Ingrese los siguientes datos por favor:");
+  $formulario->setInput("text", "usuario", "Nombre de usuario", "Pedro Pérez");
+  $formulario->setInput("email", "correo", "Correo Electrónico", "pedro@gmail.com");
+  $formulario->setInput("password", "password", "Contraseña", "********");
+  $formulario->setButton("Enviar", "Formulario enviado exitosamente!");
+  $formulario->setFoot("@Since 2021");
+  $formulario->getRender();
 
-              <!-- Submit button -->
+?>
 
-              <div class="d-grid gap-2 col-6 mx-auto">
-              <button type="submit" class=" btn btn-primary btn-block mb-4 mt-5" name="aceptar">
-                Iniciar Sección
-              </button>
-              </div>
 
-              <!-- Register buttons -->
-              <div class="text-center">
-                <p>@Since 2021</p>
-              </div>
-            </form>
+
+
+
+
+
+
+<!-- 
+<form method="POST" class="formulario" id="formulario">
+      <div class="text-center">
+        <h3>Ingrese los siguientes datos por favor:</h3>
+      </div>
+      
+			Grupo: Usuario
+			<div class="formulario__grupo" id="grupo__usuario">
+				<label for="usuario" class="formulario__label">Usuario</label>
+				<div class="formulario__grupo-input">
+					<input type="text" class="formulario__input" name="usuario" id="usuario" placeholder="john123">
+					<i class="formulario__validacion-estado fas fa-times-circle"></i>
+				</div>
+				<p class="formulario__input-error">El usuario tiene que ser de 4 a 16 dígitos y solo puede contener numeros, letras y guion bajo.</p>
+			</div>
+
+			Grupo: Correo Electronico
+			<div class="formulario__grupo" id="grupo__correo">
+				<label for="correo" class="formulario__label">Correo Electrónico</label>
+				<div class="formulario__grupo-input">
+					<input type="email" class="formulario__input" name="correo" id="correo" placeholder="correo@correo.com">
+					<i class="formulario__validacion-estado fas fa-times-circle"></i>
+				</div>
+				<p class="formulario__input-error">El correo solo puede contener letras, numeros, puntos, guiones y guion bajo.</p>
+			</div>
+
+      Grupo: Contraseña
+			<div class="formulario__grupo" id="grupo__password">
+				<label for="password" class="formulario__label">Contraseña</label>
+				<div class="formulario__grupo-input">
+					<input type="password" class="formulario__input" name="password" id="password">
+					<i class="formulario__validacion-estado fas fa-times-circle"></i>
+				</div>
+				<p class="formulario__input-error">La contraseña tiene que ser de 4 a 12 dígitos.</p>
+			</div>
+      
+			<div class="formulario__mensaje" id="formulario__mensaje">
+				<p><i class="fas fa-exclamation-triangle"></i> <b>Error:</b> Por favor rellena el formulario correctamente. </p>
+			</div>
+
+			<div class="formulario__grupo formulario__grupo-btn-enviar">
+				<button  type="submit" class="formulario__btn">Iniciar Session</button>
+          <p class="formulario__mensaje-exito" id="formulario__mensaje-exito">Formulario enviado exitosamente!</p>
+			</div>
+		</form> -->
+
+
+
+
           </div>
         </div>
       </div>
@@ -163,7 +208,6 @@ if(isset($_REQUEST['aceptar'])){
   </div>
 </section>
 <!-- Section: Design Block -->
-
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
 </body>
 </html>

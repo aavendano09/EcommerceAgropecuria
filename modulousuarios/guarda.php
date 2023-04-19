@@ -3,13 +3,14 @@
 require 'conexion.php';
 
 $idUsuario=mysqli_real_escape_string($conexion, $_REQUEST['id']);
-$username=mysqli_real_escape_string($conexion, $_REQUEST['username']);
-$email=mysqli_real_escape_string($conexion, $_REQUEST['email']);
+$username=mysqli_real_escape_string($conexion, $_REQUEST['usuario']);
+$email=mysqli_real_escape_string($conexion, $_REQUEST['correo']);
 $password=mysqli_real_escape_string($conexion, $_REQUEST['password']);
 $tipousuario=mysqli_real_escape_string($conexion, $_REQUEST['tipousuario']);
 $estado=mysqli_real_escape_string($conexion, $_REQUEST['estado']);
-$fechaingreso=mysqli_real_escape_string($conexion, $_REQUEST['fechaingreso']);
-$domicilio=mysqli_real_escape_string($conexion, $_REQUEST['domicilio']);
+$domicilio=mysqli_real_escape_string($conexion, $_REQUEST['direccion']);
+
+$fecha_actual = date("Y-m-d");
 
 $sqlidusuario = "SELECT tuser_iduser FROM tuser_tme WHERE tuser_iduser = '$idUsuario'";
 
@@ -23,7 +24,7 @@ if(mysqli_num_rows($request) == 0){
 
     if(mysqli_num_rows($request2) == 0){
         $sqlcategorias = "INSERT INTO `tuser_tme` (`tuser_iduser`, `tuser_userna`, `tuser_emailu`, `tuser_passus`, `tuser_fktipu`, `tuser_status`, `tuser_fechin`, `tuser_direus`) 
-        VALUES ('".$idUsuario."','".$username."','".$email."','".$password."','".$tipousuario."','".$estado."','".$fechaingreso."','".$domicilio."');
+        VALUES ('".$idUsuario."','".$username."','".$email."','".$password."','".$tipousuario."','".$estado."','".$fecha_actual."','".$domicilio."');
         ";
 
         if($conexion->query($sqlcategorias)){

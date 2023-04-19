@@ -110,7 +110,7 @@
         </div>
       </li>
       <li>
-      <a style="margin-top: 10px; margin-bottom: 10px;" href="fronted/tipoadmin.php" class="btn btn-primary px-3  d-lg-block pt-2">Iniciar Sesion</a>
+      <a style="margin-top: 10px; margin-bottom: 10px;" href="fronted/tipoadmin.php" class="btn btn-primary px-3  d-lg-block  pt-2">Iniciar Sesion</a>
         
       </li>
     </ul>

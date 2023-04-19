@@ -22,7 +22,6 @@ $generos = $conexion->query($sqltipousuairo);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>login</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
-    <script src="validaciones.js"></script>
 </head>
 
 <body>
@@ -90,10 +89,10 @@ $generos = $conexion->query($sqltipousuairo);
 
           <?php
 
-if(isset($_REQUEST['aceptar'])){
+if($_POST){
    session_start();
-   $username=$_REQUEST['username'];
-   $correo=$_REQUEST['email'];
+   $username=$_REQUEST['usuario'];
+   $correo=$_REQUEST['correo'];
    $password=$_REQUEST['password'];
    $tipousuario=$_REQUEST['tipousuario'];
    include_once "conexion.php";
@@ -102,7 +101,7 @@ if(isset($_REQUEST['aceptar'])){
    WHERE tuser_userna='$username' AND tuser_emailu='$correo' AND tuser_passus='$password'";
    $resultado=mysqli_query($conexion,$consulta);
    $row=mysqli_fetch_assoc($resultado);
-   if($row['tuser_fktipu']=='Administrador de Ventas'){ //administrador de Ventas
+   if($row['tuser_fktipu']=='2'){ //administrador de Ventas
       $_SESSION['idAdminVentas']=$row['tuser_iduser'];
       $_SESSION['emailAdminVentas']=$row['tuser_emailu'];
       $_SESSION['usernameAdminVentas']=$row['tuser_userna'];
@@ -111,53 +110,42 @@ if(isset($_REQUEST['aceptar'])){
    }
    else{
 ?>
-   <div class="alert alert-danger" role="alert">
-        Verifique los datos introducidos!!!
-   </div>
+    <div id="verif" class="alert alert-danger" role="alert">
+      <h5>Verifique los datos introducidos!!!</h5>
+    </div>
+    
+    <script>
+      
+      setTimeout(() => {
+        document.getElementById('verif').style.display = "none";
+      }, 2500);
+      
+      
+      </script>
 <?php
    }
 }
+require_once 'validations/Formulario.php';
 ?>
-            <form method="post">
-              <!-- 2 column grid layout with text inputs for the first and last names -->
-              <div class="row">
-              <div class="text-center mb-4">
-                <h3>Ingrese los siguientes datos por favor:</h3>
-              </div>
 
-              <div class="form-outline mb-4">
-                <input placeholder="Pedro Peréz" onkeypress="return SoloLetras(event, true);" type="text" id="username" class="form-control" name="username" />
-                <label class="form-label" for="form3Example4">Nombre de usuario</label>
-              </div>
-               
-              </div>
 
-              <!-- Email input -->
-              <div class="form-outline mb-4">
-                <input placeholder="pedro@gmail.com" type="email" id="email" class="form-control" name="email" />
-                <label class="form-label" for="form3Example3">Correo Electronico</label>
-              </div>
+<?php
+$formulario = new Formulario("", "formulario", "formulario");
+$formulario->setHeader("Ingrese los siguientes datos por favor:");
+$formulario->setInput("text", "usuario", "Nombre de usuario", "Pedro Pérez");
+$formulario->setInput("email", "correo", "Correo Electrónico", "pedro@gmail.com");
+$formulario->setInput("password", "password", "Contraseña", "La contraseña tiene que ser de 4 a 12 dígitos.", "********");
+$formulario->setButton("Enviar", "Formulario enviado exitosamente!");
+$formulario->setFoot("@Since 2021");
+$formulario->getRender();
 
-              <!-- Password input -->
-              <div class="form-outline mb-4">
-                <input placeholder="********" onkeypress="return Pass(event)" type="password" id="password" class="form-control" name="password" />
-                <label class="form-label" for="form3Example4">Contraseña</label>
-              </div>
+?>
 
-             
-              <!-- Submit button -->
+            
 
-              <div class="d-grid gap-2 col-6 mx-auto">
-              <button type="submit" class=" btn btn-primary btn-block mb-4 mt-5" name="aceptar">
-                Iniciar Sección
-              </button>
-              </div>
 
-              <!-- Register buttons -->
-              <div class="text-center">
-                <p>@Since 2021</p>
-              </div>
-            </form>
+
+
           </div>
         </div>
       </div>

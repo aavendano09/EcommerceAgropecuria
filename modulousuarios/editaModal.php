@@ -4,11 +4,11 @@ include_once "conexion.php";
 
 $sqltipousuairo = "SELECT ttusu_descus FROM ttusu_tme";
 $generos = $conexion->query($sqltipousuairo);
-
+require_once 'validations/Formulario.php';
 ?>
 
 <!-- Modal -->
-<div class="modal fade" id="editaModal" tabindex="-1" aria-labelledby="editaModalLabel" aria-hidden="true">
+<!-- <div class="modal fade" id="editaModal" tabindex="-1" aria-labelledby="editaModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
@@ -16,6 +16,43 @@ $generos = $conexion->query($sqltipousuairo);
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
+
+
+
+
+
+
+      <?php
+        // $formulario = new Formulario("modulousuarios/guarda.php", "formularioEdit", "formularioEdit");
+        // $formulario->setInput("number", "idEdit", "ID", "El ID solo puede contener numeros, no puede llevar espacios, letras ni simbolos", "999");
+        // $formulario->setInput("text", "usuarioEdit", "Nombre de usuario", "El usuario tiene que ser de 4 a 16 dígitos y solo puede contener numeros, letras y guion bajo.", "Pedro Pérez");
+        // $formulario->setInput("email", "correoEdit", "Correo Electrónico", "El correo solo puede contener letras, numeros, puntos, guiones y guion bajo.", "pedro@gmail.com");
+        // $formulario->setInput("password", "passwordEdit", "Contraseña", "La contraseña tiene que ser de 4 a 12 dígitos.", "********");
+        // $formulario->setSelect("tipousuarioEdit", "Tipo usuario", "Debe elegir una de las opciones", "ttusu_tme", "ttusu_idtipu", "ttusu_descus");
+        // $html = "<option value='1'>Activo</option>
+        //         <option value='0'>Inactivo</option>
+        // ";
+        // $formulario->setSelect("estadoEdit", "Estado", "Debe elegir una de las opciones", null, null, null, $html);
+        // $formulario->setInput("date", "fechaEdit", "Fecha Ingreso", "No se puede dejar en blanco", null);
+        // $formulario->setInput("text", "direccionEdit", "Direccion", "Texto libre", "La grita");
+        // $formulario->setButton("Enviar", "Formulario enviado exitosamente!", true, "Cerrar");
+        // $formulario->getRender();
+      ?>
+ -->
+
+
+
+
+
+
+
+
+
+
+<!-- 
+
+
+
         <form action="modulousuarios/actualiza.php" method="post" enctype="multipart/form-data">
         <div class="form-group">
                         <label>ID</label>
@@ -70,4 +107,4 @@ $generos = $conexion->query($sqltipousuairo);
     </div>
   </div>
 </div>
-
+ -->

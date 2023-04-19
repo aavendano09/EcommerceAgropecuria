@@ -1,16 +1,19 @@
 <?php
 
-require_once('conexion.php');
-
 
 include_once "conexion.php";
 
-$sqltipousuairo = "SELECT ttusu_descus FROM ttusu_tme";
+$sqltipousuairo = "SELECT ttusu_idtipu, ttusu_descus FROM ttusu_tme";
 $generos = $conexion->query($sqltipousuairo);
+$tipos = $generos->fetch_array();
 
 
-$sql = "SELECT tuser_iduser, tuser_userna, tuser_emailu, tuser_fktipu, tuser_status FROM tuser_tme;";
+$sql = "SELECT tuser_iduser, tuser_userna, tuser_emailu, tuser_fktipu, tuser_status, ttusu_descus FROM tuser_tme INNER JOIN ttusu_tme ON ttusu_idtipu = tuser_fktipu;";
 $usuarios = $conexion->query($sql);
+
+require_once 'validations/Formulario.php';
+
+
 
 ?>
 
@@ -29,7 +32,10 @@ $usuarios = $conexion->query($sql);
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
     <!-- ========================================================= -->
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
-    <script src="validaciones.js"></script>
+    <script>
+      const modulo = "modulousuarios";
+      const modaltitle = "usuario";
+    </script>
 </head>
 <body>
 
@@ -51,7 +57,7 @@ $usuarios = $conexion->query($sql);
         <div class="col-12">
             
     <div class="col-auto mb-3">
-        <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#nuevoModal"><i class="fa-solid fa-circle-plus"></i> Nuevo Usuario</a>
+        <a href="#" id="new" class="btn btn-primary" data-bs-toggle="modal"><i class="fa-solid fa-circle-plus"></i> Nuevo Usuario</a>
     </div>
 
           <div class="card">
@@ -72,7 +78,7 @@ $usuarios = $conexion->query($sql);
                <tr>
                  <td><?= $row['tuser_userna'] ?></td>
                  <td><?= $row['tuser_emailu'] ?></td>
-                 <td><?= $row['tuser_fktipu'] ?></td>
+                 <td><?= $row['ttusu_descus'] ?></td>
                  <td>
                  <?php if($row['tuser_status']): ?>
                 
@@ -86,7 +92,7 @@ $usuarios = $conexion->query($sql);
                  </td>
                  <td>
 
-                  <a href="#" class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#editaModal" data-bs-id="<?= $row['tuser_iduser']; ?>"><i class="fa-solid fa-pencil"></i> Editar</a>
+                  <a href="#" id="edit" class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#nuevoModal" data-bs-id="<?= $row['tuser_iduser']; ?>"><i class="fa-solid fa-pencil"></i> Editar</a>
 
                  </td>
                </tr>
@@ -122,10 +128,11 @@ $usuarios = $conexion->query($sql);
     <script src="assets/js/bootstrap.bundle.min.js"></script>
     <script src="assets/js/jquery-3.6.0.min.js"></script>
     <script src="assets/js/datatables.min.js"></script>
-    <script src="assets/js/pdfmake.min.js"></script>
-    <script src="assets/js/vfs_fonts.js"></script>
 
     <script>
+
+
+
       $(document).ready(function(){
     
     var table = $('#example').DataTable({
@@ -162,22 +169,23 @@ $usuarios = $conexion->query($sql);
 
 <script>
 
-     let editaModal = document.getElementById('editaModal')
+     let editaModal = document.getElementById('nuevoModal')
      let eliminaModal = document.getElementById('eliminaModal')
 
      editaModal.addEventListener('show.bs.modal', event => {
-        let button = event.relatedTarget
-        let id = button.getAttribute('data-bs-id')
-
+       let button = event.relatedTarget
+       let id = button.getAttribute('data-bs-id');
+       validRefresh();
+       openEdit();
+        
         let inputId = editaModal.querySelector('.modal-body #id')
-        let inputNombre = editaModal.querySelector('.modal-body #username')
-        let inputEmail = editaModal.querySelector('.modal-body #email')
+        let inputNombre = editaModal.querySelector('.modal-body #usuario')
+        let inputEmail = editaModal.querySelector('.modal-body #correo')
         let inputPassword = editaModal.querySelector('.modal-body #password')
         let inputTipoUsuario = editaModal.querySelector('.modal-body #tipousuario')
         let inputEstado = editaModal.querySelector('.modal-body #estado')
-        let inputFechaIngreso = editaModal.querySelector('.modal-body #fechaingreso')
-        let inputDomicilio = editaModal.querySelector('.modal-body #domicilio')
-        let inputOldEmail = editaModal.querySelector('.modal-body #emailOld')
+        let inputDomicilio = editaModal.querySelector('.modal-body #direccion')
+        let inputOldEmail = editaModal.querySelector('.modal-body #correoOld')
         
         let url = "modulousuarios/getUsuarios.php"
         let formData = new FormData()
@@ -195,9 +203,9 @@ $usuarios = $conexion->query($sql);
             inputPassword.value = data.tuser_passus
             inputTipoUsuario.value = data.tuser_fktipu
             inputEstado.value = data.tuser_status
-            inputFechaIngreso.value = data.tuser_fechin
             inputDomicilio.value = data.tuser_direus
             inputOldEmail.value = data.tuser_emailu
+            
 
         }).catch(err => console.log(err))
 
@@ -208,6 +216,8 @@ $usuarios = $conexion->query($sql);
         let id = button.getAttribute('data-bs-id')
         eliminaModal.querySelector('.modal-footer #id').value = id
      })
+
+     
     </script>
 
 

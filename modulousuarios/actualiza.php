@@ -2,22 +2,23 @@
 
 require 'conexion.php';
 
-$idUsuario=mysqli_real_escape_string($conexion, $_REQUEST['id']);
-$username=mysqli_real_escape_string($conexion, $_REQUEST['username']);
-$email=mysqli_real_escape_string($conexion, $_REQUEST['email']);
+var_dump($_POST);
+
+$idUsuario=mysqli_real_escape_string($conexion, $_POST['id']);
+$username=mysqli_real_escape_string($conexion, $_REQUEST['usuario']);
+$email=mysqli_real_escape_string($conexion, $_REQUEST['correo']);
 $password=mysqli_real_escape_string($conexion, $_REQUEST['password']);
 $tipousuario=mysqli_real_escape_string($conexion, $_REQUEST['tipousuario']);
 $estado=mysqli_real_escape_string($conexion, $_REQUEST['estado']);
-$fechaingreso=mysqli_real_escape_string($conexion, $_REQUEST['fechaingreso']);
-$domicilio=mysqli_real_escape_string($conexion, $_REQUEST['domicilio']);
-$oldEmail=mysqli_real_escape_string($conexion, $_REQUEST['emailOld']);
+$domicilio=mysqli_real_escape_string($conexion, $_REQUEST['direccion']);
+$oldEmail=mysqli_real_escape_string($conexion, $_REQUEST['correoOld']);
 
 
 
 if($oldEmail == $email){
     
     $sqlusuarios = "UPDATE tuser_tme SET
-        tuser_iduser='" . $idUsuario . "',tuser_userna='" . $username . "',tuser_emailu='" . $email . "',tuser_passus='" . $password . "',tuser_fktipu='" . $tipousuario . "',tuser_status='" . $estado . "',tuser_fechin='" . $fechaingreso . "',tuser_direus='" . $domicilio . "'
+        tuser_iduser='" . $idUsuario . "',tuser_userna='" . $username . "',tuser_emailu='" . $email . "',tuser_passus='" . $password . "',tuser_fktipu='" . $tipousuario . "',tuser_status='" . $estado . "',tuser_direus='" . $domicilio . "'
         where tuser_iduser='$idUsuario';
         ";
 
@@ -34,7 +35,7 @@ if($oldEmail == $email){
 
     if(mysqli_num_rows($request2) == 0){
         $sqlusuarios = "UPDATE tuser_tme SET
-        tuser_iduser='" . $idUsuario . "',tuser_userna='" . $username . "',tuser_emailu='" . $email . "',tuser_passus='" . $password . "',tuser_fktipu='" . $tipousuario . "',tuser_status='" . $estado . "',tuser_fechin='" . $fechaingreso . "',tuser_direus='" . $domicilio . "'
+        tuser_iduser='" . $idUsuario . "',tuser_userna='" . $username . "',tuser_emailu='" . $email . "',tuser_passus='" . $password . "',tuser_fktipu='" . $tipousuario . "',tuser_status='" . $estado ."',tuser_direus='" . $domicilio . "'
         where tuser_iduser='$idUsuario';
         ";
 
