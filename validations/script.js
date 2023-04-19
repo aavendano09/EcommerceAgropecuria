@@ -12,7 +12,6 @@ var select = new Array();
 var arrSelect = new Array();
 
 $('input').each(function () {
-
 input[this.name] = false;
 arrInput[i] = this.name;
 i++;
@@ -27,23 +26,23 @@ $('select').each(function () {
 	i++;
 });
 
-console.log(input);
-console.log(select);
-console.log(arrInput);
-console.log(arrSelect);
+// console.log(input);
+// console.log(select);
+// console.log(arrInput);
+// console.log(arrSelect);
 
 const expresiones = {
 	id: /^\d{1,4}$/,
-	usuario: /^[a-zA-ZÀ-ÿ\s]{1,40}$/, // Letras y espacios, pueden llevar acentos.
-	nombre: /^[a-zA-ZÀ-ÿ\s]{1,40}$/, // Letras y espacios, pueden llevar acentos.
+	usuario: /^[a-zA-ZÀ-ÿ\s]{3,40}$/, // Letras y espacios, pueden llevar acentos.
+	nombre: /^[a-zA-ZÀ-ÿ\s]{3,40}$/, // Letras y espacios, pueden llevar acentos.
 	password: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$#!%*?&]{8,15}$/, // 4 a 12 digitos.
 	correo: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9]+\.[a-zA-Z0-9]+$/,
 	correoOld: /.*/,
 	telefono: /^\d{11,11}$/, // 7 a 14 numeros.
-	cedula: /^(\d[0-9][0-9][0-9][0-9][0-9][0-9]|[1-3][0-9][0-9][0-9][0-9][0-9][0-9][0-9])$/, // 7 a 14 numeros.
-	rif: /^\d{9,9}$/, // 7 a 14 numeros.
+	cedula: /^\d{7,8}$/,
+	rif: /^\d{9,9}$/, // 9 a 9 numeros.
 	tiprif: /^[a-zA-ZÀ-ÿ\d\-_,.#\/\s]+$/,
-	direccion: /^[a-zA-ZÀ-ÿ\d\-_,.#\/\s]+$/,
+	direccion: /^[a-zA-ZÀ-ÿ\d\-_,.#'"\/\s]+$/,
 	tipousuario: /^\d{1,3}$/,
 	razon: /^[a-zA-ZÀ-ÿ\.\s]{1,50}$/,
 	estado: /^\d{1,3}$/,
@@ -118,6 +117,10 @@ const validarPassword2 = () => {
 	}
 }
 
+$('#correo').keyup(function(){
+	let string = $('#correo').val();
+	$('#correo').val(string.replace(/ /g, ""));
+})
 
 
 inputs.forEach((input) => {
@@ -143,10 +146,11 @@ formulario.addEventListener('submit', (event) => {
 		}		
 	}
 	
-	
+	//console.log(input)
 	for (let i = 0; i < arrInput.length; i++) {
-		if (!($("#"+arrInput[i]).prop('required') == false) && !($("#"+arrInput[i]).prop('readonly'))){
-
+		//console.log(arrInput[i]+"input")
+		if (!($("#"+arrInput[i]).prop('required') == false) && !($("#"+arrInput[i]).prop('readonly')) && $("#"+arrInput[i]).length > 0){
+			//console.log(arrInput[i]+" "+"input")
 			validarFormularioSubmit(arrInput[i]);
 			
 		}
@@ -154,23 +158,27 @@ formulario.addEventListener('submit', (event) => {
 	
 	for (let i = 0; i < arrSelect.length; i++) {
 		if (!($("#"+arrSelect[i]).prop('required') == false) && !($("#"+arrSelect[i]).prop('readonly'))){
+			//console.log(arrSelect[i]+" "+"select")
 			validarFormularioSubmit(arrSelect[i]);
 		}
 		
 	}
-
+	console.log(input);
 	for (let i = 0; i < arrInput.length; i++) {
-		
-		if (!input[arrInput[i]]) {
+		//console.log(input[arrInput[i]] + arrInput[i])
+		if (!input[arrInput[i]] &&  $("#"+arrInput[i]).length > 0) {
 			band = false;
 		}
+		//console.log(band+"input")
 		
 	}
 	
 	for (let i = 0; i < arrSelect.length; i++) {
+		//console.log(!input[arrSelect[i]])
 		if (!select[arrSelect[i]]) {
 			band = false;
 		}	
+		//console.log(band+"select")
 	}
 	
 
@@ -207,24 +215,28 @@ function openModal(){
 	  $("#id").css('background', '#fafafaec');
 	  $("#nuevoModalLabel").text("Agregar "+modaltitle+":");
 	  formulario.reset();
+	  validRefresh();
 	  openModal();
 	}
   )
 
+
   function validRefresh(){
 	for (let i = 0; i < arrInput.length; i++) {
-		console.log(arrInput[i]);
-		document.getElementById(`grupo__${arrInput[i]}`).classList.remove('formulario__grupo-incorrecto');
-		document.querySelector(`#grupo__${arrInput[i]} i`).classList.remove('fa-times-circle');
-		document.getElementById(`grupo__${arrInput[i]}`).classList.remove('formulario__grupo-correcto');
-		document.querySelector(`#grupo__${arrInput[i]} i`).classList.remove('fa-check-circle');
-		document.querySelector(`#grupo__${arrInput[i]} .formulario__input-error`).classList.remove('formulario__input-error-activo');
+		if ($("#"+arrInput[i]).length > 0) {
+			//console.log(arrInput[i]);
+			document.getElementById(`grupo__${arrInput[i]}`).classList.remove('formulario__grupo-incorrecto');
+			document.querySelector(`#grupo__${arrInput[i]} i`).classList.remove('fa-times-circle');
+			document.getElementById(`grupo__${arrInput[i]}`).classList.remove('formulario__grupo-correcto');
+			document.querySelector(`#grupo__${arrInput[i]} i`).classList.remove('fa-check-circle');
+			document.querySelector(`#grupo__${arrInput[i]} .formulario__input-error`).classList.remove('formulario__input-error-activo');
+		}
 		
 		
 	}
 	
 	for (let i = 0; i < arrSelect.length; i++) {
-		console.log(arrSelect[i]);
+		//console.log(arrSelect[i]);
 		document.getElementById(`grupo__${arrSelect[i]}`).classList.remove('formulario__grupo-incorrecto');
 		document.getElementById(`grupo__${arrSelect[i]}`).classList.remove('formulario__grupo-correcto');
 		document.querySelector(`#grupo__${arrSelect[i]} i`).classList.remove('fa-check-circle');

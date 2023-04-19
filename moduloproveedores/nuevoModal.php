@@ -10,10 +10,6 @@
 
 
 
-
-
-
-
 <?php
   $formulario = new Formulario("moduloproveedores/guarda.php", "formulario", "formulario");
   $formulario->setInput("number", "id", "ID", "9999");

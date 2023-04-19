@@ -8,7 +8,7 @@ $sqltipousuairo = "SELECT ttusu_descus FROM ttusu_tme";
 $generos = $conexion->query($sqltipousuairo);
 
 
-$sql = "SELECT tuser_iduser, tuser_userna, tuser_emailu, tuser_fktipu FROM tuser_tme WHERE tuser_status = '1';";
+$sql = "SELECT tuser_iduser, tuser_userna, tuser_emailu, tuser_fktipu,ttusu_descus FROM tuser_tme INNER JOIN ttusu_tme ON ttusu_idtipu = tuser_fktipu WHERE tuser_status = '1';";
 $usuarios = $conexion->query($sql);
 
 ?>
@@ -138,7 +138,7 @@ $usuarios = $conexion->query($sql);
                <tr id="row_<?php echo $row['tuser_iduser']; ?>">
                  <td><?= $row['tuser_userna'] ?></td>
                  <td><?= $row['tuser_emailu'] ?></td>
-                 <td><?= $row['tuser_fktipu'] ?></td>
+                 <td><?= $row['ttusu_descus'] ?></td>
                  <td>
 
                  <a href="#" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#eliminaModal" data-bs-id="<?= $row['tuser_iduser']; ?>"><i class="fa-solid fa-trash"></i> Eliminar</a>

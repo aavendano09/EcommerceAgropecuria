@@ -5,6 +5,8 @@ require_once('conexion.php');
 $sql = "SELECT tclie_idclie, tclie_identc, tclie_namecl, tclie_telecl, tclie_emailc, tclie_cedrif FROM tclic_tme;";
 $clientes = $conexion->query($sql);
 
+require_once 'validations/Formulario.php';
+
 ?>
 
 <!DOCTYPE html>
@@ -22,7 +24,10 @@ $clientes = $conexion->query($sql);
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
     <!-- ========================================================= -->
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
-    <script src="validaciones.js"></script>
+    <script>
+      const modulo = "moduloclientes";
+      const modaltitle = "cliente";
+    </script>
 </head>
 <body>
 
@@ -44,7 +49,7 @@ $clientes = $conexion->query($sql);
         <div class="col-12">
             
     <div class="col-auto mb-3">
-        <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#nuevoModal"><i class="fa-solid fa-circle-plus"></i> Nuevo Cliente</a>
+        <a href="#" id="new" class="btn btn-primary" data-bs-toggle="modal"><i class="fa-solid fa-circle-plus"></i> Nuevo Cliente</a>
     </div>
 
           <div class="card">
@@ -80,7 +85,7 @@ $clientes = $conexion->query($sql);
                  <td><?= $row_clientes['tclie_emailc'] ?></td>
                  <td>
 
-                  <a href="#" class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#editaModal" data-bs-id="<?= $row_clientes['tclie_idclie']; ?>"><i class="fa-solid fa-pencil"></i> Editar</a>
+                  <a href="#" id="edit" class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#nuevoModal" onclick="edit(<?= $row_clientes['tclie_idclie']; ?>)"><i class="fa-solid fa-pencil"></i> Editar</a>
 
 
                  </td>
@@ -110,15 +115,12 @@ $clientes = $conexion->query($sql);
 
     <?php
     include 'nuevoModal.php';
-    include 'editaModal.php';
     include 'eliminaModal.php';
     ?>
 
     <script src="assets/js/bootstrap.bundle.min.js"></script>
     <script src="assets/js/jquery-3.6.0.min.js"></script>
     <script src="assets/js/datatables.min.js"></script>
-    <script src="assets/js/pdfmake.min.js"></script>
-    <script src="assets/js/vfs_fonts.js"></script>
 
     <script>
       $(document).ready(function(){
@@ -158,21 +160,44 @@ $clientes = $conexion->query($sql);
 
     <script>
 
-     let editaModal = document.getElementById('editaModal')
+$('#cedula').prop('name', 'cedulaHidden');
+
+  $('#tiprif').change(
+    function(){
+      $('.ident').val('');
+    if ($('#tiprif').val()=="V") {
+      $('.ident').prop('name', 'cedula');
+      $('.ident').prop('id', 'cedula');
+      $('.ident').prop('placeholder', '15862175');
+      $('#grupo__rif').prop('id', 'grupo__cedula');
+      $('#errormsg').text('La identificacion debe poseer 7 u 8 digitos');
+    }else{
+      $('.ident').prop('name', 'rif');
+      $('.ident').prop('id', 'rif');
+      $('#grupo__cedula').prop('id', 'grupo__rif');
+      $('.ident').prop('placeholder', '407898280');
+      $('#errormsg').text('La identificacion debe poseer 9 digitos');
+    }
+  })
+
+     let editaModal = document.getElementById('nuevoModal')
      let eliminaModal = document.getElementById('eliminaModal')
 
-     editaModal.addEventListener('show.bs.modal', event => {
-        let button = event.relatedTarget
-        let id = button.getAttribute('data-bs-id')
+    function edit(val) {
+        let id = val;
+        validRefresh();
+        openEdit();
 
         let inputId = editaModal.querySelector('.modal-body #id')
-        let inputCedrif = editaModal.querySelector('.modal-body #edicedrif')
-        let inputIdentificacion = editaModal.querySelector('.modal-body #ediidentificacion')
-        let inputIdentificacionHide = editaModal.querySelector('.modal-body #ediidentificacionHide')
+        let inputCedrif = editaModal.querySelector('.modal-body #tiprif')
+        let inputIdentificacion = editaModal.querySelector('.modal-body .ident')
+        let inputCedrifOld = editaModal.querySelector('.modal-body #tiprifOld')
+        let inputIdentificacionHide = editaModal.querySelector('.modal-body #rifOld')
         let inputNombre = editaModal.querySelector('.modal-body #nombre')
-        let inputTelefono = editaModal.querySelector('.modal-body #editelefono')
+        let inputTelefono = editaModal.querySelector('.modal-body #telefono')
         let inputCorreo = editaModal.querySelector('.modal-body #correo')
-        let inputCorreoHide = editaModal.querySelector('.modal-body #correoHide')
+        let inputCorreoHide = editaModal.querySelector('.modal-body #correoOld')
+        let inputDir = editaModal.querySelector('.modal-body #direccion')
         
 
         let url = "moduloclientes/getMoneda.php"
@@ -188,16 +213,34 @@ $clientes = $conexion->query($sql);
             inputId.value = data.tclie_idclie
             inputCedrif.value = data.tclie_cedrif
             inputIdentificacion.value = data.tclie_identc
+            inputCedrifOld.value = data.tclie_cedrif
             inputIdentificacionHide.value = data.tclie_identc
             inputNombre.value = data.tclie_namecl
             inputTelefono.value = data.tclie_telecl
             inputCorreo.value = data.tclie_emailc
             inputCorreoHide.value = data.tclie_emailc
-            console.log(inputNombre.value);
+            inputDir.value = data.tclie_direcl
+
+            if (inputCedrif.value=="V") {
+
+            $('.ident').prop('name', 'cedula');
+            $('.ident').prop('id', 'cedula');
+            $('.ident').prop('placeholder', '15862175');
+            $('#grupo__rif').prop('id', 'grupo__cedula');
+            $('#errormsg').text('La identificacion debe poseer 7 u 8 digitos');
+          }else{
+
+
+            $('.ident').prop('name', 'rif');
+            $('.ident').prop('id', 'rif');
+            $('#grupo__cedula').prop('id', 'grupo__rif');
+            $('.ident').prop('placeholder', '407898280');
+            $('#errormsg').text('La identificacion debe poseer 9 digitos');
+          }
             
         }).catch(err => console.log(err))
 
-     })
+     }
      eliminaModal.addEventListener('shown.bs.modal', event => {
         let button = event.relatedTarget
         let id = button.getAttribute('data-bs-id')

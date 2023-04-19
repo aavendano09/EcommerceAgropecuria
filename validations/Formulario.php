@@ -16,8 +16,8 @@ class Formulario
     private $usuario = "Solo se permiten letras y espacios";
     private $correo = "El correo solo puede contener letras, numeros, puntos, guiones y guion bajo.";
     private $fecha = "La fecha no puede ser menor a: ";
-    private $direccion = "No puede estar vacio";
-    private $razon = "No puede estar vacio";
+    private $direccion = "No puede estar vacio, no se acepta ese simbolo";
+    private $razon = "Solo se permiten letras y puntos";
     private $telefono = "Solo se permiten numeros de 11 digitos, sin espacios";
     private $cedula = "Debe contener minimo 7 digitos y maximo 8";
     private $password2 = "Las contraseñas no coinciden";
@@ -72,10 +72,10 @@ class Formulario
 
             <div class='formulario__grupo d-inline' id='grupo__$input' $display>
                 <div class='formulario__grupo-input d-inline'>
-                    <input type='$type' class='formulario__input col-12 ml-3' style='width: 74%;' name='$input' id='$input' placeholder='$ph' $required>
+                    <input type='$type' class='formulario__input ident col-12 ml-3' style='width: 74%;' name='$input' id='$input' placeholder='$ph' $required>
                     <i class='formulario__validacion-estado fas fa-times-circle' style='bottom: 2px;'></i>
                 </div>
-                <p class='formulario__input-error'>$msg</p>
+                <p id='errormsg' class='formulario__input-error'>$msg</p>
             </div>
         ";
     }

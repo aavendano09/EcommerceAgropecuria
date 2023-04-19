@@ -4,12 +4,19 @@ require 'conexion.php';
 
 
 $id = $conexion->real_escape_string($_POST['id']);
-$identificacion = $conexion->real_escape_string($_POST['identificacion']);
-$cedrif = $conexion->real_escape_string($_POST['cedrif']);
+if (isset($_POST['rif'])) {
+
+    $identificacion = $conexion->real_escape_string($_POST['rif']);
+}else{
+    $identificacion = $conexion->real_escape_string($_POST['cedula']);
+    echo $identificacion;
+}
+$cedrif = $conexion->real_escape_string($_POST['tiprif']);
+
 $nombre = $conexion->real_escape_string($_POST['nombre']);
 $telefono = $conexion->real_escape_string($_POST['telefono']);
 $correo = $conexion->real_escape_string($_POST['correo']);
-
+$direccion = $conexion->real_escape_string($_POST['direccion']);
 
 
 
@@ -19,7 +26,7 @@ $request = $conexion->query($sqlidCliente);
 
 if(mysqli_num_rows($request) == 0){
 
-    $sqlidenCliente = "SELECT tclie_identc FROM tclic_tme WHERE tclie_identc = '$identificacion'";
+    $sqlidenCliente = "SELECT tclie_identc FROM tclic_tme WHERE tclie_identc = '$identificacion' AND tclie_cedrif = '$cedrif'";
 
     $request = $conexion->query($sqlidenCliente);
 
@@ -31,10 +38,11 @@ if(mysqli_num_rows($request) == 0){
     
         if(mysqli_num_rows($request) == 0){
             
-            $sqlmonedas = "INSERT INTO tclic_tme (tclie_idclie, tclie_identc, tclie_namecl, tclie_telecl, tclie_emailc, tclie_cedrif) 
-            VALUES ('$id','$identificacion','$nombre','$telefono','$correo', '$cedrif')";
-    
-    
+            $sqlmonedas = "INSERT INTO tclic_tme (tclie_idclie, tclie_identc, tclie_namecl, tclie_telecl, tclie_emailc, tclie_direcl, tclie_cedrif) 
+            VALUES ('$id','$identificacion','$nombre','$telefono','$correo', '$direccion', '$cedrif')";
+
+            echo $sqlmonedas;
+            
             if($conexion->query($sqlmonedas)){
                 
             }

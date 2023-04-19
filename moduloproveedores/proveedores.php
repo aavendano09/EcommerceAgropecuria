@@ -93,7 +93,7 @@ $proveedores = $conexion->query($sql);
                   </td>
                  <td>
 
-                  <a href="#" id="edit" class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#nuevoModal" data-bs-id="<?= $row_proveedores['tprov_idprov']; ?>"><i class="fa-solid fa-pencil"></i> Editar</a>
+                  <a href="#" id="edit" class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#nuevoModal" onclick="edit(<?= $row_proveedores['tprov_idprov']?>)"><i class="fa-solid fa-pencil"></i> Editar</a>
 
                  </td>
                </tr>
@@ -122,7 +122,6 @@ $proveedores = $conexion->query($sql);
 
     <?php
     include 'nuevoModal.php';
-    include 'editaModal.php';
     include 'eliminaModal.php';
     ?>
 
@@ -176,11 +175,10 @@ $proveedores = $conexion->query($sql);
 let editaModal = document.getElementById('nuevoModal')
 let eliminaModal = document.getElementById('eliminaModal')
 
-editaModal.addEventListener('show.bs.modal', event => {
-  let button = event.relatedTarget
-  let id = button.getAttribute('data-bs-id')
+function edit(val) {
+  let id = val;
   validRefresh();
-   openEdit();
+  openEdit();
 
    let inputId = editaModal.querySelector('.modal-body #id')
    let inputIdentificacion = editaModal.querySelector('.modal-body #rif')
@@ -219,7 +217,7 @@ editaModal.addEventListener('show.bs.modal', event => {
        
    }).catch(err => console.log(err))
 
-})
+}
 
 eliminaModal.addEventListener('shown.bs.modal', event => {
    let button = event.relatedTarget

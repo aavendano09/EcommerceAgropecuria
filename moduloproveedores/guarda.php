@@ -27,7 +27,7 @@ if(mysqli_num_rows($request) == 0){
 
     
 
-    $sqlRifProv = "SELECT tprov_Rifpro FROM tdprv_tme WHERE tprov_Rifpro = '$identificacion' AND tprov_tiprif = '$tiprif";
+    $sqlRifProv = "SELECT tprov_Rifpro FROM tdprv_tme WHERE tprov_Rifpro = '$identificacion' AND tprov_tiprif = '$tiprif'";
 
     $request = $conexion->query($sqlRifProv);
 

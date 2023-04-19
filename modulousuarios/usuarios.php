@@ -92,7 +92,7 @@ require_once 'validations/Formulario.php';
                  </td>
                  <td>
 
-                  <a href="#" id="edit" class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#nuevoModal" data-bs-id="<?= $row['tuser_iduser']; ?>"><i class="fa-solid fa-pencil"></i> Editar</a>
+                  <a href="#" id="edit" class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#nuevoModal" onclick="edit(<?= $row['tuser_iduser']; ?>)"><i class="fa-solid fa-pencil"></i> Editar</a>
 
                  </td>
                </tr>
@@ -172,9 +172,8 @@ require_once 'validations/Formulario.php';
      let editaModal = document.getElementById('nuevoModal')
      let eliminaModal = document.getElementById('eliminaModal')
 
-     editaModal.addEventListener('show.bs.modal', event => {
-       let button = event.relatedTarget
-       let id = button.getAttribute('data-bs-id');
+     function edit(val) {
+        let id = val;
        validRefresh();
        openEdit();
         
@@ -209,7 +208,7 @@ require_once 'validations/Formulario.php';
 
         }).catch(err => console.log(err))
 
-     })
+     }
 
      eliminaModal.addEventListener('shown.bs.modal', event => {
         let button = event.relatedTarget
