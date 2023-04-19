@@ -60,9 +60,10 @@ h6,
     font-weight: 500;
 }
 
-.btn-primary,
-.btn-outline-primary:hover {
-    color: #FFFFFF;
+
+
+.btn-primary:hover{
+    color: #000000 !important;
 }
 
 .btn-square {
@@ -96,6 +97,7 @@ h6,
     background: var(--primary);
 }
 
+
 .topbar-right::before {
     position: absolute;
     content: "";
@@ -104,7 +106,7 @@ h6,
     top: 0;
     left: -15px;
     transform: skewX(-30deg);
-    background-color: var(--primary);
+    
 }
 
 

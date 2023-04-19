@@ -2,20 +2,14 @@
 
 if (isset ($_SESSION['idCliente'])){
     if(isset($_REQUEST['guardar'])){
-        $nombreCli=$_REQUEST['nombreCli'];
-        $emailCli=$_REQUEST['emailCli'];
-        $direccionCli=$_REQUEST['direccionCli'];
-        $queryCli="UPDATE tclic_tme set tclie_namecl='$nombreCli',tclie_emailc='$emailCli',tclie_direcl='$direccionCli' where tclie_idclie='".$_SESSION['idCliente']."' ";
-        $resCli=mysqli_query($conexion,$queryCli);
-
         $nombreRec=$_REQUEST['nombreRec'];
         $emailRec=$_REQUEST['emailRec'];
         $direccionRec=$_REQUEST['direccionRec'];
-        $queryRec="INSERT INTO tclre_tts (tclir_nombre,tclir_emailr,tclir_direcc,tclir_fkcodc) VALUES ('$nombreRec','$emailRec','$direccionRec','".$_SESSION['idCliente']."')
+        $queryRecibe="INSERT INTO tclre_tts (tclir_nombre,tclir_emailr,tclir_direcc,tclir_fkcodc) VALUES ('$nombreRec','$emailRec','$direccionRec','".$_SESSION['idCliente']."')
         ON DUPLICATE KEY UPDATE
         tclir_nombre='$nombreRec',tclir_emailr='$emailRec',tclir_direcc='$direccionRec'; ";
-        $resRec=mysqli_query($conexion,$queryRec);
-        if($resCli && $resRec){
+        $resRecibe=mysqli_query($conexion,$queryRecibe);
+        if($resRecibe){
             echo '<meta http-equiv="refresh" content="0; url=home.php?modulo=pasarela" />';
         }
         else{

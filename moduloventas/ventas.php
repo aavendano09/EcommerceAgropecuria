@@ -27,7 +27,7 @@ error_reporting(0);
 <body>
 <style>
 
-#div_registro_cliente, #add_product_venta{
+#add_product_venta{
   display: none;
 }
 
