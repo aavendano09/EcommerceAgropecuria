@@ -70,8 +70,6 @@
                         <h4 class="mb-3">Numero de Telefono</h4>
                         <p class="mb-2">+58 4147166765</p>
                         <p class="mb-4">+58 4247004686</p>
-                        <a class="btn btn-primary px-4" href="tel:+58 4147166765">Llamar Ahora<i
-                                class="fa fa-arrow-right ms-2"></i></a>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
@@ -82,8 +80,6 @@
                         <h4 class="mb-3">Correo Electronico</h4>
                         <p class="mb-2">ferreagro.elagricultor@gmail.com</p>
                         <p class="mb-4">elagricultor@gmail.com</p>
-                        <a class="btn btn-primary px-4" href="mailto:ferreagro.elagricultor@gmail.com">Enviar correo <i
-                                class="fa fa-arrow-right ms-2"></i></a>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
@@ -94,8 +90,6 @@
                         <h4 class="mb-3">Numero de oficina</h4>
                         <p class="mb-2">0277 4110926</p>
                         <p class="mb-4">0277 2917101</p>
-                        <a class="btn btn-primary px-4" href="https://goo.gl/maps/2An64uL1pmL4r9JZ6"
-                            target="blank">Dirección <i class="fa fa-arrow-right ms-2"></i></a>
                     </div>
                 </div>
             </div>

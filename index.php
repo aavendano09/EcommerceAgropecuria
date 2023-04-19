@@ -42,87 +42,79 @@
         <div class="spinner-border text-primary" role="status" style="width: 3rem; height: 3rem;"></div>
     </div>
     <!-- Spinner End -->
-
-    <!-- Navbar Start -->
-    <nav class="navbar navbar-expand-lg bg-white navbar-light sticky-top py-0 pe-5">
-        <a href="index.php" class="navbar-brand ps-5 me-0">
-            <h1 style="width: 320px;" class="text-white m-0">El Agricultor C.A.</h1>
-        </a>
-        <button type="button" class="navbar-toggler me-0" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarCollapse">
-            <div class="navbar-nav ms-auto p-4 p-lg-0">
-            <div class="navbar-nav ms-auto p-4 p-lg-0">
-                <a style="margin-left: 20px;" href="index.php" class="nav-item nav-link active">Inicio</a>
-                <a href="home.php?modulo=productos" class="nav-item nav-link">Productos</a>
-                <a href="home.php?modulo=promociones" class="nav-item nav-link">Promociones</a>
-                <a href="home.php?modulo=contacto" class="nav-item nav-link">Contactos</a>
-                <a href="home.php?modulo=carrito" class="nav-item nav-link">Ver Carrito</a>
-                
-                <div>
-        <!-- Right navbar links -->
-    <ul class="navbar-nav ml-auto">
-      <!-- Messages Dropdown Menu -->
-      <li class="nav-item dropdown">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid">
+    <a class="navbar-brand me-5" href="index.php">El Agricultor C.A.</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div style="margin-left: 10px;" class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="index.php">Inicio</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="home.php?modulo=productos">Productos</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="home.php?modulo=promociones">Promociones</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="home.php?modulo=contacto">Contacto</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="home.php?modulo=carrito">Ver Carrito</a>
+        </li>
+        <li class="nav-item dropdown">
         <a class="nav-link" data-toggle="dropdown" href="#" id="iconoCarrito">
           <i class="fa fa-cart-plus" aria-hidden="true"></i>
           <span class="badge badge-danger navbar-badge" id="badgeProducto" >0</span>
         </a>
         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right" id="listaCarrito">
         </div>
-      </li>
-
-      <!-- Notifications Dropdown Menu -->
-      <li class="nav-item dropdown">
-        <a class="nav-link" data-toggle="dropdown" href="#">
-          Cliente
-          <i class="fa fa-user" aria-hidden="true"></i>
-        </a>
-        <div class="dropdown-menu dropdown-menu-md dropdown-menu-right">
-            <?php
-
-            if(isset($_SESSION['idCliente'])==false){
-            
-            ?>
-          <a href="logincliente.php" class="dropdown-item">
-            <i class="fas fa-door-open mr-2 text-primary"></i> Loguearse
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Cliente
+            <i class="fa fa-user" aria-hidden="true"></i>
           </a>
-          <div class="dropdown-divider"></div>
-          <a href="registrocliente.php" class="dropdown-item">
-             <i class="fas fa-sign-in-alt mr-2 text-primary"></i> Registrarse
-          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
           <?php
-            }else{
-          ?>
 
-          <a href="home.php?modulo=usuario" class="dropdown-item">
-             <i class="fas fa-user mr-2 text-primary"></i>Hola <?php echo $_SESSION['usernameCliente']; ?>
-          </a>
-          <form action="home.php?modulo=productos" method="post">
-            <button name="accion" class="btn btn-danger dropdown-item" type="submit" value="cerrar">
-                 <i class="fas fa-door-closed mr-2 text-danger"></i>Cerrar Sesion
-            </button>
-          </form>
-          <?php
-            }
-          ?>
-        </div>
-      </li>
-      <li>
-      <a style="margin-top: 10px; margin-bottom: 10px;" href="fronted/tipoadmin.php" class="btn btn-primary px-3  d-lg-block  pt-2">Iniciar Sesion</a>
-        
-      </li>
-    </ul>
+if(isset($_SESSION['idCliente'])==false){
+
+?>
+<a href="logincliente.php" class="dropdown-item">
+<i class="fas fa-door-open mr-2 text-primary"></i> Loguearse
+</a>
+<div class="dropdown-divider"></div>
+<a href="registrocliente.php" class="dropdown-item">
+ <i class="fas fa-sign-in-alt mr-2 text-primary"></i> Registrarse
+</a>
+<?php
+}else{
+?>
+
+<a href="" class="dropdown-item">
+ <i class="fas fa-user mr-2 text-primary"></i>Hola <?php echo $_SESSION['usernameCliente']; ?>
+</a>
+<form action="home.php?modulo=productos" method="post">
+<button name="accion" class="btn btn-danger dropdown-item" type="submit" value="cerrar">
+     <i class="fas fa-door-closed mr-2 text-danger"></i>Cerrar Sesion
+</button>
+</form>
+<?php
+}
+?>
+          </ul>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link btn btn-primary " href="fronted/tipoadmin.php" tabindex="-1" aria-disabled="true">Iniciar Sesion</a>
+        </li>
+      </ul>
     </div>
-            </div>
-              </div>
-        
-    
-      </div>
-    <!-- Navbar End -->
+  </div>
 </nav>
-    <!-- Navbar End -->
 
 
     <!-- Carousel Start -->
