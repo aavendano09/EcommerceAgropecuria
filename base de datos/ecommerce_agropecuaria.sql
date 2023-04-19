@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.2
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Servidor: 127.0.0.1
--- Tiempo de generación: 13-04-2023 a las 01:06:10
--- Versión del servidor: 10.4.14-MariaDB
--- Versión de PHP: 7.4.10
+-- Servidor: localhost
+-- Tiempo de generación: 20-04-2023 a las 01:37:20
+-- Versión del servidor: 10.4.28-MariaDB
+-- Versión de PHP: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -25,7 +25,7 @@ DELIMITER $$
 --
 -- Procedimientos
 --
-CREATE DEFINER=`root`@`localhost` PROCEDURE `add_tdtec_tts` (IN `codigo` INT, IN `cantidad` INT, IN `token_user` VARCHAR(50))  BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `add_tdtec_tts` (IN `codigo` INT, IN `cantidad` INT, IN `token_user` VARCHAR(50))   BEGIN
 
 
           DECLARE precio_actual decimal(10,2);
@@ -40,7 +40,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `add_tdtec_tts` (IN `codigo` INT, IN
           WHERE tmpc.tdtec_tokuse = token_user;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `add_tdtem_tts` (IN `codigo` INT, IN `cantidad` INT, IN `token_user` VARCHAR(50))  BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `add_tdtem_tts` (IN `codigo` INT, IN `cantidad` INT, IN `token_user` VARCHAR(50))   BEGIN
           DECLARE precio_actual decimal(10,2);
           SELECT tprod_preciv into precio_actual FROM tprod_tme WHERE tprod_idprod = codigo;
 
@@ -52,7 +52,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `add_tdtem_tts` (IN `codigo` INT, IN
           WHERE tmp.tdtem_tokuse = token_user;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `anular_factura` (IN `no_factura` INT)  BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `anular_factura` (IN `no_factura` INT)   BEGIN
      
         DECLARE existe_factura int;
         DECLARE registros int;
@@ -104,7 +104,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `anular_factura` (IN `no_factura` IN
      
      END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `del_tdtec_tts` (`id_detalle` INT, `token` VARCHAR(50))  BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `del_tdtec_tts` (`id_detalle` INT, `token` VARCHAR(50))   BEGIN
              DELETE FROM tdtec_tts WHERE tdtec_correl = id_detalle;
 
              SELECT tmp.tdtec_correl, tmp.tdtec_idprod, p.tprod_namepr, tmp.tdtec_cantid, tmp.tdtec_precic
@@ -114,7 +114,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `del_tdtec_tts` (`id_detalle` INT, `
              WHERE tmp.tdtec_tokuse = token;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `del_tdtem_tts` (`id_detalle` INT, IN `token` VARCHAR(50))  BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `del_tdtem_tts` (`id_detalle` INT, IN `token` VARCHAR(50))   BEGIN
              DELETE FROM tdtem_tts WHERE tdtem_correl = id_detalle;
 
              SELECT tmp.tdtem_correl, tmp.tdtem_idprod, p.tprod_namepr, tmp.tdtem_cantid, tmp.tdtem_preciv
@@ -124,7 +124,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `del_tdtem_tts` (`id_detalle` INT, I
              WHERE tmp.tdtem_tokuse = token;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `procesar_compra_manual` (IN `cod_usuario` INT, IN `cod_proveedor` INT, IN `token` VARCHAR(50), IN `nofactura` INT)  BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `procesar_compra_manual` (IN `cod_usuario` INT, IN `cod_proveedor` INT, IN `token` VARCHAR(50), IN `nofactura` INT)   BEGIN
            DECLARE factura int;
            DECLARE registros int;
            DECLARE total decimal(10,2);
@@ -178,7 +178,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `procesar_compra_manual` (IN `cod_us
            END IF;
       END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `procesar_venta_manual` (IN `cod_usuario` VARCHAR(10), IN `cod_cliente` INT, IN `token` VARCHAR(50))  BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `procesar_venta_manual` (IN `cod_usuario` VARCHAR(10), IN `cod_cliente` INT, IN `token` VARCHAR(50))   BEGIN
            DECLARE factura int;
            DECLARE registros int;
            DECLARE total decimal(10,2);
@@ -241,13 +241,13 @@ DELIMITER ;
 --
 
 CREATE TABLE `tbiva_tme` (
-  `tbiva_idivaa` varchar(20) COLLATE utf8_spanish2_ci NOT NULL,
-  `tbiva_rifiva` varchar(12) COLLATE utf8_spanish2_ci NOT NULL,
-  `tbiva_nombre` varchar(100) COLLATE utf8_spanish2_ci NOT NULL,
-  `tbiva_razsoc` varchar(100) COLLATE utf8_spanish2_ci NOT NULL,
-  `tbiva_teliva` varchar(11) COLLATE utf8_spanish2_ci NOT NULL,
-  `tbiva_emaili` varchar(100) COLLATE utf8_spanish2_ci NOT NULL,
-  `tbiva_diriva` text COLLATE utf8_spanish2_ci NOT NULL,
+  `tbiva_idivaa` varchar(20) NOT NULL,
+  `tbiva_rifiva` varchar(12) NOT NULL,
+  `tbiva_nombre` varchar(100) NOT NULL,
+  `tbiva_razsoc` varchar(100) NOT NULL,
+  `tbiva_teliva` varchar(11) NOT NULL,
+  `tbiva_emaili` varchar(100) NOT NULL,
+  `tbiva_diriva` text NOT NULL,
   `tbiva_valiva` double NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
@@ -266,13 +266,13 @@ INSERT INTO `tbiva_tme` (`tbiva_idivaa`, `tbiva_rifiva`, `tbiva_nombre`, `tbiva_
 
 CREATE TABLE `tclic_tme` (
   `tclie_idclie` int(11) NOT NULL,
-  `tclie_identc` varchar(12) COLLATE utf8_spanish2_ci NOT NULL,
-  `tclie_namecl` varchar(50) COLLATE utf8_spanish2_ci NOT NULL,
-  `tclie_telecl` varchar(11) COLLATE utf8_spanish2_ci NOT NULL,
-  `tclie_emailc` varchar(50) COLLATE utf8_spanish2_ci NOT NULL,
-  `tclie_passcl` varchar(30) CHARACTER SET utf8 NOT NULL DEFAULT '12345',
-  `tclie_direcl` text CHARACTER SET utf8 DEFAULT NULL,
-  `tclie_cedrif` enum('V','J') COLLATE utf8_spanish2_ci DEFAULT NULL
+  `tclie_identc` varchar(12) NOT NULL,
+  `tclie_namecl` varchar(50) NOT NULL,
+  `tclie_telecl` varchar(11) NOT NULL,
+  `tclie_emailc` varchar(50) NOT NULL,
+  `tclie_passcl` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '12345',
+  `tclie_direcl` text CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `tclie_cedrif` enum('V','J','G') DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
 --
@@ -280,13 +280,11 @@ CREATE TABLE `tclic_tme` (
 --
 
 INSERT INTO `tclic_tme` (`tclie_idclie`, `tclie_identc`, `tclie_namecl`, `tclie_telecl`, `tclie_emailc`, `tclie_passcl`, `tclie_direcl`, `tclie_cedrif`) VALUES
-(1, '16689544', '', '04147166765', 'ligiaurda08@gmail.com', '12345', '', 'V'),
-(2, '20288242', 'Jesus Daniel', '02772917101', 'jjdanielcontreras4@gmail.com', '12345', '', 'V'),
+(1, '16689544', 'Lidia', '04147166765', 'ligiaurda08@gmail.com', '12345', 'San Cristobal', 'V'),
+(2, '20288242', 'Jesus Daniel', '02772917101', 'jjdanielcontreras4@gmail.com', '12345', 'San Cristobal', 'V'),
 (3, '15862175', 'Richar Garcia', '04247004686', 'richar@gmail.com', '12345', 'La grita', 'V'),
-(12, '30625989', 'Alexander Urdaneta', '04147166798', 'angel@gmail.com', '1234567890', 'San Cristobal', 'V'),
-(13, '29674870', 'Daliana Contreras', '04247543219', 'daliana@gmail.com', '12345', 'El cobre', 'J'),
-(14, '32684765', 'Julio Cesar', '02772917101', 'juliochacon@gmail.com', '12345', 'Seboruco', 'V'),
-(16, '0000000', 'Consumidor final', '00000000000', '0@gmail.com', '0', '0', 'V');
+(4, '23232323', 'Pedro Perez', '32323333233', 'pedro@gmail.com', '12345', 'San cristobal.', 'V'),
+(5, '88888888', 'Jesus Daniel', '23423423234', 'jesus@gmail.com', '12345', 'Peribeca', 'V');
 
 -- --------------------------------------------------------
 
@@ -297,9 +295,9 @@ INSERT INTO `tclic_tme` (`tclie_idclie`, `tclie_identc`, `tclie_namecl`, `tclie_
 CREATE TABLE `tclre_tts` (
   `tclir_idreci` int(11) NOT NULL,
   `tclir_fkcodc` int(11) NOT NULL,
-  `tclir_nombre` varchar(50) COLLATE utf8_spanish2_ci NOT NULL,
-  `tclir_emailr` varchar(50) COLLATE utf8_spanish2_ci NOT NULL,
-  `tclir_direcc` text COLLATE utf8_spanish2_ci NOT NULL
+  `tclir_nombre` varchar(50) NOT NULL,
+  `tclir_emailr` varchar(50) NOT NULL,
+  `tclir_direcc` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
 --
@@ -319,12 +317,12 @@ INSERT INTO `tclre_tts` (`tclir_idreci`, `tclir_fkcodc`, `tclir_nombre`, `tclir_
 
 CREATE TABLE `tcomp_tts` (
   `tcomp_idcomp` int(11) NOT NULL,
-  `tcomp_numfac` varchar(10) COLLATE utf8_spanish2_ci NOT NULL,
+  `tcomp_numfac` varchar(10) NOT NULL,
   `tcomp_fechac` datetime NOT NULL DEFAULT current_timestamp(),
-  `tcomp_status` varchar(20) COLLATE utf8_spanish2_ci NOT NULL DEFAULT 'cancelado',
+  `tcomp_status` varchar(20) NOT NULL DEFAULT 'cancelado',
   `tcomp_totalc` double(10,2) NOT NULL,
   `tcomp_fkprov` int(11) NOT NULL,
-  `tcomp_userco` varchar(10) COLLATE utf8_spanish2_ci NOT NULL
+  `tcomp_userco` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
 --
@@ -342,8 +340,8 @@ INSERT INTO `tcomp_tts` (`tcomp_idcomp`, `tcomp_numfac`, `tcomp_fechac`, `tcomp_
 --
 
 CREATE TABLE `tctpr_tme` (
-  `tctpr_idcatg` varchar(20) COLLATE utf8_spanish2_ci NOT NULL,
-  `tctpr_namect` varchar(30) COLLATE utf8_spanish2_ci NOT NULL,
+  `tctpr_idcatg` varchar(20) NOT NULL,
+  `tctpr_namect` varchar(30) NOT NULL,
   `tctpr_status` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
@@ -366,12 +364,12 @@ INSERT INTO `tctpr_tme` (`tctpr_idcatg`, `tctpr_namect`, `tctpr_status`) VALUES
 --
 
 CREATE TABLE `tcuba_tme` (
-  `tcuba_idcuBa` varchar(10) COLLATE utf8_spanish2_ci NOT NULL,
-  `tcuba_nameba` varchar(50) COLLATE utf8_spanish2_ci NOT NULL,
-  `tcuba_Nocuba` varchar(20) COLLATE utf8_spanish2_ci NOT NULL,
-  `tcuba_identi` varchar(12) COLLATE utf8_spanish2_ci NOT NULL,
-  `tcuba_tpcuba` enum('Ahorro','Corriente') CHARACTER SET utf8 NOT NULL,
-  `tcuba_rifba` enum('V','J') COLLATE utf8_spanish2_ci NOT NULL
+  `tcuba_idcuBa` varchar(10) NOT NULL,
+  `tcuba_nameba` varchar(50) NOT NULL,
+  `tcuba_Nocuba` varchar(20) NOT NULL,
+  `tcuba_identi` varchar(12) NOT NULL,
+  `tcuba_tpcuba` enum('Ahorro','Corriente') CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `tcuba_rifba` enum('V','J') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
 --
@@ -392,7 +390,7 @@ INSERT INTO `tcuba_tme` (`tcuba_idcuBa`, `tcuba_nameba`, `tcuba_Nocuba`, `tcuba_
 CREATE TABLE `tdcom_tts` (
   `tdcom_iddeco` int(11) NOT NULL,
   `tdcom_fkidco` int(11) NOT NULL,
-  `tdcom_fkprod` varchar(30) COLLATE utf8_spanish2_ci NOT NULL,
+  `tdcom_fkprod` varchar(30) NOT NULL,
   `tdcom_cantid` float NOT NULL,
   `tdcom_precio` double(5,2) NOT NULL,
   `tdcom_Subtot` double(10,2) NOT NULL
@@ -415,11 +413,11 @@ INSERT INTO `tdcom_tts` (`tdcom_iddeco`, `tdcom_fkidco`, `tdcom_fkprod`, `tdcom_
 CREATE TABLE `tdevt_tts` (
   `tdven_iddetv` int(11) NOT NULL,
   `tdven_fkidvt` int(11) NOT NULL,
-  `tdven_fkcodp` varchar(30) COLLATE utf8_spanish2_ci NOT NULL,
+  `tdven_fkcodp` varchar(30) NOT NULL,
   `tdven_cantpr` float NOT NULL,
   `tdven_precio` double(10,2) NOT NULL,
   `tdven_Subtot` double(10,2) NOT NULL,
-  `tdven_fktpmo` varchar(40) COLLATE utf8_spanish2_ci NOT NULL DEFAULT 'Contado'
+  `tdven_fktpmo` varchar(40) NOT NULL DEFAULT 'Contado'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
 --
@@ -450,13 +448,13 @@ INSERT INTO `tdevt_tts` (`tdven_iddetv`, `tdven_fkidvt`, `tdven_fkcodp`, `tdven_
 
 CREATE TABLE `tdprv_tme` (
   `tprov_idprov` int(11) NOT NULL,
-  `tprov_Rifpro` varchar(12) COLLATE utf8_spanish2_ci NOT NULL,
-  `tprov_Razsoc` varchar(100) COLLATE utf8_spanish2_ci NOT NULL,
-  `tprov_direpr` text COLLATE utf8_spanish2_ci NOT NULL,
-  `tprov_telepr` varchar(11) COLLATE utf8_spanish2_ci NOT NULL,
-  `tprov_emailp` varchar(100) COLLATE utf8_spanish2_ci NOT NULL,
+  `tprov_Rifpro` varchar(12) NOT NULL,
+  `tprov_Razsoc` varchar(100) NOT NULL,
+  `tprov_direpr` text NOT NULL,
+  `tprov_telepr` varchar(11) NOT NULL,
+  `tprov_emailp` varchar(100) NOT NULL,
   `tprov_status` tinyint(1) NOT NULL,
-  `tprov_tiprif` varchar(45) COLLATE utf8_spanish2_ci NOT NULL
+  `tprov_tiprif` varchar(45) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
 --
@@ -464,11 +462,13 @@ CREATE TABLE `tdprv_tme` (
 --
 
 INSERT INTO `tdprv_tme` (`tprov_idprov`, `tprov_Rifpro`, `tprov_Razsoc`, `tprov_direpr`, `tprov_telepr`, `tprov_emailp`, `tprov_status`, `tprov_tiprif`) VALUES
-(1, '407898280', 'FERREAGRO EL AGRICULTOR C.A.', 'LA GRITA, ZONA INDUSTRIAL LA QUINTA.', '02772917101', 'FERREAGRO.ELAGRICULTOR@GMAIL.COM', 1, 'J'),
+(1, '407898281', 'FERREAGRO EL AGRICULTOR C.A.', 'LA GRITA, ZONA INDUSTRIAL LA QUINTA.', '02772917101', 'FERREAGRO.ELAGRICULTOR@GMAIL.COM', 1, 'G'),
 (2, '200007821', 'PETROQUIMICA DE VENEZUELA', 'MORON. VENEZUELA', '04247004686', 'MORONPQV@GMAIL.COM', 1, 'G'),
-(3, '00000004', 'Vendedor', 'No definida', '00000000000', 'vendedor@gmail.com', 0, 'J'),
-(444, '34343434', 'asdfasdfasf', 'asdfasdfadf', '23242342342', 'aaa@aaa.com', 0, 'G'),
-(677, '111111111', 'sfdgsdggdsfgsd', 'asdfasdfadf', '44444444444', 'Leo@ledo.com', 1, 'G');
+(3, '000000000', 'Vendedor', 'No definida', '00000000000', 'vendedor@gmail.com', 1, 'J'),
+(4, '407898287', 'FERSURCA C.A.', 'La Fría Estado Táchira', '04147166787', 'fersurcalafria@gmail.com', 1, 'J'),
+(5, '417898256', 'Distribuidora Campo Andes', 'Portuguesa', '04164921899', 'campoandes@gmail.com', 1, 'J'),
+(6, '427898278', 'Distribuidora El Campo', 'La Fria-Las mesas', '04147166754', 'campolindo@gmail.com', 1, 'G'),
+(444, '322323232', 'Vendero', 'San cristobal.', '23323232333', 'asd@asd.asd', 1, 'V');
 
 -- --------------------------------------------------------
 
@@ -478,8 +478,8 @@ INSERT INTO `tdprv_tme` (`tprov_idprov`, `tprov_Rifpro`, `tprov_Razsoc`, `tprov_
 
 CREATE TABLE `tdtec_tts` (
   `tdtec_correl` int(11) NOT NULL,
-  `tdtec_tokuse` varchar(100) COLLATE utf8_spanish2_ci NOT NULL,
-  `tdtec_idprod` varchar(30) COLLATE utf8_spanish2_ci NOT NULL,
+  `tdtec_tokuse` varchar(100) NOT NULL,
+  `tdtec_idprod` varchar(30) NOT NULL,
   `tdtec_cantid` int(11) NOT NULL,
   `tdtec_precic` decimal(10,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
@@ -492,8 +492,8 @@ CREATE TABLE `tdtec_tts` (
 
 CREATE TABLE `tdtem_tts` (
   `tdtem_correl` int(11) NOT NULL,
-  `tdtem_tokuse` varchar(100) COLLATE utf8_spanish2_ci NOT NULL,
-  `tdtem_idprod` varchar(30) COLLATE utf8_spanish2_ci NOT NULL,
+  `tdtem_tokuse` varchar(100) NOT NULL,
+  `tdtem_idprod` varchar(30) NOT NULL,
   `tdtem_cantid` int(11) NOT NULL,
   `tdtem_preciv` decimal(10,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
@@ -503,24 +503,24 @@ CREATE TABLE `tdtem_tts` (
 --
 
 INSERT INTO `tdtem_tts` (`tdtem_correl`, `tdtem_tokuse`, `tdtem_idprod`, `tdtem_cantid`, `tdtem_preciv`) VALUES
-(8, 'd41d8cd98f00b204e9800998ecf8427e', '3', 1, '68.00'),
-(9, 'd41d8cd98f00b204e9800998ecf8427e', '3', 1, '68.00'),
-(10, 'd41d8cd98f00b204e9800998ecf8427e', '3', 1, '68.00'),
-(11, 'd41d8cd98f00b204e9800998ecf8427e', '3', 1, '68.00'),
-(12, 'd41d8cd98f00b204e9800998ecf8427e', '3', 1, '68.00'),
-(13, 'd41d8cd98f00b204e9800998ecf8427e', '3', 1, '68.00'),
-(14, 'd41d8cd98f00b204e9800998ecf8427e', '3', 1, '68.00'),
-(15, 'd41d8cd98f00b204e9800998ecf8427e', '3', 1, '68.00'),
-(16, 'd41d8cd98f00b204e9800998ecf8427e', '3', 1, '68.00'),
-(17, 'd41d8cd98f00b204e9800998ecf8427e', '3', 1, '68.00'),
-(18, 'd41d8cd98f00b204e9800998ecf8427e', '3', 1, '68.00'),
-(19, 'd41d8cd98f00b204e9800998ecf8427e', '3', 1, '68.00'),
-(20, 'd41d8cd98f00b204e9800998ecf8427e', '2', 1, '18.00'),
-(21, 'd41d8cd98f00b204e9800998ecf8427e', '2', 1, '18.00'),
-(22, 'd41d8cd98f00b204e9800998ecf8427e', '2', 1, '18.00'),
-(23, 'd41d8cd98f00b204e9800998ecf8427e', '2', 1, '18.00'),
-(24, 'd41d8cd98f00b204e9800998ecf8427e', '2', 1, '18.00'),
-(25, 'd41d8cd98f00b204e9800998ecf8427e', '2', 1, '18.00');
+(8, 'd41d8cd98f00b204e9800998ecf8427e', '3', 1, 68.00),
+(9, 'd41d8cd98f00b204e9800998ecf8427e', '3', 1, 68.00),
+(10, 'd41d8cd98f00b204e9800998ecf8427e', '3', 1, 68.00),
+(11, 'd41d8cd98f00b204e9800998ecf8427e', '3', 1, 68.00),
+(12, 'd41d8cd98f00b204e9800998ecf8427e', '3', 1, 68.00),
+(13, 'd41d8cd98f00b204e9800998ecf8427e', '3', 1, 68.00),
+(14, 'd41d8cd98f00b204e9800998ecf8427e', '3', 1, 68.00),
+(15, 'd41d8cd98f00b204e9800998ecf8427e', '3', 1, 68.00),
+(16, 'd41d8cd98f00b204e9800998ecf8427e', '3', 1, 68.00),
+(17, 'd41d8cd98f00b204e9800998ecf8427e', '3', 1, 68.00),
+(18, 'd41d8cd98f00b204e9800998ecf8427e', '3', 1, 68.00),
+(19, 'd41d8cd98f00b204e9800998ecf8427e', '3', 1, 68.00),
+(20, 'd41d8cd98f00b204e9800998ecf8427e', '2', 1, 18.00),
+(21, 'd41d8cd98f00b204e9800998ecf8427e', '2', 1, 18.00),
+(22, 'd41d8cd98f00b204e9800998ecf8427e', '2', 1, 18.00),
+(23, 'd41d8cd98f00b204e9800998ecf8427e', '2', 1, 18.00),
+(24, 'd41d8cd98f00b204e9800998ecf8427e', '2', 1, 18.00),
+(25, 'd41d8cd98f00b204e9800998ecf8427e', '2', 1, 18.00);
 
 -- --------------------------------------------------------
 
@@ -529,8 +529,8 @@ INSERT INTO `tdtem_tts` (`tdtem_correl`, `tdtem_tokuse`, `tdtem_idprod`, `tdtem_
 --
 
 CREATE TABLE `tmone_tme` (
-  `tmone_idmone` varchar(10) COLLATE utf8_spanish2_ci NOT NULL,
-  `tmone_namemo` varchar(40) COLLATE utf8_spanish2_ci NOT NULL,
+  `tmone_idmone` varchar(10) NOT NULL,
+  `tmone_namemo` varchar(40) NOT NULL,
   `tmone_status` tinyint(1) NOT NULL,
   `tmone_imagen` longblob NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
@@ -553,8 +553,8 @@ INSERT INTO `tmone_tme` (`tmone_idmone`, `tmone_namemo`, `tmone_status`, `tmone_
 --
 
 CREATE TABLE `tmpag_tme` (
-  `tmpag_idmetd` varchar(10) COLLATE utf8_spanish2_ci NOT NULL,
-  `tmpag_namemt` varchar(30) COLLATE utf8_spanish2_ci NOT NULL,
+  `tmpag_idmetd` varchar(10) NOT NULL,
+  `tmpag_namemt` varchar(30) NOT NULL,
   `tmpag_status` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
@@ -574,8 +574,8 @@ INSERT INTO `tmpag_tme` (`tmpag_idmetd`, `tmpag_namemt`, `tmpag_status`) VALUES
 --
 
 CREATE TABLE `tmpro_tme` (
-  `tmpro_idmedi` varchar(10) COLLATE utf8_spanish2_ci NOT NULL,
-  `tmpro_descmd` varchar(30) COLLATE utf8_spanish2_ci NOT NULL,
+  `tmpro_idmedi` varchar(10) NOT NULL,
+  `tmpro_descmd` varchar(30) NOT NULL,
   `tmpro_status` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
@@ -596,17 +596,17 @@ INSERT INTO `tmpro_tme` (`tmpro_idmedi`, `tmpro_descmd`, `tmpro_status`) VALUES
 --
 
 CREATE TABLE `tprod_tme` (
-  `tprod_idprod` varchar(30) COLLATE utf8_spanish2_ci NOT NULL,
+  `tprod_idprod` varchar(30) NOT NULL,
   `tprod_fotopr` longblob NOT NULL,
-  `tprod_namepr` varchar(40) COLLATE utf8_spanish2_ci NOT NULL,
-  `tprod_descpr` text COLLATE utf8_spanish2_ci NOT NULL,
-  `tprod_prespr` varchar(50) COLLATE utf8_spanish2_ci NOT NULL,
+  `tprod_namepr` varchar(40) NOT NULL,
+  `tprod_descpr` text NOT NULL,
+  `tprod_prespr` varchar(50) NOT NULL,
   `tprod_precic` double(5,2) NOT NULL,
   `tprod_preciv` double(5,2) NOT NULL,
   `tprod_fechin` date NOT NULL,
   `tprod_fechve` date NOT NULL,
   `tprod_cantpr` float NOT NULL,
-  `tprod_fktipp` varchar(40) COLLATE utf8_spanish2_ci NOT NULL,
+  `tprod_fktipp` varchar(40) NOT NULL,
   `tprod_status` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
@@ -642,9 +642,9 @@ INSERT INTO `tprod_tme` (`tprod_idprod`, `tprod_fotopr`, `tprod_namepr`, `tprod_
 --
 
 CREATE TABLE `ttpro_tme` (
-  `ttpro_idtipp` varchar(20) COLLATE utf8_spanish2_ci NOT NULL,
-  `ttpro_nametp` varchar(40) COLLATE utf8_spanish2_ci NOT NULL,
-  `ttpro_fkcatg` varchar(30) COLLATE utf8_spanish2_ci NOT NULL
+  `ttpro_idtipp` varchar(20) NOT NULL,
+  `ttpro_nametp` varchar(40) NOT NULL,
+  `ttpro_fkcatg` varchar(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
 --
@@ -668,8 +668,8 @@ INSERT INTO `ttpro_tme` (`ttpro_idtipp`, `ttpro_nametp`, `ttpro_fkcatg`) VALUES
 --
 
 CREATE TABLE `ttusu_tme` (
-  `ttusu_idtipu` varchar(10) COLLATE utf8_spanish2_ci NOT NULL,
-  `ttusu_descus` varchar(30) COLLATE utf8_spanish2_ci NOT NULL
+  `ttusu_idtipu` int(10) NOT NULL,
+  `ttusu_descus` varchar(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
 --
@@ -677,9 +677,9 @@ CREATE TABLE `ttusu_tme` (
 --
 
 INSERT INTO `ttusu_tme` (`ttusu_idtipu`, `ttusu_descus`) VALUES
-('02', 'Administrador de Ventas'),
-('01', 'Administrador General'),
-('03', 'Cliente');
+(2, 'Administrador de Ventas'),
+(1, 'Administrador General'),
+(3, 'Cliente');
 
 -- --------------------------------------------------------
 
@@ -688,14 +688,14 @@ INSERT INTO `ttusu_tme` (`ttusu_idtipu`, `ttusu_descus`) VALUES
 --
 
 CREATE TABLE `tuser_tme` (
-  `tuser_iduser` varchar(10) COLLATE utf8_spanish2_ci NOT NULL,
-  `tuser_userna` varchar(20) COLLATE utf8_spanish2_ci NOT NULL,
-  `tuser_emailu` varchar(50) COLLATE utf8_spanish2_ci NOT NULL,
-  `tuser_passus` varchar(30) COLLATE utf8_spanish2_ci NOT NULL,
-  `tuser_fktipu` varchar(30) COLLATE utf8_spanish2_ci NOT NULL,
+  `tuser_iduser` varchar(10) NOT NULL,
+  `tuser_userna` varchar(20) NOT NULL,
+  `tuser_emailu` varchar(50) NOT NULL,
+  `tuser_passus` varchar(30) NOT NULL,
+  `tuser_fktipu` int(11) NOT NULL,
   `tuser_status` tinyint(1) NOT NULL,
   `tuser_fechin` date NOT NULL,
-  `tuser_direus` text COLLATE utf8_spanish2_ci NOT NULL
+  `tuser_direus` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
 --
@@ -703,16 +703,16 @@ CREATE TABLE `tuser_tme` (
 --
 
 INSERT INTO `tuser_tme` (`tuser_iduser`, `tuser_userna`, `tuser_emailu`, `tuser_passus`, `tuser_fktipu`, `tuser_status`, `tuser_fechin`, `tuser_direus`) VALUES
-('1', 'Angel Avendano', 'aavendanourdaneta01@gmail.com', '12345', 'Administrador General', 1, '2023-01-01', 'San Cristobal, Pueblo Nuevo, Avenida Principal. Urbanizacion Colinas del Este. CaSA No.4'),
-('111', 'Pedro 9999999', 'pedro@gmail.com', '12345', 'Administrador de Ventas', 0, '2023-04-12', 'Centro San Cristóbal '),
-('123', 'fffff', 'sad@sadfcck.com', 'asdfasf', 'Administrador General', 0, '2023-04-08', 'fasdfasdf'),
-('1342', 'asdfasf', 'asdfa@fasf.com', 'asdfasf', 'Cliente', 0, '2023-04-08', 'asdfasf'),
-('2', 'Richar Avendano', 'aavendanourdaneta@gmail.com', '12345', 'Administrador de Ventas', 1, '2023-01-24', 'El cobre'),
-('232', 'ddddd', 'ddd@ddd.com', 'ssssss', 'Cliente', 1, '2023-04-09', 'asdfasf'),
-('234523', 'Leonardo', 'leo@gmail.com', '12345', 'Administrador de Ventas', 0, '2023-04-08', 'Centro'),
-('3', 'kevin', 'kevin@gmail.com', '12345', 'Administrador General', 0, '2023-02-01', 'San cristobal.'),
-('677', 'cccccccccccccccccc', 'ccc@ccc.cc', 'ddddddddddddd', 'Cliente', 0, '2023-04-12', 'asfasdf'),
-('875', 'Cliente', 'cliente@cliente.com', '12345', 'Cliente', 1, '2023-02-01', 'Servidor');
+('006', 'Ligia Urdaneta', 'urdaligi08@gmail.com', 'Ligi09$#', 2, 1, '2023-04-19', 'Las Mesas'),
+('1', 'Angel Avendano', 'aavendanourdaneta01@gmail.com', 'Richi04$#', 1, 1, '2023-01-01', 'San Cristobal, Pueblo Nuevo, Avenida Principal. Urbanizacion Colinas del Este. CaSA No.4'),
+('112', 'Kevin Saavedra', 'kevinpana@gmail.com', 'Richi04$#', 2, 1, '0000-00-00', 'Centro gabirias '),
+('12', 'Juan Zambrano', 'Juanzambrano2002@gmail.com', 'Juan2002$', 2, 0, '2023-04-19', 'La Vega'),
+('2', 'Richar Avendano', 'aavendanourdaneta@gmail.com', 'Richi04$#', 2, 1, '2023-01-24', 'El cobre'),
+('220', 'Pedriño', 'pedri@gmail.com', 'Richi04$#', 2, 0, '0000-00-00', 'La grita'),
+('234523', 'Leonardo', 'leo@gmail.com', 'Richi04$#', 2, 0, '2023-04-08', 'Centro'),
+('3', 'kevin', 'kevin@gmail.com', 'Kevin$9570', 1, 0, '2023-02-01', 'San cristobal.'),
+('345', 'Pedriño', 'pedro@gmail.com', 'Kk$444444', 2, 0, '0000-00-00', 'San cristobal.'),
+('875', 'Cliente', 'cliente@cliente.com', 'Richi04$#', 3, 1, '2023-02-01', 'Servidor');
 
 -- --------------------------------------------------------
 
@@ -724,9 +724,9 @@ CREATE TABLE `tvenn_tts` (
   `tvent_idvent` int(11) NOT NULL,
   `tvent_fkclie` int(11) NOT NULL,
   `tvent_fechav` datetime NOT NULL DEFAULT current_timestamp(),
-  `tvent_uservt` varchar(10) COLLATE utf8_spanish2_ci NOT NULL,
+  `tvent_uservt` varchar(10) NOT NULL,
   `tvent_totalv` double(10,2) NOT NULL,
-  `tvent_status` varchar(100) COLLATE utf8_spanish2_ci NOT NULL DEFAULT 'cancelado'
+  `tvent_status` varchar(100) NOT NULL DEFAULT 'cancelado'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
 --
@@ -882,7 +882,7 @@ ALTER TABLE `ttusu_tme`
 ALTER TABLE `tuser_tme`
   ADD PRIMARY KEY (`tuser_iduser`),
   ADD UNIQUE KEY `tuser_emailu` (`tuser_emailu`),
-  ADD KEY `tuser_fktipu` (`tuser_fktipu`) USING BTREE;
+  ADD KEY `tuser_fktipu` (`tuser_fktipu`);
 
 --
 -- Indices de la tabla `tvenn_tts`
@@ -900,7 +900,7 @@ ALTER TABLE `tvenn_tts`
 -- AUTO_INCREMENT de la tabla `tclic_tme`
 --
 ALTER TABLE `tclic_tme`
-  MODIFY `tclie_idclie` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=124242;
+  MODIFY `tclie_idclie` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `tclre_tts`
@@ -930,7 +930,7 @@ ALTER TABLE `tdevt_tts`
 -- AUTO_INCREMENT de la tabla `tdprv_tme`
 --
 ALTER TABLE `tdprv_tme`
-  MODIFY `tprov_idprov` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=678;
+  MODIFY `tprov_idprov` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3435;
 
 --
 -- AUTO_INCREMENT de la tabla `tdtec_tts`
@@ -943,6 +943,12 @@ ALTER TABLE `tdtec_tts`
 --
 ALTER TABLE `tdtem_tts`
   MODIFY `tdtem_correl` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+
+--
+-- AUTO_INCREMENT de la tabla `ttusu_tme`
+--
+ALTER TABLE `ttusu_tme`
+  MODIFY `ttusu_idtipu` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `tvenn_tts`
@@ -979,6 +985,12 @@ ALTER TABLE `tdcom_tts`
 --
 ALTER TABLE `ttpro_tme`
   ADD CONSTRAINT `ttpro_tme_ibfk_1` FOREIGN KEY (`ttpro_fkcatg`) REFERENCES `tctpr_tme` (`tctpr_namect`);
+
+--
+-- Filtros para la tabla `tuser_tme`
+--
+ALTER TABLE `tuser_tme`
+  ADD CONSTRAINT `tuser_tme_ibfk_1` FOREIGN KEY (`tuser_fktipu`) REFERENCES `ttusu_tme` (`ttusu_idtipu`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Filtros para la tabla `tvenn_tts`
