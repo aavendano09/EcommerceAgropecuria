@@ -103,7 +103,7 @@ if ($_POST) {
    WHERE tuser_userna='$username' AND tuser_emailu='$correo' AND tuser_passus='$password'";
    $resultado=mysqli_query($conexion,$consulta);
    $row=mysqli_fetch_assoc($resultado);
-   if($row['tuser_fktipu']=='1'){ //administrador General
+   if($row['tuser_fktipu']=='1' && $row['tuser_status'] == '1'){ //administrador General
       $_SESSION['tidAdmin']=$row['tuser_iduser'];
       $_SESSION['email']=$row['tuser_emailu'];
       $_SESSION['username']=$row['tuser_userna'];

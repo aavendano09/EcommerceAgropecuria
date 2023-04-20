@@ -22,7 +22,7 @@
 </table>
 <div class="d-flex justify-content-between mt-5">
 <a style="margin-left: 10px;" class="btn btn-warning" href="home.php?modulo=productos" role="button">Seguir comprando</a>
-<a style="margin-right: 10px;" class="btn btn-primary" href="home.php?modulo=envio" role="button">Ir a datos de envio</a>
+<a style="margin-right: 10px;" id="datosEnvio" class="btn btn-primary" href="home.php?modulo=envio" role="button">Ir a datos de envio</a>
 </div>
 <br>
 <br>

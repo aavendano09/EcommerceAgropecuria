@@ -13,18 +13,22 @@ $(document).ready(function () {
         dataType: "json",
         success: function (response) {
             llenarTablaCarrito(response);
+            
         }
     });
 
 
-    
 
     function llenarTablaCarrito(response){
         $("#tablaCarrito tbody").text("");
+
+         if (response.length <= 0) {
+            $("#datosEnvio").prop('hidden', 'hidden');
+         }
         
         var TOTAL=0;
         response.forEach(element => {
-
+        
             $.ajax({
                 url: 'ajax/calcStock.php',
                 type: "POST",
@@ -159,6 +163,7 @@ $(document).ready(function () {
             success: function (response) {
                 llenarTablaCarrito(response);
                 llenaCarrito(response);
+                
             }
         });
     });
