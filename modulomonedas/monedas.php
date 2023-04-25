@@ -5,6 +5,7 @@ require_once('conexion.php');
 $sql = "SELECT tmone_idmone, tmone_namemo, tmone_status, tmone_imagen FROM tmone_tme;";
 $monedas = $conexion->query($sql);
 
+require_once 'validations/Formulario.php';
 ?>
 
 <!DOCTYPE html>
@@ -22,7 +23,10 @@ $monedas = $conexion->query($sql);
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
     <!-- ========================================================= -->
     <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
-    <script src="validaciones.js"></script>
+    <script>
+      const modulo = "modulomonedas";
+      const modaltitle = "Moneda";
+    </script>
 </head>
 <body>
 
@@ -44,7 +48,7 @@ $monedas = $conexion->query($sql);
         <div class="col-12">
             
     <div class="col-auto mb-3">
-        <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#nuevoModal"><i class="fa-solid fa-circle-plus"></i> Nueva Moneda</a>
+        <a href="#" id="new" class="btn btn-primary" data-bs-toggle="modal"><i class="fa-solid fa-circle-plus"></i> Nueva Moneda</a>
     </div>
 
           <div class="card">
@@ -79,7 +83,7 @@ $monedas = $conexion->query($sql);
                  <td><img style="width: 100px;" src="data:image/jpg;base64,<?php echo base64_encode($row_monedas['tmone_imagen']) ?>" alt=""></td>
                  <td>
 
-                  <a href="#" class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#editaModal" data-bs-id="<?= $row_monedas['tmone_idmone']; ?>"><i class="fa-solid fa-pencil"></i> Editar</a>
+                  <a href="#" id="edit" class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#nuevoModal" onclick="edit(<?= $row_monedas['tmone_idmone']; ?>)"><i class="fa-solid fa-pencil"></i> Editar</a>
 
                   <a href="#" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#eliminaModal" data-bs-id="<?= $row_monedas['tmone_idmone']; ?>"><i class="fa-solid fa-trash"></i> Eliminar</a>
 
@@ -117,8 +121,6 @@ $monedas = $conexion->query($sql);
     <script src="assets/js/bootstrap.bundle.min.js"></script>
     <script src="js/jquery-3.6.0.min.js"></script>
     <script src="assets/js/datatables.min.js"></script>
-    <script src="assets/js/pdfmake.min.js"></script>
-    <script src="assets/js/vfs_fonts.js"></script>
 
     <script>
       $(document).ready(function(){
@@ -158,12 +160,13 @@ $monedas = $conexion->query($sql);
 
     <script>
 
-     let editaModal = document.getElementById('editaModal')
+     let editaModal = document.getElementById('nuevoModal')
      let eliminaModal = document.getElementById('eliminaModal')
 
-     editaModal.addEventListener('show.bs.modal', event => {
-        let button = event.relatedTarget
-        let id = button.getAttribute('data-bs-id')
+     function edit(val) {
+        let id = val;
+       validRefresh();
+       openEdit();
 
         let inputId = editaModal.querySelector('.modal-body #id')
         let inputNombre = editaModal.querySelector('.modal-body #nombre')
@@ -188,7 +191,7 @@ $monedas = $conexion->query($sql);
 
         }).catch(err => console.log(err))
 
-     })
+     }
 
      eliminaModal.addEventListener('shown.bs.modal', event => {
         let button = event.relatedTarget

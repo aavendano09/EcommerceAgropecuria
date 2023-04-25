@@ -5,6 +5,7 @@ require_once('conexion.php');
 $sql = "SELECT tctpr_idcatg, tctpr_namect, tctpr_status FROM tctpr_tme;";
 $categorias = $conexion->query($sql);
 
+require_once 'validations/Formulario.php';
 ?>
 
 <!DOCTYPE html>
@@ -22,7 +23,10 @@ $categorias = $conexion->query($sql);
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
     <!-- ========================================================= -->
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
-    <script src="validaciones.js"></script>
+    <script>
+      const modulo = "modulocategorias";
+      const modaltitle = "Categoria";
+    </script>
 </head>
 <body>
 
@@ -44,7 +48,7 @@ $categorias = $conexion->query($sql);
         <div class="col-12">
             
     <div class="col-auto mb-3">
-        <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#nuevoModal"><i class="fa-solid fa-circle-plus"></i> Nueva Categoria</a>
+        <a href="#" id="new" class="btn btn-primary" data-bs-toggle="modal"><i class="fa-solid fa-circle-plus"></i> Nueva Categoria</a>
     </div>
 
           <div class="card">
@@ -79,7 +83,7 @@ $categorias = $conexion->query($sql);
 
                  <td>
 
-                  <a href="#" class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#editaModal" data-bs-id="<?= $row['tctpr_idcatg']; ?>"><i class="fa-solid fa-pencil"></i> Editar</a>
+                  <a href="#" id="edit" class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#nuevoModal" onclick="edit(<?= $row['tctpr_idcatg']; ?>)"><i class="fa-solid fa-pencil"></i> Editar</a>
 
                   <a href="#" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#eliminaModal" data-bs-id="<?= $row['tctpr_idcatg']; ?>"><i class="fa-solid fa-trash"></i> Eliminar</a>
 
@@ -117,8 +121,6 @@ $categorias = $conexion->query($sql);
     <script src="assets/js/bootstrap.bundle.min.js"></script>
     <script src="assets/js/jquery-3.6.0.min.js"></script>
     <script src="assets/js/datatables.min.js"></script>
-    <script src="assets/js/pdfmake.min.js"></script>
-    <script src="assets/js/vfs_fonts.js"></script>
 
     <script>
       $(document).ready(function(){
@@ -157,12 +159,13 @@ $categorias = $conexion->query($sql);
 
 <script>
 
-     let editaModal = document.getElementById('editaModal')
+     let editaModal = document.getElementById('nuevoModal')
      let eliminaModal = document.getElementById('eliminaModal')
 
-     editaModal.addEventListener('show.bs.modal', event => {
-        let button = event.relatedTarget
-        let id = button.getAttribute('data-bs-id')
+     function edit(val) {
+        let id = val;
+       validRefresh();
+       openEdit();
 
         let inputId = editaModal.querySelector('.modal-body #id')
         let inputNombre = editaModal.querySelector('.modal-body #nombre')
@@ -184,7 +187,7 @@ $categorias = $conexion->query($sql);
 
         }).catch(err => console.log(err))
 
-     })
+     }
 
      eliminaModal.addEventListener('shown.bs.modal', event => {
         let button = event.relatedTarget

@@ -214,13 +214,13 @@ $modulo=$_REQUEST['modulo'];
              <li class="nav-item">
                 <a href="paneladmin.php?modulo=productos" class="nav-link <?php echo ($modulo=="productos" )?" active ":" "; ?>">
                   <i class="fas fa-chevron-right nav-icon"></i>
-                  <p>Carga Masiva</p>
+                  <p>Nuevo</p>
                 </a>
              </li>
              <li class="nav-item">
                 <a href="paneladmin.php?modulo=eliminaproductos" class="nav-link <?php echo ($modulo=="eliminaproductos" )?" active ":" "; ?>">
                   <i class="fas fa-chevron-right nav-icon"></i>
-                  <p>Eliminacion Masiva</p>
+                  <p>Eliminacion</p>
                 </a>
              </li>
             </ul>

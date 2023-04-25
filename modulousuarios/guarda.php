@@ -20,9 +20,9 @@ if(mysqli_num_rows($request) == 0){
 
     $sqlemailusuario = "SELECT tuser_emailu FROM tuser_tme WHERE tuser_emailu = '$email'";
 
-    $request2 = $conexion->query($sqlemailusuario);
+    $request = $conexion->query($sqlemailusuario);
 
-    if(mysqli_num_rows($request2) == 0){
+    if(mysqli_num_rows($request) == 0){
         $sqlcategorias = "INSERT INTO `tuser_tme` (`tuser_iduser`, `tuser_userna`, `tuser_emailu`, `tuser_passus`, `tuser_fktipu`, `tuser_status`, `tuser_fechin`, `tuser_direus`) 
         VALUES ('".$idUsuario."','".$username."','".$email."','".$password."','".$tipousuario."','".$estado."','".$fecha_actual."','".$domicilio."');
         ";

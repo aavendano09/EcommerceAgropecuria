@@ -4,10 +4,10 @@ require 'conexion.php';
 
 $id = $conexion->real_escape_string($_POST['id']);
 $nombre = $conexion->real_escape_string($_POST['nombre']);
-$numero = $conexion->real_escape_string($_POST['numero']);
-$identificacion = $conexion->real_escape_string($_POST['identificacion']);
-$cedrif = $conexion->real_escape_string($_POST['cedrif']);
-$tipocuenta = $conexion->real_escape_string($_POST['tipocuenta']);
+$numero = $conexion->real_escape_string($_POST['nro_cuenta']);
+$tiprif = $conexion->real_escape_string($_POST['tiprif']);
+$identificacion = $conexion->real_escape_string($_POST['rif']);
+$tipocuenta = $conexion->real_escape_string($_POST['tipo_cuenta']);
 
 $sqlIdCuenta = "SELECT tcuba_idcuBa FROM tcuba_tme WHERE tcuba_idcuBa = '$id'";
 
@@ -21,7 +21,7 @@ if (mysqli_num_rows($request) == 0) {
 
     if(mysqli_num_rows($request) == 0){
         $sqlmonedas = "INSERT INTO tcuba_tme (tcuba_idcuBa, tcuba_nameba, tcuba_Nocuba, tcuba_identi, tcuba_tpcuba, tcuba_rifba) 
-        VALUES ('$id','$nombre','$numero','$identificacion','$tipocuenta','$cedrif')";
+        VALUES ('$id','$nombre','$numero','$identificacion','$tipocuenta','$tiprif')";
 
         if($conexion->query($sqlmonedas)){
 

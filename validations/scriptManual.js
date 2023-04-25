@@ -50,7 +50,7 @@ const expresiones = {
 	extranjero: /^(\d[0-9][0-9][0-9][0-9][0-9][0-9]|[1-3][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9])$/, // 7 a 14 numeros.
 	nro_cuenta: /^\d{20,20}$/,
 	tipo_cuenta: /^[a-zA-Z\s]{3,40}$/,
-	imagsgen: /(png|jpg|wepg|jpeg|jfif)$/
+	imagen: /(png|jpg|wepg|jpeg|jfif)$/
 }
 
 

@@ -1,10 +1,12 @@
 <?php
 
+
 require_once('conexion.php');
 
 $sql = "SELECT tmpro_idmedi, tmpro_descmd, tmpro_status FROM tmpro_tme;";
 $medidas = $conexion->query($sql);
 
+require_once 'validations/Formulario.php';
 ?>
 
 <!DOCTYPE html>
@@ -22,7 +24,10 @@ $medidas = $conexion->query($sql);
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
     <!-- ========================================================= -->
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
-    <script src="validaciones.js"></script>
+    <script>
+      const modulo = "modulomedidas";
+      const modaltitle = "Medida";
+    </script>
 </head>
 <body>
 
@@ -44,7 +49,7 @@ $medidas = $conexion->query($sql);
         <div class="col-12">
             
     <div class="col-auto mb-3">
-        <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#nuevoModal"><i class="fa-solid fa-circle-plus"></i> Nueva Medida</a>
+        <a href="#" id="new" class="btn btn-primary" data-bs-toggle="modal"><i class="fa-solid fa-circle-plus"></i> Nueva Medida</a>
     </div>
 
           <div class="card">
@@ -77,7 +82,7 @@ $medidas = $conexion->query($sql);
                 </td>
                  <td>
 
-                  <a href="#" class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#editaModal" data-bs-id="<?= $row['tmpro_idmedi']; ?>"><i class="fa-solid fa-pencil"></i> Editar</a>
+                  <a href="#" id="edit" class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#nuevoModal" onclick="edit(<?= $row['tmpro_idmedi']; ?>)"><i class="fa-solid fa-pencil"></i> Editar</a>
 
                   <a href="#" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#eliminaModal" data-bs-id="<?= $row['tmpro_idmedi']; ?>"><i class="fa-solid fa-trash"></i> Eliminar</a>
 
@@ -108,15 +113,12 @@ $medidas = $conexion->query($sql);
 
     <?php
     include 'nuevoModal.php';
-    include 'editaModal.php';
     include 'eliminaModal.php';
     ?>
 
     <script src="assets/js/bootstrap.bundle.min.js"></script>
     <script src="assets/js/jquery-3.6.0.min.js"></script>
     <script src="assets/js/datatables.min.js"></script>
-    <script src="assets/js/pdfmake.min.js"></script>
-    <script src="assets/js/vfs_fonts.js"></script>
 
     <script>
       $(document).ready(function(){
@@ -155,12 +157,13 @@ $medidas = $conexion->query($sql);
 
 <script>
 
-     let editaModal = document.getElementById('editaModal')
+     let editaModal = document.getElementById('nuevoModal')
      let eliminaModal = document.getElementById('eliminaModal')
 
-     editaModal.addEventListener('show.bs.modal', event => {
-        let button = event.relatedTarget
-        let id = button.getAttribute('data-bs-id')
+     function edit(val) {
+        let id = val;
+       validRefresh();
+       openEdit();
 
         let inputId = editaModal.querySelector('.modal-body #id')
         let inputDescripcion = editaModal.querySelector('.modal-body #descripcion')
@@ -182,7 +185,7 @@ $medidas = $conexion->query($sql);
 
         }).catch(err => console.log(err))
 
-     })
+     }
 
      eliminaModal.addEventListener('shown.bs.modal', event => {
         let button = event.relatedTarget

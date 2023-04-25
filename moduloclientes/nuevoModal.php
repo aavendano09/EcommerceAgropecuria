@@ -11,7 +11,7 @@
   <?php
     $formulario = new Formulario("moduloclientes/guarda.php", "formulario", "formulario");
     $formulario->setInput("number", "id", "ID", "9999");
-    $formulario->setSelInput("number", "tiprif", "rif", "Cedula/Rif:", "407898280", 'required', 'null');
+    $formulario->setSelInput("number", "tiprif", "rif", "Cedula/Rif:", "407898280", 'required', 'null', ['V','J','G']);
     $formulario->setInput("text", "tiprifOld", "Tiprif", "V", '', 'hidden');
     $formulario->setInput("number", "rifOld", "Rif", "0000000000", '', 'hidden');
     $formulario->setInput("text", "nombre", "Nombre: ", "Pedro Pérez");

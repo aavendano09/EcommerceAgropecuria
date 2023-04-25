@@ -8,7 +8,9 @@ $tipoproducto = $conexion->query($sqltipoproducto);
 $sql = "SELECT tprod_idprod, tprod_fotopr, tprod_descpr, tprod_prespr, tprod_precic, tprod_preciv, tprod_fechve, tprod_fechin, tprod_cantpr,tprod_fktipp,tprod_status FROM tprod_tme;";
 $productos = $conexion->query($sql);
 
-$sql2 = "SELECT tvent_idvent FROM tvenn_tts"
+$sql2 = "SELECT tvent_idvent FROM tvenn_tts";
+
+require_once 'validations/Formulario.php';
 ?>
 
 
@@ -28,7 +30,10 @@ $sql2 = "SELECT tvent_idvent FROM tvenn_tts"
     <!-- ========================================================= -->
     <link href="https://cdn.datatables.net/1.13.2/css/jquery.dataTables.min.css">
     <link href="https://cdn.datatables.net/datetime/1.3.0/css/dataTables.dateTime.min.css">
-    <script src="validaciones.js"></script>
+    <script>
+      const modulo = "moduloproductos";
+      const modaltitle = "Producto";
+    </script>
 </head>
 
 <body>
@@ -40,7 +45,7 @@ $sql2 = "SELECT tvent_idvent FROM tvenn_tts"
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Carga Masiva de Productos</h1>
+            <h1>Catálogo de Productos</h1>
           </div>
         </div>
       </div><!-- /.container-fluid -->
@@ -54,7 +59,7 @@ $sql2 = "SELECT tvent_idvent FROM tvenn_tts"
       <!-- Boton para agregar productos-->
             
         <div class="col-auto mb-3">
-        <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#nuevoModal"><i class="fa-solid fa-circle-plus"></i> Nuevo Producto</a>
+            <a href="#" id="new" class="btn btn-primary" data-bs-toggle="modal"><i class="fa-solid fa-circle-plus"></i> Nuevo Producto</a>
         </div>
 
         <div class="card">
@@ -103,7 +108,7 @@ $sql2 = "SELECT tvent_idvent FROM tvenn_tts"
                   </td>
                  <td>
 
-                  <a href="#" class="btn btn-sm btn-warning mb-2 mt-2" data-bs-toggle="modal" data-bs-target="#editaModal" data-bs-id="<?= $row_productos['tprod_idprod']; ?>"><i class="fa-solid fa-pencil"></i> Editar</a>
+                  <a href="#" class="btn btn-sm btn-warning mb-2 mt-2" data-bs-toggle="modal" data-bs-target="#nuevoModal" onclick="edit(<?= $row_productos['tprod_idprod']; ?>)"><i class="fa-solid fa-pencil"></i> Editar</a>
     
                 
                 </td>
@@ -130,14 +135,12 @@ $sql2 = "SELECT tvent_idvent FROM tvenn_tts"
 
   <?php
     include 'nuevoModal.php';
-    include 'editaModal.php';
     ?>
 
     <script src="assets/js/bootstrap.bundle.min.js"></script>
     <script src="assets/js/jquery-3.6.0.min.js"></script>
     <script src="assets/js/datatables.min.js"></script>
-    <script src="assets/js/pdfmake.min.js"></script>
-    <script src="assets/js/vfs_fonts.js"></script>
+
 
 
     <script>
@@ -409,9 +412,10 @@ $sql2 = "SELECT tvent_idvent FROM tvenn_tts"
 
 let editaModal = document.getElementById('editaModal')
 
-editaModal.addEventListener('show.bs.modal', event => {
-   let button = event.relatedTarget
-   let id = button.getAttribute('data-bs-id')
+function edit(val) {
+        let id = val;
+       validRefresh();
+       openEdit();
 
    let inputId = editaModal.querySelector('.modal-body #id')
    let inputDNombre= editaModal.querySelector('.modal-body #nombre')
@@ -449,7 +453,7 @@ editaModal.addEventListener('show.bs.modal', event => {
 
    }).catch(err => console.log(err))
 
-})
+}
 
 
 </script>

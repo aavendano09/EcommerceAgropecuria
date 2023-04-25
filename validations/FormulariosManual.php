@@ -1,11 +1,11 @@
 
-<link rel="stylesheet" href="validations/styles.css">
+<link rel="stylesheet" href="validations/stylesManual.css">
 
 <?php
 
 include_once 'conexion.php';
 
-class Formulario 
+class FormularioManual 
 {
     private $inputs = '';
     private $conexion;
@@ -14,7 +14,6 @@ class Formulario
     //Mensajes de error
     private $id = "Solo se pueden ingresar de 1 a 4 digitos, solo numeros sin espacios ";
     private $usuario = "Solo se permiten letras y espacios";
-    private $nombre = "Solo se permiten letras y espacios";
     private $correo = "El correo solo puede contener letras, numeros, puntos, guiones y guion bajo.";
     private $fecha = "La fecha no puede ser menor a: ";
     private $direccion = "No puede estar vacio, no se acepta ese simbolo";
@@ -24,7 +23,6 @@ class Formulario
     private $password2 = "Las contraseñas no coinciden";
     private $selects= "Debes selecionar una opcion";
     private $rif= "La identificacion debe poseer 9 digitos";
-    private $nro_cuenta = "Solo se perminten 20 numeros";
     private $password = 
     "La contraseña tiene que ser:<br>
     Minimo 8 caracteres<br>

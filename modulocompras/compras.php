@@ -4,6 +4,8 @@ error_reporting(0);
    if(isset($_SESSION['tidAdmin'])==false){
     header("location:login.php");
    }
+
+  include_once 'validations/FormulariosManual.php';
 ?>
 
 
@@ -22,7 +24,10 @@ error_reporting(0);
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
     <!-- ========================================================= -->
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
-    <script src="validaciones.js"></script>
+    <script>
+      const modulo = "modulocompras";
+      const modaltitle = "Compra";
+    </script>
 </head>
 <body>
 <style>
@@ -90,7 +95,7 @@ error_reporting(0);
 
          <!-- Datos del Vendedor-->
          <div style="margin-top: 20px;" class="datos_venta">
-          <h4 class="text-center">Datos de Venta:</h4>
+          <h4 class="text-center">Datos de Compra:</h4>
              <div class="row">
                   <div class="col-8">
                   <label class="form-label">No. Factura</label>

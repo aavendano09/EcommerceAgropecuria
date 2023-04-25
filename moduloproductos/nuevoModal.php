@@ -20,7 +20,7 @@ $productos = $conexion->query($sql);
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <form action="moduloproductos/guarda.php" method="post" enctype="multipart/form-data">
+        <!-- <form action="moduloproductos/guarda.php" method="post" enctype="multipart/form-data">
             <div class="mb-3">
                  <label for="nombre" class="form-label">Codigo:</label>
                  <input placeholder="9999" onkeypress="return SoloNumeros(event, 'id', 4);" type="text" name="id" id="id" class="form-control" required>
@@ -45,9 +45,9 @@ $productos = $conexion->query($sql);
                         <label>Tipo Producto</label>
                         <select name="tipoproducto" id="tipoproducto" class="form-select" required>
                           <option value="">Seleccionar...</option>
-                          <?php while($row_producto = $tipoproducto->fetch_assoc()){ ?>
-                                <option value="<?php echo $row_producto['ttpro_nametp']; ?>"><?= $row_producto['ttpro_nametp'] ?></option>
-                          <?php } ?>
+                          <?php// while($row_producto = $tipoproducto->fetch_assoc()){ ?>
+                                <option value="<?php// echo $row_producto['ttpro_nametp']; ?>"><?= $row_producto['ttpro_nametp'] ?></option>
+                          <?php// } ?>
                         </select>
             </div>
             <div class="mb-3">
@@ -74,7 +74,23 @@ $productos = $conexion->query($sql);
                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                <button type="submit" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i> Guardar</button>
             </div>
-        </form>
+        </form> -->
+
+<?php
+  $formulario = new Formulario("moduloproductos/guarda.php", "formulario", "formulario");
+  $formulario->setInput("number", "id", "ID", "9999");
+  $formulario->setInput("file", "imagen", "Imagen:", "");
+  $formulario->setInput("text", "nombre", "Nombre:", "Fertilizantes");
+  $formulario->setInput("text", "descripcion", "Descripcion:", "Informacion adicional");
+  $formulario->setInput("text", "presentacion", "Presentacion:", "Sacos");
+  $html = "<option value='1'>Activo</option>
+          <option value='0'>Inactivo</option>
+  ";
+  $formulario->setSelect("estado", "Estado", $html, null, null, null);
+  $formulario->setButton("Enviar", "Formulario enviado exitosamente!", true, "Cerrar", 1);
+  $formulario->getRender();
+?>
+
       </div>
     </div>
   </div>

@@ -5,8 +5,7 @@ require_once('conexion.php');
 $sql = "SELECT tcuba_idcuBa, tcuba_nameba, tcuba_Nocuba, tcuba_identi, tcuba_tpcuba, tcuba_rifba FROM tcuba_tme;";
 $cuentas = $conexion->query($sql);
 
-
-
+require_once 'validations/Formulario.php';
 ?>
 
 <!DOCTYPE html>
@@ -24,7 +23,10 @@ $cuentas = $conexion->query($sql);
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
     <!-- ========================================================= -->
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
-    <script src="validaciones.js"></script>
+    <script>
+      const modulo = "modulocuentasbancarias";
+      const modaltitle = "cuenta bancaria";
+    </script>
 </head>
 <body>
 
@@ -46,7 +48,7 @@ $cuentas = $conexion->query($sql);
         <div class="col-12">
             
     <div class="col-auto mb-3">
-        <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#nuevoModal"><i class="fa-solid fa-circle-plus"></i> Nueva Cuenta Bancaria</a>
+        <a href="#" id="new" class="btn btn-primary" data-bs-toggle="modal"><i class="fa-solid fa-circle-plus"></i> Nueva Cuenta Bancaria</a>
     </div>
 
           <div class="card">
@@ -70,11 +72,11 @@ $cuentas = $conexion->query($sql);
                  <td><?= $row_cuentas['tcuba_idcuBa'] ?></td>
                  <td><?= $row_cuentas['tcuba_nameba'] ?></td>
                  <td><?= $row_cuentas['tcuba_Nocuba'] ?></td>
-                 <td><?= $row_cuentas['tcuba_rifba'] . "-" .number_format($row_cuentas['tcuba_identi'], 0, ",", ".") ?></td>
+                 <td><?= $row_cuentas['tcuba_rifba'] . "-" .$row_cuentas['tcuba_identi']?></td>
                  <td><?= $row_cuentas['tcuba_tpcuba'] ?></td>
                  <td>
 
-                  <a href="#" class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#editaModal" data-bs-id="<?= $row_cuentas['tcuba_idcuBa']; ?>"><i class="fa-solid fa-pencil"></i> Editar</a>
+                  <a href="#" class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#nuevoModal" onclick="edit(<?= $row_cuentas['tcuba_idcuBa']; ?>)"><i class="fa-solid fa-pencil"></i> Editar</a>
 
                   <a href="#" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#eliminaModal" data-bs-id="<?= $row_cuentas['tcuba_idcuBa']; ?>"><i class="fa-solid fa-trash"></i> Eliminar</a>
 
@@ -112,8 +114,6 @@ $cuentas = $conexion->query($sql);
     <script src="assets/js/bootstrap.bundle.min.js"></script>
     <script src="assets/js/jquery-3.6.0.min.js"></script>
     <script src="assets/js/datatables.min.js"></script>
-    <script src="assets/js/pdfmake.min.js"></script>
-    <script src="assets/js/vfs_fonts.js"></script>
 
     <script>
       $(document).ready(function(){
@@ -153,20 +153,45 @@ $cuentas = $conexion->query($sql);
 
     <script>
 
-     let editaModal = document.getElementById('editaModal')
+$('#cedula').prop('name', 'cedulaHidden');
+
+  $('#tiprif').change(
+    function(){
+      $('.ident').val('');
+    if ($('#tiprif').val()=="V") {
+      $('.ident').prop('name', 'cedula');
+      $('.ident').prop('id', 'cedula');
+      $('.ident').prop('placeholder', '15862175');
+      $('#grupo__rif').prop('id', 'grupo__cedula');
+      $('#errormsg').text('La identificacion debe poseer 7 u 8 digitos');
+    }else{
+      $('.ident').prop('name', 'rif');
+      $('.ident').prop('id', 'rif');
+      $('#grupo__cedula').prop('id', 'grupo__rif');
+      $('.ident').prop('placeholder', '407898280');
+      $('#errormsg').text('La identificacion debe poseer 9 digitos');
+    }
+  })
+
+ $('#tiprif').change(
+    function(){
+      $('#rif').val('');
+  })
+     let editaModal = document.getElementById('nuevoModal')
      let eliminaModal = document.getElementById('eliminaModal')
 
-     editaModal.addEventListener('show.bs.modal', event => {
-        let button = event.relatedTarget
-        let id = button.getAttribute('data-bs-id')
+     function edit(val) {
+        let id = val;
+       validRefresh();
+       openEdit();
 
         let inputId = editaModal.querySelector('.modal-body #id')
         let inputNombre = editaModal.querySelector('.modal-body #nombre')
-        let inputnumero = editaModal.querySelector('.modal-body #edinumero')
-        let inputhidenumero = editaModal.querySelector('.modal-body #hidenumero')
-        let inputidentificacion = editaModal.querySelector('.modal-body #ediidentificacion')
-        let inputcedrif = editaModal.querySelector('.modal-body #cedrif')
-        let inputtipocuenta = editaModal.querySelector('.modal-body #tipocuenta')
+        let inputnumero = editaModal.querySelector('.modal-body #nro_cuenta')
+        let inputhidenumero = editaModal.querySelector('.modal-body #nro_cuentahide')
+        let inputtiprif = editaModal.querySelector('.modal-body #tiprif')
+        let inputidentificacion = editaModal.querySelector('.modal-body #rif')
+        let inputtipocuenta = editaModal.querySelector('.modal-body #tipo_cuenta')
 
         let url = "modulocuentasbancarias/getMoneda.php"
         let formData = new FormData()
@@ -183,12 +208,12 @@ $cuentas = $conexion->query($sql);
             inputnumero.value = data.tcuba_Nocuba
             inputhidenumero.value = data.tcuba_Nocuba
             inputidentificacion.value = data.tcuba_identi
-            inputcedrif.value = data.tcuba_rifba
+            inputtiprif.value = data.tcuba_rifba
             inputtipocuenta.value = data.tcuba_tpcuba
 
         }).catch(err => console.log(err))
 
-     })
+     }
 
      eliminaModal.addEventListener('shown.bs.modal', event => {
         let button = event.relatedTarget
