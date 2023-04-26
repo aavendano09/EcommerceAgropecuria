@@ -162,6 +162,7 @@ require_once 'validations/Formulario.php';
 
     <script>
       input["ara"] = false;
+      arrInput[4] = "ara";
       // $('#imagen').attr("required", false);
 $("#new").on(
 	"click",

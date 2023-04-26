@@ -81,7 +81,7 @@ const validarCampo = (expresion, Oinput, campo) => {
 	if(expresion.test(Oinput.value)){
 		input[campo] = true;
 		select[campo] = true;
-		console.log(input[campo]);
+		//console.log(input[campo]);
 		document.getElementById(`grupo__${campo}`).classList.remove('formulario__grupo-incorrecto');
 		document.getElementById(`grupo__${campo}`).classList.add('formulario__grupo-correcto');
 		document.querySelector(`#grupo__${campo} i`).classList.add('fa-check-circle');
@@ -92,7 +92,7 @@ const validarCampo = (expresion, Oinput, campo) => {
 	} else {
 		input[campo] = false;
 		select[campo] = false;
-		console.log(input[campo]);
+		//console.log(input[campo]);
 		document.getElementById(`grupo__${campo}`).classList.add('formulario__grupo-incorrecto');
 		document.getElementById(`grupo__${campo}`).classList.remove('formulario__grupo-correcto');
 		document.querySelector(`#grupo__${campo} i`).classList.add('fa-times-circle');
@@ -122,6 +122,8 @@ const validarPassword2 = () => {
 		campos['password'] = true;
 	}
 }
+
+
 
 $('#correo').keyup(function(){
 	let string = $('#correo').val();
@@ -156,17 +158,24 @@ formulario.addEventListener('submit', (event) => {
 	
 	for (let i = 0; i < arrInput.length; i++) {
 		
-		if (($("#"+arrInput[i]).prop('required') == false) ||  ($("#"+arrInput[i]).prop('readonly')) || $("#"+arrInput[i]).attr("id") == "ara") {
+		if ( (($("#"+arrInput[i]).prop('required') == false) ||  ($("#"+arrInput[i]).prop('readonly'))) ) {
+			//console.log(arrInput[i]+" "+"input")
 			input[arrInput[i]] = true;
 		}		
 	}
 	
 	//console.log(input)
 	for (let i = 0; i < arrInput.length; i++) {
-		console.log(arrInput[i]+"input")
-		if ((!($("#"+arrInput[i]).prop('required') == false) && !($("#"+arrInput[i]).prop('readonly')) && $("#"+arrInput[i]).length > 0)||$("#"+arrInput[i]).attr("id") == "ara"){
-			console.log(arrInput[i]+" "+"input")
-			validarFormularioSubmit(arrInput[i]);
+		//console.log(arrInput[i]+"input")
+		if (   (!($("#"+arrInput[i]).prop('required') == false) && !($("#"+arrInput[i]).prop('readonly')) && $("#"+arrInput[i]).length > 0)   ||    $("#"+arrInput[i]).attr("name") === "ara"){
+			//console.log(arrInput[i]+" "+"input")
+			if ( $("#"+arrInput[i]).attr("name") === "ara") {
+				input['imagen']=true;
+				validarFormularioSubmit(arrInput[i]);
+			}else{
+				validarFormularioSubmit(arrInput[i]);
+			}
+			
 			
 		}
 	}
@@ -178,13 +187,13 @@ formulario.addEventListener('submit', (event) => {
 		}
 		
 	}
-	console.log(input);
+
 	for (let i = 0; i < arrInput.length; i++) {
 		//console.log(input[arrInput[i]] + arrInput[i])
 		if (!input[arrInput[i]] &&  $("#"+arrInput[i]).length > 0) {
+			console.log(arrInput[i])
 			band = false;
 		}
-		//console.log(band+"input")
 		
 	}
 	
@@ -196,7 +205,8 @@ formulario.addEventListener('submit', (event) => {
 		//console.log(band+"select")
 	}
 	
-
+console.log(band);
+console.log(input["imagen"])
 	if(band){
 
 		document.getElementById('formulario__mensaje-exito').classList.add('formulario__mensaje-exito-activo');
@@ -256,5 +266,4 @@ function openModal(){
     $("#id").prop("readonly", 'readonly');
     $("#id").prop("tabinex", '-1');
     $("#id").css('background', '#ddddddec');
-
   }
