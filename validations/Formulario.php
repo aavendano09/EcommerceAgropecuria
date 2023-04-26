@@ -25,6 +25,7 @@ class Formulario
     private $selects= "Debes selecionar una opcion";
     private $rif= "La identificacion debe poseer 9 digitos";
     private $nro_cuenta = "Solo se perminten 20 numeros";
+    private $imagen = "Solo se permiten archivos jpg, png, jpeg, jfif";
     private $password = 
     "La contraseña tiene que ser:<br>
     Minimo 8 caracteres<br>
@@ -61,7 +62,7 @@ class Formulario
             <div class='formulario__grupo mr-5 d-inline' id='grupo__$select' $display>
                 <label for='$input' class='formulario__label'>$label</label>
                 <div class='formulario__grupo-input d-inline'>
-                    <select type='text' class='formulario__input col-2 d-inline' name='$select' id='$select' $required>
+                    <select type='text' class='formulario__input col-2 d-inline' name='$select' id='$select' >
                     <option value=''>-</option>";
         for ($i=0; $i < count($options); $i++) { 
             $this->inputs .= "<option value='$options[$i]'>$options[$i]</option>";

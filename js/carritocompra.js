@@ -1,4 +1,7 @@
+var response;
+
 $(document).ready(function () {
+
     $.ajax({
         type: "post",
         url: "ajax/leerCarrito.php",
@@ -14,10 +17,15 @@ $(document).ready(function () {
         success: function (response) {
             llenarTablaCarrito(response);
             
+        },
+        error: function(response){
+            if (!response.length) {
+                $("#datosEnvio").prop('hidden', 'hidden');
+             }
         }
     });
 
-
+});
 
     function llenarTablaCarrito(response){
         $("#tablaCarrito tbody").text("");
@@ -183,30 +191,98 @@ $(document).ready(function () {
     });
     $("#agregarCarrito").click(async function (e) { 
         e.preventDefault();
-
+        
         
 
         var id=$(this).data('id');
         var nombre=$(this).data('nombre');
         var cantidad=$("#cantidadProducto").val();
         var precio=$(this).data('precio');
+        var max = $(this).data('max');
+        var current = $(this).data('current');
+
         $.ajax({
             type: "post",
-            url: "ajax/agregarCarrito.php",
-            data: {"id":id,"nombre":nombre,"cantidad":cantidad,"precio":precio},
+            url: "ajax/sessionCarrito.php",
+            data: {"id":id},
             asycn:true,
             dataType: "json",
             beforeSend: function() {
-                $("#badgeProducto").text(1);
-                $("#badgeProducto").hide(500).show(500).hide(500).show(500).hide(500).show(500);
-                $("#iconoCarrito").click();
+
             },
             success: function (response) {
-                llenaCarrito(response);
-                $("#badgeProducto").hide(500).show(500).hide(500).show(500).hide(500).show(500);
-                $("#iconoCarrito").click();
+                
+                console.log(response);
             }
         });
+
+        console.log(response)
+
+        if (!current) {
+            $.ajax({
+                type: "post",
+                url: "ajax/agregarCarrito.php",
+                data: {"id":id,"nombre":nombre,"cantidad":cantidad,"precio":precio},
+                asycn:true,
+                dataType: "json",
+                beforeSend: function() {
+                    $("#badgeProducto").text(1);
+                    $("#badgeProducto").hide(500).show(500).hide(500).show(500).hide(500).show(500);
+                    $("#iconoCarrito").click();
+                },
+                success: function (response) {
+                    llenaCarrito(response);
+                    $("#badgeProducto").hide(500).show(500).hide(500).show(500).hide(500).show(500);
+                    $("#iconoCarrito").click();
+                }
+            });
+        }else{
+            if (response <= max) {
+                $.ajax({
+                    type: "post",
+                    url: "ajax/aumentoCarrito.php",
+                    data: {"id":id,"nombre":nombre,"cantidad":cantidad,"precio":precio},
+                    asycn:true,
+                    dataType: "json",
+                    beforeSend: function() {
+                        $("#badgeProducto").text(1);
+                        $("#badgeProducto").hide(500).show(500).hide(500).show(500).hide(500).show(500);
+                        $("#iconoCarrito").click();
+                    },
+                    success: function (response) {
+                        llenaCarrito(response);
+                        $("#badgeProducto").hide(500).show(500).hide(500).show(500).hide(500).show(500);
+                        $("#iconoCarrito").click();
+                    }
+                });
+            }else{
+                alert("Amigo cliente, ha superado la maxima existencia del producto");
+                //$('#agregarCarrito').prop('disabled', 'disabled');
+                location.reaload();
+            }
+        }
+        
+
+
+
+
+
+        // console.log(response)
+        // console.log(max)
+        // if (response > max) {
+            
+        // }else{
+        //     
+        // }
+
+
+        
+
+       
+
+        
+
+        
     });
     function llenaCarrito(response){
         var cantidad=Object.keys(response).length;
@@ -241,7 +317,7 @@ $(document).ready(function () {
                 <i class="fa fa-cart-plus"></i>
             </a>
             <div class="dropdown-divider"></div>
-            <a href="#" class="dropdown-item dropdown-footer text-danger" id="borrarCarrito">
+            <a href="#" class="dropdown-item dropdown-footer text-danger" id="borrarCarrito" onclick="window.location = 'exit.php'">
                 Borrar carrito 
                 <i class="fa fa-trash"></i>
             </a>
@@ -278,4 +354,3 @@ $(document).ready(function () {
             $("#direccionRec").val(direccionRec);
         }
     });
-});

@@ -63,7 +63,7 @@
           <a class="nav-link" href="home.php?modulo=contacto">Contacto</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="home.php?modulo=carrito">Ver Carrito</a>
+            <a class="nav-link" onclick="carga()" href="home.php?modulo=carrito">Ver Carrito</a>
         </li>
         <li class="nav-item dropdown">
         <a class="nav-link" data-toggle="dropdown" href="#" id="iconoCarrito">

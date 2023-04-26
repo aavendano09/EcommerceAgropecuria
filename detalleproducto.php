@@ -1,8 +1,7 @@
 <?php
+session_start();
 
 include 'conexion.php';
-
-
 
 ?>
 
@@ -89,17 +88,39 @@ $rowProducto = mysqli_fetch_assoc($resProducto);
                   $ <?php echo $rowProducto['tprod_preciv'] ?>
                 </h2>
               </div>
+        
 
-              <div class="mt-4">
-                <button class="btn btn-primary btn-lg btn-flat" id="agregarCarrito"
-                data-id="<?php echo $_REQUEST['id'] ?>"
-                data-nombre="<?php echo $rowProducto['tprod_namepr'] ?>"
-                data-precio="<?php echo $rowProducto['tprod_preciv'] ?>"
-                >
-                  <i class="fas fa-cart-plus fa-lg mr-2"></i> 
-                  Agregar al carrito
-                </button>
-              </div>
+              <?php if ($_SESSION['productosSession'][$_REQUEST['id']]['cantidad'] < $rowProducto['tprod_cantpr']): ?>
+                    <div class="mt-4">
+                    <button class="btn btn-primary btn-lg btn-flat" id="agregarCarrito"
+                    data-id="<?php echo $_REQUEST['id'] ?>"
+                    data-nombre="<?php echo $rowProducto['tprod_namepr'] ?>"
+                    data-precio="<?php echo $rowProducto['tprod_preciv'] ?>"
+                    data-max="<?php echo $rowProducto['tprod_cantpr'] ?>"
+                    data-current="<?php echo $_SESSION['productosSession'][$_REQUEST['id']]['cantidad'] ?>"
+                    >
+                      <i class="fas fa-cart-plus fa-lg mr-2"></i> 
+                      Agregar al carrito
+                    </button>
+                  </div>
+              <?php else: ?>
+                  <div class="mt-4">
+                  <button class="btn btn-primary btn-lg btn-flat" id="agregarCarrito"
+                  data-id="<?php echo $_REQUEST['id'] ?>"
+                  data-nombre="<?php echo $rowProducto['tprod_namepr'] ?>"
+                  data-precio="<?php echo $rowProducto['tprod_preciv'] ?>"
+                  data-max="<?php echo $rowProducto['tprod_cantpr'] ?>"
+                  data-current="<?php echo $_SESSION['productosSession'][$_REQUEST['id']]['cantidad'] ?>"
+                  disabled
+                  >
+                    <i class="fas fa-cart-plus fa-lg mr-2"></i> 
+                    Agregar al carrito
+                  </button>
+                </div>
+              
+              
+              <?php endif; ?>
+              
 
               <div class="mt-4">
                  Cantidad: 
@@ -175,5 +196,20 @@ $rowProducto = mysqli_fetch_assoc($resProducto);
     <script src="fronted/js/main.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 
+    <!-- Javascript files-->
+   <!-- JavaScript Libraries -->
+   <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="fronted/lib/wow/wow.min.js"></script>
+    <script src="fronted/lib/easing/easing.min.js"></script>
+    <script src="fronted/lib/waypoints/waypoints.min.js"></script>
+    <script src="fronted/lib/owlcarousel/owl.carousel.min.js"></script>
+    <script src="fronted/lib/counterup/counterup.min.js"></script>
+
+    <!-- Template Javascript -->
+    <script src="fronted/js/main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+	  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+    
 </body>
 </html>

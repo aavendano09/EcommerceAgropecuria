@@ -17,7 +17,7 @@
           <option value='0'>Inactivo</option>
   ";
   $formulario->setSelect("estado", "Estado", $html, null, null, null);
-  $formulario->setInput("file", "imagen", "Imagen:", "");
+  $formulario->setInput("file", "imagen", "Imagen:", "", "false");
   $formulario->setButton("Enviar", "Formulario enviado exitosamente!", true, "Cerrar", 1);
   $formulario->getRender();
 ?>

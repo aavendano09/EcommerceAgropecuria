@@ -25,10 +25,10 @@ $('select').each(function () {
 	i++;
 });
 
-// console.log(input);
-// console.log(select);
-// console.log(arrInput);
-// console.log(arrSelect);
+console.log(input);
+console.log(select);
+console.log(arrInput);
+console.log(arrSelect);
 
 const expresiones = {
 	id: /^\d{1,4}$/,
@@ -50,7 +50,7 @@ const expresiones = {
 	extranjero: /^(\d[0-9][0-9][0-9][0-9][0-9][0-9]|[1-3][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9])$/, // 7 a 14 numeros.
 	nro_cuenta: /^\d{20,20}$/,
 	tipo_cuenta: /^[a-zA-Z\s]{3,40}$/,
-	imagsgen: /(png|jpg|wepg|jpeg|jfif)$/
+	imagen: /(png|jpg|wepg|jpeg|jfif)$/
 }
 
 
@@ -78,6 +78,7 @@ function validarFormularioSubmit(campo){
 const validarCampo = (expresion, Oinput, campo) => {
 
 	if(expresion.test(Oinput.value)){
+		console.log(Oinput);
 		input[campo] = true;
 		select[campo] = true;
 		document.getElementById(`grupo__${campo}`).classList.remove('formulario__grupo-incorrecto');
@@ -128,6 +129,7 @@ $('#correo').keyup(function(){
 
 $('#imagen').addClass("form-control");
 $('#imagen').prop("accept", "image/png, .jpeg, .jpg, image/gif, .jfif");
+$('#imagen').prop("required", "false");
 
 inputs.forEach((input) => {
 	input.addEventListener('keyup', validarFormulario);
@@ -159,9 +161,9 @@ formulario.addEventListener('submit', (event) => {
 	
 	//console.log(input)
 	for (let i = 0; i < arrInput.length; i++) {
-		//console.log(arrInput[i]+"input")
+		console.log(arrInput[i]+"input")
 		if (!($("#"+arrInput[i]).prop('required') == false) && !($("#"+arrInput[i]).prop('readonly')) && $("#"+arrInput[i]).length > 0){
-			//console.log(arrInput[i]+" "+"input")
+			console.log(arrInput[i]+" "+"input")
 			validarFormularioSubmit(arrInput[i]);
 			
 		}
@@ -266,6 +268,5 @@ function openModal(){
     $("#id").prop("readonly", 'readonly');
     $("#id").prop("tabinex", '-1');
     $("#id").css('background', '#ddddddec');
-	
 
   }

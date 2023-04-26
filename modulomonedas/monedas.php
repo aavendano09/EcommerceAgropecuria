@@ -159,11 +159,24 @@ require_once 'validations/Formulario.php';
 
 
     <script>
+      // $('#imagen').attr("required", false);
+$("#new").on(
+	"click",
+	function(){
+	  $('#ara').prop("id", "imagen");
+    $('#imagen').prop("required", true);
+	}
+  )
 
+
+    
      let editaModal = document.getElementById('nuevoModal')
      let eliminaModal = document.getElementById('eliminaModal')
 
      function edit(val) {
+      formulario.reset();
+       $('#imagen').prop("id", "ara");
+       $('#ara').removeAttr("required");
         let id = val;
        validRefresh();
        openEdit();
