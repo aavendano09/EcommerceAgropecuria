@@ -50,7 +50,8 @@ const expresiones = {
 	extranjero: /^(\d[0-9][0-9][0-9][0-9][0-9][0-9]|[1-3][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9])$/, // 7 a 14 numeros.
 	nro_cuenta: /^\d{20,20}$/,
 	tipo_cuenta: /^[a-zA-Z\s]{3,40}$/,
-	imagen: /(png|jpg|wepg|jpeg|jfif)$/
+	imagen: /(png|jpg|wepg|jpeg|jfif)$/,
+	ara: /(^$)|\b(png|jpg|wepg|jpeg|jfif)\b/
 }
 
 
@@ -237,7 +238,7 @@ function openModal(){
   function validRefresh(){
 	for (let i = 0; i < arrInput.length; i++) {
 		if ($("#"+arrInput[i]).length > 0) {
-			//console.log(arrInput[i]);
+			console.log(arrInput[i]);
 			document.getElementById(`grupo__${arrInput[i]}`).classList.remove('formulario__grupo-incorrecto');
 			document.querySelector(`#grupo__${arrInput[i]} i`).classList.remove('fa-times-circle');
 			document.getElementById(`grupo__${arrInput[i]}`).classList.remove('formulario__grupo-correcto');

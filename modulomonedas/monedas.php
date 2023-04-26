@@ -163,8 +163,11 @@ require_once 'validations/Formulario.php';
 $("#new").on(
 	"click",
 	function(){
-	  $('#ara').prop("id", "imagen");
+    $('#ara').prop("id", "imagen");
+	  $('#imagen').prop("name", "imagen");
     $('#imagen').prop("required", true);
+    $('#imagen').prop('name', 'imagen');
+    $('#grupo__ara').prop('id', 'grupo__imagen');
 	}
   )
 
@@ -174,12 +177,16 @@ $("#new").on(
      let eliminaModal = document.getElementById('eliminaModal')
 
      function edit(val) {
-      formulario.reset();
        $('#imagen').prop("id", "ara");
+       $('#ara').prop("name", "ara");
        $('#ara').removeAttr("required");
-        let id = val;
+       $('#grupo__imagen').prop('id', 'grupo__ara');
+       document.getElementById(`grupo__ara`).classList.remove('formulario__grupo-incorrecto');
+       formulario.reset();
+
+      let id = val;
+      openEdit();
        validRefresh();
-       openEdit();
 
         let inputId = editaModal.querySelector('.modal-body #id')
         let inputNombre = editaModal.querySelector('.modal-body #nombre')
