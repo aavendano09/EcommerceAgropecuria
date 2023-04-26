@@ -13,7 +13,7 @@
 <?php
   $formulario = new Formulario("moduloproveedores/guarda.php", "formulario", "formulario");
   $formulario->setInput("number", "id", "ID", "9999");
-  $formulario->setSelInput("number", "tiprif", "rif", "Rif", "407898280");
+  $formulario->setSelInput("number", "tiprif", "rif", "Rif", "407898280",'required', 'null', ['J','G']);
   $formulario->setInput("text", "tiprifOld", "Tiprif", "V", '', 'hidden');
   $formulario->setInput("number", "rifOld", "Rif", "0000000000", '', 'hidden');
   $formulario->setInput("text", "razon", "Razon social", "Vendedor");

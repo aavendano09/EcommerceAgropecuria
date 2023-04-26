@@ -212,6 +212,12 @@ $modulo=$_REQUEST['modulo'];
                 </a>
              </li>
              <li class="nav-item">
+                <a href="paneladmin.php?modulo=presentaciones" class="nav-link <?php echo ($modulo=="presentaciones" )?" active ":" "; ?>">
+                  <i class="fas fa-chevron-right nav-icon"></i>
+                  <p>Presentaciones</p>
+                </a>
+             </li>
+             <li class="nav-item">
                 <a href="paneladmin.php?modulo=productos" class="nav-link <?php echo ($modulo=="productos" )?" active ":" "; ?>">
                   <i class="fas fa-chevron-right nav-icon"></i>
                   <p>Nuevo</p>
@@ -341,6 +347,10 @@ $modulo=$_REQUEST['modulo'];
 
   if($modulo=="productos"){
     include_once "moduloproductos/productos.php";
+  }
+
+  if($modulo=="presentaciones"){
+    include_once "modulopresentacion/presentaciones.php";
   }
 
   if($modulo=="eliminaproductos"){

@@ -59,7 +59,7 @@ $proveedores = $conexion->query($sql);
         <thead class="table-dark">
             <tr>
                 <th>Id</th>
-                <th>Rif</th>
+                <th style="width: 150px;">Rif</th>
                 <th>Razon Social</th>
                 <th>Direccion</th>
                 <th>Telefono</th>
