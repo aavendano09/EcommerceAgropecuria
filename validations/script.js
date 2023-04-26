@@ -209,7 +209,7 @@ formulario.addEventListener('submit', (event) => {
 			icono.classList.remove('formulario__grupo-correcto');
 		});
 
-		//$('#formulario').submit();
+		$('#formulario').submit();
 	} else {
 		
 

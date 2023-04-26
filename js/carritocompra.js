@@ -328,7 +328,7 @@ $(document).ready(function () {
                 <i class="fa fa-cart-plus"></i>
             </a>
             <div class="dropdown-divider"></div>
-            <a href="#" class="dropdown-item dropdown-footer text-danger" id="borrarCarrito" onclick="window.location = 'exit.php'">
+            <a href="#" class="dropdown-item dropdown-footer text-danger" id="borrarCarrito" onclick="window.location = 'cerrarCarrito.php'">
                 Borrar carrito 
                 <i class="fa fa-trash"></i>
             </a>
