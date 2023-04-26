@@ -14,7 +14,7 @@
 <?php
   $formulario = new Formulario("modulomedidas/guarda.php", "formulario", "formulario");
   $formulario->setInput("number", "id", "ID", "9999");
-  $formulario->setInput("text", "descripcion", "Descripción:", "Informacion adicional");
+  $formulario->setInput("text", "nombre", "nombre:", "Informacion adicional");
   $html = "<option value='1'>Activo</option>
           <option value='0'>Inactivo</option>
   ";

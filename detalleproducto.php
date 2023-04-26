@@ -123,10 +123,17 @@ $rowProducto = mysqli_fetch_assoc($resProducto);
               <?php endif; ?>
               
 
-              <div class="mt-4">
+              <?php if ($_SESSION['productosSession'][$_REQUEST['id']]['cantidad'] < $rowProducto['tprod_cantpr']):?>
+                <div class="mt-4">
                  Cantidad: 
                   <input type="number" class="form-control" max="<?= $rowProducto['tprod_cantpr'] ?>" id="cantidadProducto" value="1">
-              </div>
+                </div>
+              <?php else: ?>
+                <div class="mt-4">
+                 Cantidad: 
+                  <input type="number" class="form-control" max="<?= $rowProducto['tprod_cantpr'] ?>" id="cantidadProducto" value="1" disabled>
+                </div>
+              <?php endif; ?>
 
             </div>
           </div>

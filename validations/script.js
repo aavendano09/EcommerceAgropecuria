@@ -25,10 +25,10 @@ $('select').each(function () {
 	i++;
 });
 
-console.log(input);
-console.log(select);
-console.log(arrInput);
-console.log(arrSelect);
+//console.log(input);
+//console.log(select);
+//console.log(arrInput);
+//giconsole.log(arrSelect);
 
 const expresiones = {
 	id: /^\d{1,4}$/,
@@ -79,9 +79,9 @@ function validarFormularioSubmit(campo){
 const validarCampo = (expresion, Oinput, campo) => {
 
 	if(expresion.test(Oinput.value)){
-		console.log(Oinput);
 		input[campo] = true;
 		select[campo] = true;
+		console.log(input[campo]);
 		document.getElementById(`grupo__${campo}`).classList.remove('formulario__grupo-incorrecto');
 		document.getElementById(`grupo__${campo}`).classList.add('formulario__grupo-correcto');
 		document.querySelector(`#grupo__${campo} i`).classList.add('fa-check-circle');
@@ -92,6 +92,7 @@ const validarCampo = (expresion, Oinput, campo) => {
 	} else {
 		input[campo] = false;
 		select[campo] = false;
+		console.log(input[campo]);
 		document.getElementById(`grupo__${campo}`).classList.add('formulario__grupo-incorrecto');
 		document.getElementById(`grupo__${campo}`).classList.remove('formulario__grupo-correcto');
 		document.querySelector(`#grupo__${campo} i`).classList.add('fa-times-circle');
@@ -155,7 +156,7 @@ formulario.addEventListener('submit', (event) => {
 	
 	for (let i = 0; i < arrInput.length; i++) {
 		
-		if (($("#"+arrInput[i]).prop('required') == false) ||  ($("#"+arrInput[i]).prop('readonly'))) {
+		if (($("#"+arrInput[i]).prop('required') == false) ||  ($("#"+arrInput[i]).prop('readonly')) || $("#"+arrInput[i]).attr("id") == "ara") {
 			input[arrInput[i]] = true;
 		}		
 	}
@@ -163,7 +164,7 @@ formulario.addEventListener('submit', (event) => {
 	//console.log(input)
 	for (let i = 0; i < arrInput.length; i++) {
 		console.log(arrInput[i]+"input")
-		if (!($("#"+arrInput[i]).prop('required') == false) && !($("#"+arrInput[i]).prop('readonly')) && $("#"+arrInput[i]).length > 0){
+		if ((!($("#"+arrInput[i]).prop('required') == false) && !($("#"+arrInput[i]).prop('readonly')) && $("#"+arrInput[i]).length > 0)||$("#"+arrInput[i]).attr("id") == "ara"){
 			console.log(arrInput[i]+" "+"input")
 			validarFormularioSubmit(arrInput[i]);
 			
@@ -208,7 +209,7 @@ formulario.addEventListener('submit', (event) => {
 			icono.classList.remove('formulario__grupo-correcto');
 		});
 
-		$('#formulario').submit();
+		//$('#formulario').submit();
 	} else {
 		
 
@@ -224,40 +225,26 @@ function openModal(){
   $("#new").on(
 	"click",
 	function(){
+		formulario.reset();
 	  $("#formulario").prop("action", modulo+"/guarda.php");
 	  $("#id").prop("readonly", false);
 	  $("#id").css('background', '#fafafaec');
 	  $("#nuevoModalLabel").text("Agregar "+modaltitle+":");
-	  formulario.reset();
-	  validRefresh();
 	  openModal();
+	  validRefresh();
 	}
   )
 
 
   function validRefresh(){
-	for (let i = 0; i < arrInput.length; i++) {
-		if ($("#"+arrInput[i]).length > 0) {
-			console.log(arrInput[i]);
-			document.getElementById(`grupo__${arrInput[i]}`).classList.remove('formulario__grupo-incorrecto');
-			document.querySelector(`#grupo__${arrInput[i]} i`).classList.remove('fa-times-circle');
-			document.getElementById(`grupo__${arrInput[i]}`).classList.remove('formulario__grupo-correcto');
-			document.querySelector(`#grupo__${arrInput[i]} i`).classList.remove('fa-check-circle');
-			document.querySelector(`#grupo__${arrInput[i]} .formulario__input-error`).classList.remove('formulario__input-error-activo');
-		}
-		
-		
-	}
 	
-	for (let i = 0; i < arrSelect.length; i++) {
-		//console.log(arrSelect[i]);
-		document.getElementById(`grupo__${arrSelect[i]}`).classList.remove('formulario__grupo-incorrecto');
-		document.getElementById(`grupo__${arrSelect[i]}`).classList.remove('formulario__grupo-correcto');
-		document.querySelector(`#grupo__${arrSelect[i]} i`).classList.remove('fa-check-circle');
-		document.querySelector(`#grupo__${arrSelect[i]} .formulario__input-error`).classList.remove('formulario__input-error-activo');
-		document.querySelector(`#grupo__${arrSelect[i]} i`).classList.remove('fa-times-circle');
 		
-	}
+	$(".formulario__grupo-incorrecto").removeClass('formulario__grupo-incorrecto')
+	$(".fa-times-circle").removeClass('fa-times-circle')
+	$(".formulario__grupo-correcto").removeClass('formulario__grupo-correcto')
+	$(".fa-check-circle").removeClass('fa-check-circle')
+	$(".formulario__input-error-activo").removeClass('formulario__input-error-activo')
+	
 
 
   }

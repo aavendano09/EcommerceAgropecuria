@@ -1,6 +1,5 @@
 <?php
 session_start();
-
 $productos= unserialize($_COOKIE['productos']);
     if (!isset($_SESSION['productosSession'])) {
         $_SESSION['productosSession'] = array();

@@ -202,15 +202,16 @@ $(document).ready(function () {
         var max = $(this).data('max');
         var current = $(this).data('current');
 
+        console.log(id)
+        console.log(id)
+        console.log(id)
+        console.log(id)
         $.ajax({
             type: "post",
             url: "ajax/sessionCarrito.php",
             data: {"id":id},
             asycn:true,
             dataType: "json",
-            beforeSend: function() {
-
-            },
             success: function (data) {
             responses = data
             console.log(responses+" sucess ");
@@ -226,18 +227,21 @@ $(document).ready(function () {
                 type: "post",
                 url: "ajax/agregarCarrito.php",
                 data: {"id":id,"nombre":nombre,"cantidad":cantidad,"precio":precio},
-                asycn:true,
+                asycn: false,
                 dataType: "json",
                 beforeSend: function() {
                     $("#badgeProducto").text(1);
                     $("#badgeProducto").hide(500).show(500).hide(500).show(500).hide(500).show(500);
                     $("#iconoCarrito").click();
                 },
-                success: function (response) {
+                error: function(err){
+                    console.log(err);
+                }
+            })
+            .done(function(response){
                     llenaCarrito(response);
                     $("#badgeProducto").hide(500).show(500).hide(500).show(500).hide(500).show(500);
                     $("#iconoCarrito").click();
-                }
             });
             countCookie++;
         }else{
@@ -267,6 +271,7 @@ $(document).ready(function () {
                 if (total >= max) {
                     alert("Amigo cliente, ha superado la maxima existencia del producto");
                     $('#agregarCarrito').prop('disabled', 'disabled');
+                    $('#agregarCarrito').prop('disabled', 'disabled');
                 }
            
         }
@@ -292,7 +297,7 @@ $(document).ready(function () {
     });
     function llenaCarrito(response){
         var cantidad=Object.keys(response).length;
-
+        console.log("jp")
         $("#badgeProducto").text(cantidad);
        
         $("#listaCarrito").text("");

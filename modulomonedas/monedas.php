@@ -158,7 +158,10 @@ require_once 'validations/Formulario.php';
     </script>
 
 
+
+
     <script>
+      input["ara"] = false;
       // $('#imagen').attr("required", false);
 $("#new").on(
 	"click",
@@ -185,8 +188,7 @@ $("#new").on(
        formulario.reset();
 
       let id = val;
-      openEdit();
-       validRefresh();
+      
 
         let inputId = editaModal.querySelector('.modal-body #id')
         let inputNombre = editaModal.querySelector('.modal-body #nombre')
@@ -211,6 +213,8 @@ $("#new").on(
 
         }).catch(err => console.log(err))
 
+        openEdit();
+        validRefresh();
      }
 
      eliminaModal.addEventListener('shown.bs.modal', event => {
