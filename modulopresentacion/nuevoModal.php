@@ -12,13 +12,13 @@
 
 
 <?php
-  $formulario = new Formulario("modulomedidas/guarda.php", "formulario", "formulario");
-  $formulario->setInput("number", "id", "ID", "9999");
-  $formulario->setInput("text", "descripcion", "Descripción:", "Descripcion");
+  $formulario = new Formulario("moduloPresentacion/guarda.php", "formulario", "formulario");
+  $formulario->setInput("number", "id", "ID", 12, "9999");
+  $formulario->setInput("text", "descripcion", "Descripción:", 12, "Descripcion");
   $html = "<option value='1'>Activo</option>
           <option value='0'>Inactivo</option>
   ";
-  $formulario->setSelect("estado", "Estado", $html, null, null, null);
+  $formulario->setSelect("estado", "Estado", 12, $html, null, null, null);
   $formulario->setButton("Enviar", "Formulario enviado exitosamente!", true, "Cerrar", 1);
   $formulario->getRender();
 ?>

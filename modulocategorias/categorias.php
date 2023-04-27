@@ -85,8 +85,15 @@ require_once 'validations/Formulario.php';
 
                   <a href="#" id="edit" class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#nuevoModal" onclick="edit(<?= $row['tctpr_idcatg']; ?>)"><i class="fa-solid fa-pencil"></i> Editar</a>
 
-                  <a href="#" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#eliminaModal" data-bs-id="<?= $row['tctpr_idcatg']; ?>"><i class="fa-solid fa-trash"></i> Eliminar</a>
+                  <?php if($row['tctpr_status']): ?>
 
+                    <a href="#" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#eliminaModal" data-bs-id="<?= $row['tctpr_idcatg']; ?>"><i class="fa-solid fa-trash"></i> Eliminar</a>
+
+                  <?php else: ?>
+
+                    <a href="#" class="btn btn-sm btn-secondary" style="pointer-events: none;" disabled data-bs-toggle="modal"><i class="fa-solid fa-trash"></i> Eliminar</a>
+
+                  <?php endif; ?>
                  </td>
                </tr>
 

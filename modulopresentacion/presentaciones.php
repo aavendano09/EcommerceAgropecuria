@@ -3,7 +3,7 @@
 
 require_once('conexion.php');
 
-$sql = "SELECT tmpro_idmedi, tmpro_descmd, tmpro_status FROM tmpro_tme;";
+$sql = "SELECT tpre_idpres, tpre_despre, tpre_status FROM tpre_tts;";
 $medidas = $conexion->query($sql);
 
 require_once 'validations/Formulario.php';
@@ -15,7 +15,7 @@ require_once 'validations/Formulario.php';
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Medidas</title>
+    <title>Presentaciones</title>
     <link href="assets/css/bootstrap.min.css" rel="stylesheet">
     <link href="assets/css/all.min.css" rel="stylesheet">
     <link href="assets/images/favicon.png" rel="icon">
@@ -25,8 +25,8 @@ require_once 'validations/Formulario.php';
     <!-- ========================================================= -->
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
     <script>
-      const modulo = "modulomedidas";
-      const modaltitle = "Medida";
+      const modulo = "moduloPresentaciones";
+      const modaltitle = "Presentacion";
     </script>
 </head>
 <body>
@@ -37,7 +37,7 @@ require_once 'validations/Formulario.php';
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Medidas</h1>
+            <h1>Presentaciones</h1>
           </div>
         </div>
       </div><!-- /.container-fluid -->
@@ -49,7 +49,7 @@ require_once 'validations/Formulario.php';
         <div class="col-12">
             
     <div class="col-auto mb-3">
-        <a href="#" id="new" class="btn btn-primary" data-bs-toggle="modal"><i class="fa-solid fa-circle-plus"></i> Nueva Medida</a>
+        <a href="#" id="new" class="btn btn-primary" data-bs-toggle="modal"><i class="fa-solid fa-circle-plus"></i> Nueva Presentacion</a>
     </div>
 
           <div class="card">
@@ -66,11 +66,13 @@ require_once 'validations/Formulario.php';
         </thead>
         <tbody>
         <?php while($row = $medidas->fetch_assoc()){ ?>
+
+
                <tr>
-                 <td><?= $row['tmpro_idmedi'] ?></td>
-                 <td><?= $row['tmpro_descmd'] ?></td>
+                 <td><?= $row['tpre_idpres'] ?></td>
+                 <td><?= $row['tpre_despre'] ?></td>
                  <td>
-                  <?php if($row['tmpro_status'] ): ?>
+                  <?php if($row['tpre_status'] ): ?>
                   
                   Activo
 
@@ -82,9 +84,19 @@ require_once 'validations/Formulario.php';
                 </td>
                  <td>
 
-                  <a href="#" id="edit" class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#nuevoModal" onclick="edit(<?= $row['tmpro_idmedi']; ?>)"><i class="fa-solid fa-pencil"></i> Editar</a>
+                  <a href="#" id="edit" class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#nuevoModal" onclick="edit(<?= $row['tpre_idpres']; ?>)"><i class="fa-solid fa-pencil"></i> Editar</a>
 
-                  <a href="#" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#eliminaModal" data-bs-id="<?= $row['tmpro_idmedi']; ?>"><i class="fa-solid fa-trash"></i> Eliminar</a>
+                  <?php if($row['tpre_status']): ?>
+
+                    <a href="#" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#eliminaModal"  data-bs-id="<?= $row['tpre_idpres']; ?>"><i class="fa-solid fa-trash"></i> Eliminar</a>
+
+                  <?php else: ?>
+
+                    <a href="#" class="btn btn-sm btn-secondary" disabled style="pointer-events: none;" data-bs-toggle="modal"><i class="fa-solid fa-trash"></i> Eliminar</a>
+
+                  <?php endif; ?>
+
+
 
                  </td>
                </tr>
@@ -169,7 +181,7 @@ require_once 'validations/Formulario.php';
         let inputDescripcion = editaModal.querySelector('.modal-body #descripcion')
         let inputEstado = editaModal.querySelector('.modal-body #estado')
 
-        let url = "modulomedidas/getMedidas.php"
+        let url = "modulopresentacion/getPresentacion.php"
         let formData = new FormData()
         formData.append('id', id)
 
@@ -179,9 +191,10 @@ require_once 'validations/Formulario.php';
         }).then(response => response.json())
         .then(data => {
 
-            inputId.value = data.tmpro_idmedi
-            inputDescripcion.value = data.tmpro_descmd
-            inputEstado.value = data.tmpro_status
+
+            inputId.value = data.tpre_idpres
+            inputDescripcion.value = data.tpre_despre
+            inputEstado.value = data.tpre_status
 
         }).catch(err => console.log(err))
 

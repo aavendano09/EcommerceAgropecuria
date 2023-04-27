@@ -25,10 +25,10 @@ $('select').each(function () {
 	i++;
 });
 
-//console.log(input);
-//console.log(select);
-//console.log(arrInput);
-//giconsole.log(arrSelect);
+console.log(input);
+console.log(select);
+console.log(arrInput);
+console.log(arrSelect);
 
 const expresiones = {
 	id: /^\d{1,4}$/,
@@ -170,7 +170,7 @@ formulario.addEventListener('submit', (event) => {
 	for (let i = 0; i < arrInput.length; i++) {
 		
 		if ( (($("#"+arrInput[i]).prop('required') == false) ||  ($("#"+arrInput[i]).prop('readonly'))) ) {
-			//console.log(arrInput[i]+" "+"input")
+			console.log(arrInput[i]+" "+"input")
 			input[arrInput[i]] = true;
 		}		
 	}
@@ -202,7 +202,7 @@ formulario.addEventListener('submit', (event) => {
 	for (let i = 0; i < arrInput.length; i++) {
 		//console.log(input[arrInput[i]] + arrInput[i])
 		if (!input[arrInput[i]] &&  $("#"+arrInput[i]).length > 0) {
-			console.log(arrInput[i])
+			//console.log(arrInput[i])
 			band = false;
 		}
 		

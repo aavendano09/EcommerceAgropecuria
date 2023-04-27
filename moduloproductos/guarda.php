@@ -11,7 +11,7 @@ $tprod_precic = $conexion->real_escape_string($_POST['preciocosto']);
 $tprod_preciv = $conexion->real_escape_string($_POST['precioventa']);
 $fechavencimiento = $conexion->real_escape_string($_POST['fechavencimiento']);
 $fechaingreso = $conexion->real_escape_string($_POST['fechaingreso']);
-$cantidad = $conexion->real_escape_string($_POST['cantidad']);
+$contentneto = $conexion->real_escape_string($_POST['contenidoneto']);
 $tipoproducto=mysqli_real_escape_string($conexion, $_REQUEST['tipoproducto']);
 $presentacion=mysqli_real_escape_string($conexion, $_REQUEST['presentacion']);
 
@@ -49,8 +49,8 @@ if (mysqli_num_rows($request) == 0) {
 
     if($fechavencimiento >= $valiVencimiento){
        
-        $sqlproductos = "INSERT INTO `tprod_tme` (`tprod_idprod`, `tprod_fotopr`, `tprod_namepr`, `tprod_descpr`, `tprod_fktprp`, `tprod_precic`, `tprod_preciv`, `tprod_fechin`, `tprod_fechve`, `tprod_cantpr`) 
-    VALUES ('$id','$imagen','$nombre','$descripcion','$idtprp','$tprod_precic','$tprod_preciv','$fechaingreso','$fechavencimiento','$cantidad')";
+        $sqlproductos = "INSERT INTO `tprod_tme` (`tprod_idprod`, `tprod_fotopr`, `tprod_namepr`, `tprod_descpr`, `tprod_fktprp`, `tprod_precic`, `tprod_preciv`, `tprod_fechin`, `tprod_fechve`, `tprod_connet`) 
+    VALUES ('$id','$imagen','$nombre','$descripcion','$idtprp','$tprod_precic','$tprod_preciv','$fechaingreso','$fechavencimiento','$contentneto')";
 
     if ($band) {
         if($conexion->query($sqlproductos)){

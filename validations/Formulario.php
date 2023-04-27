@@ -69,7 +69,7 @@ class Formulario
                 <label for='$input' class='formulario__label'>$label</label>
                     <br/>
                     <br/>
-                    <select type='text' class='formulario__input col-2 d-inline' name='$select' id='$select' >
+                    <select type='text' class='formulario__input col-2 d-inline' name='$select' id='$select' $required>
                     <option value=''>-</option>";
         for ($i=0; $i < count($options); $i++) { 
             $this->inputs .= "<option value='$options[$i]'>$options[$i]</option>";

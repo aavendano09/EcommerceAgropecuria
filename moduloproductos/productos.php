@@ -453,7 +453,7 @@ function edit(val) {
    let inputDescripcion = editaModal.querySelector('.modal-body #descripcion')
    let inputTipoProducto = editaModal.querySelector('.modal-body #tipoproducto')
    let inputPresentacion = editaModal.querySelector('.modal-body #presentacion')
-   let inputCantidad = editaModal.querySelector('.modal-body #cantidad')
+   let inputCantidad = editaModal.querySelector('.modal-body #contenidoneto')
    let inputPreciocosto = editaModal.querySelector('.modal-body #preciocosto')
    let inputPrecioventa = editaModal.querySelector('.modal-body #precioventa')
    let inputFechavencimiento = editaModal.querySelector('.modal-body #fechavencimiento')
@@ -476,7 +476,7 @@ function edit(val) {
        inputTipoProducto.value = data.ttpro_idtipp
        cargaPresent(data.ttpro_idtipp, data.tpre_idpres);
        cargaMedida(data.tpre_idpres);
-       inputCantidad.value = data.tprod_cantpr
+       inputCantidad.value = data.tprod_connet
        inputPreciocosto.value = data.tprod_precic
        inputPrecioventa.value = data.tprod_preciv
        inputFechavencimiento.value = data.tprod_fechve
