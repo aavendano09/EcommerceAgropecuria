@@ -15,7 +15,7 @@
   $html = "<option value='1'>Activo</option>
           <option value='0'>Inactivo</option>
   ";
-  $formulario->setSelect("estado", "Estado", 6, $html, null, null, null);
+  $formulario->setSelect("estado", "Estado", 12, $html, null, null, null);
   $formulario->setButton("Enviar", "Formulario enviado exitosamente!", true, "Cerrar", 1);
   $formulario->getRender();
 ?>
