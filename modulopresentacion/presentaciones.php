@@ -25,7 +25,7 @@ require_once 'validations/Formulario.php';
     <!-- ========================================================= -->
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
     <script>
-      const modulo = "moduloPresentaciones";
+      const modulo = "modulopresentacion";
       const modaltitle = "Presentacion";
     </script>
 </head>
