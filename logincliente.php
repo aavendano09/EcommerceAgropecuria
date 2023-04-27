@@ -111,9 +111,9 @@ require_once 'validations/Formulario.php';
 <?php
   $formulario = new Formulario("", "formulario", "formulario");
   $formulario->setHeader("Ingrese los siguientes datos estimado cliente:");
-  $formulario->setInput("text", "usuario", "Nombre y Apellido", "Pedro Pérez");
-  $formulario->setInput("email", "correo", "Correo Electrónico", "pedro@gmail.com");
-  $formulario->setInput("password", "password", "Contraseña", "********");
+  $formulario->setInput("text", "usuario", "Nombre y Apellido", 12, "Pedro Pérez");
+  $formulario->setInput("email", "correo", "Correo Electrónico", 12, "pedro@gmail.com");
+  $formulario->setInput("password", "password", "Contraseña", 12, "********");
   $formulario->setButton("Enviar", "Formulario enviado exitosamente!");
   $formulario->setHtml(" <a href='registrocliente.php' class='text-success'>Registrarse</a>");
   $formulario->setFoot("@Since 2021");

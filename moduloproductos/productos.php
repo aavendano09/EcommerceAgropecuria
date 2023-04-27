@@ -5,7 +5,15 @@ require_once('conexion.php');
 $sqltipoproducto = "SELECT ttpro_nametp FROM ttpro_tme";
 $tipoproducto = $conexion->query($sqltipoproducto);
 
-$sql = "SELECT tprod_idprod, tprod_fotopr, tprod_descpr, tprod_prespr, tprod_precic, tprod_preciv, tprod_fechve, tprod_fechin, tprod_cantpr,tprod_fktipp,tprod_status FROM tprod_tme;";
+$sql = "SELECT tprod_idprod, tprod_fotopr, tprod_descpr, ttpro_nametp, tpre_despre, tprod_precic, tprod_preciv, tprod_fechve, tprod_fechin, tprod_cantpr,tprod_status FROM tprod_tme 
+INNER JOIN tprp_tts ON tprp_idtprp = tprod_fktprp
+INNER JOIN tpre_tts ON tpre_idpres = tprp_fkpres
+INNER JOIN ttpro_tme ON tprp_fktpro = ttpro_idtipp;";
+
+
+//  SELECT tprod_namepr, tmpro_descmd, ttpro_nametp FROM tmpro_tme INNER JOIN tpre_tts ON tmpro_idmedi = tpre_fkmedi INNER JOIN tprp_tts ON tpre_idpres = tprp_fkpres INNER JOIN tprod_tme ON tprod_fktprp = tprp_idtprp INNER JOIN ttpro_tme ON tprp_fktpro
+// WHERE tprod_fktprp = 3  LIMIT 1; 
+
 $productos = $conexion->query($sql);
 
 $sql2 = "SELECT tvent_idvent FROM tvenn_tts";
@@ -73,8 +81,8 @@ require_once 'validations/Formulario.php';
                 <th>Codigo</th>
                 <th>Imagen</th>
                 <th>Descripcion</th>
-                <th>Presentacion</th>
                 <th>Tipo de Producto</th>
+                <th>Presentacion</th>
                 <th>Precio</th>
                 <th>Cantidad</th>
                 <th>Estado</th>
@@ -88,8 +96,8 @@ require_once 'validations/Formulario.php';
                  <td><?= $row_productos['tprod_idprod'] ?></td>
                  <td><img style="width: 100px;" src="data:image/jpg;base64,<?php echo base64_encode($row_productos['tprod_fotopr']) ?>" alt=""></td>
                  <td><?= $row_productos['tprod_descpr'] ?></td>
-                 <td><?= $row_productos['tprod_prespr'] ?></td>
-                 <td><?= $row_productos['tprod_fktipp'] ?></td>
+                 <td><?= $row_productos['ttpro_nametp'] ?></td>
+                 <td><?= $row_productos['tpre_despre'] ?></td>
                  <td><?= $row_productos['tprod_preciv'] ?></td>
                  <td><?= $row_productos['tprod_cantpr'] ?></td>
                  <td>
@@ -115,6 +123,8 @@ require_once 'validations/Formulario.php';
                </tr>
 
            <?php } ?>
+
+
 </tbody>
 
         </tbody>
@@ -409,24 +419,45 @@ require_once 'validations/Formulario.php';
     </script>
 
 <script>
+     input["ara"] = false;
+      arrInput[4] = "ara";
+      // $('#imagen').attr("required", false);
+$("#new").on(
+	"click",
+	function(){
+    $('#ara').prop("id", "imagen");
+	  $('#imagen').prop("name", "imagen");
+    $('#imagen').prop("required", true);
+    $('#imagen').prop('name', 'imagen');
+    $('#grupo__ara').prop('id', 'grupo__imagen');
+	}
+  )
 
-let editaModal = document.getElementById('editaModal')
+let editaModal = document.getElementById('nuevoModal')
 
 function edit(val) {
-        let id = val;
-       validRefresh();
-       openEdit();
+    $('#imagen').prop("id", "ara");
+       $('#ara').prop("name", "ara");
+       $('#ara').removeAttr("required");
+       $('#grupo__imagen').prop('id', 'grupo__ara');
+       document.getElementById(`grupo__ara`).classList.remove('formulario__grupo-incorrecto');
+       formulario.reset();
+
+    let id = val;
+
+    validRefresh();
+    openEdit();
 
    let inputId = editaModal.querySelector('.modal-body #id')
-   let inputDNombre= editaModal.querySelector('.modal-body #nombre')
+   let inputDNombre= editaModal.querySelector('.modal-body #nombre2')
    let inputDescripcion = editaModal.querySelector('.modal-body #descripcion')
-   let inputPresentacion = editaModal.querySelector('.modal-body #presentacion')
    let inputTipoProducto = editaModal.querySelector('.modal-body #tipoproducto')
+   let inputPresentacion = editaModal.querySelector('.modal-body #presentacion')
+   let inputCantidad = editaModal.querySelector('.modal-body #cantidad')
    let inputPreciocosto = editaModal.querySelector('.modal-body #preciocosto')
    let inputPrecioventa = editaModal.querySelector('.modal-body #precioventa')
    let inputFechavencimiento = editaModal.querySelector('.modal-body #fechavencimiento')
    let inputFechaingreso = editaModal.querySelector('.modal-body #fechaingreso')
-   let inputCantidad = editaModal.querySelector('.modal-body #cantidad')
    let inputStatus= editaModal.querySelector('.modal-body #estado')
 
    let url = "moduloproductos/getProductos.php"
@@ -442,18 +473,106 @@ function edit(val) {
        inputId.value = data.tprod_idprod
        inputDNombre.value = data.tprod_namepr
        inputDescripcion.value = data.tprod_descpr
-       inputPresentacion.value = data.tprod_prespr
-       inputTipoProducto.value = data.tprod_fktipp
+       inputTipoProducto.value = data.ttpro_idtipp
+       cargaPresent(data.ttpro_idtipp, data.tpre_idpres);
+       cargaMedida(data.tpre_idpres);
+       inputCantidad.value = data.tprod_cantpr
        inputPreciocosto.value = data.tprod_precic
        inputPrecioventa.value = data.tprod_preciv
        inputFechavencimiento.value = data.tprod_fechve
        inputFechaingreso.value = data.tprod_fechin
-       inputCantidad.value = data.tprod_cantpr
        inputStatus.value = data.tprod_status
 
    }).catch(err => console.log(err))
 
 }
+
+function cargaPresent(id, value = ""){
+
+
+    let sql = "SELECT tpre_idpres, tpre_despre FROM tpre_tts INNER JOIN tprp_tts ON tpre_idpres = tprp_fkpres INNER JOIN ttpro_tme ON tprp_fktpro = ttpro_idtipp WHERE ttpro_idtipp = '"+id+"'";
+   
+   if (id > 0) {
+       
+       
+       $.ajax({
+           type: "post",
+           url: "moduloproductos/carga.php",
+           data: {"sql": sql},
+           asycn:true,
+           dataType: "json",
+       }).done(function(resp){
+           var data = resp
+           var cadena = "<option value=''>Seleccione...</option>";
+           
+   
+           
+           if (data.length > 0) {
+               for (var i = 0; i < data.length; i++) {
+                if (data[i]["tpre_idpres"] == value) {
+                    cadena +="<option selected='true' value='"+data[i]["tpre_idpres"]+"'>"+data[i]["tpre_despre"]+"</option>";
+                   
+                }else{
+                    cadena +="<option value='"+data[i]["tpre_idpres"]+"'>"+data[i]["tpre_despre"]+"</option>";
+                }
+
+               }
+               $("#presentacion").html(cadena);
+           } else {
+               cadena +="<option value=''>No se encontraron registros</option>";
+               $("presentacion").html(cadena);
+           }
+       })
+   }else{
+   
+       $("#presentacion").html("<option value=''>Seleccione...</option>");
+   }
+
+}
+
+
+function cargaMedida(id){
+    
+let sql = "SELECT tmpro_descmd FROM tmpro_tme INNER JOIN tpre_tts ON tmpro_idmedi = tpre_fkmedi WHERE tpre_idpres = '"+id+"' LIMIT 1; ";
+
+$.ajax({
+        type: "post",
+        url: "moduloproductos/carga.php",
+        data: {"sql":sql},
+        asycn:true,
+        dataType: "json",
+    }).done(function(resp){
+    var data = resp
+
+
+    if (data.length > 0) {
+            
+
+        $("#medidas").text(data[0]['tmpro_descmd']);
+    } else {
+        cadena +="<option value=''>No se encontraron registros</option>";
+        $("presentacion").html("N/A");
+    }
+})
+}
+
+
+$("#tipoproducto").on("change", function(){
+
+    idTipoProducto = $('#tipoproducto').val();
+
+    cargaPresent(idTipoProducto);
+   
+})
+
+
+$("#presentacion").on("change", function(){
+
+    idPresent = $('#presentacion').val();
+
+    cargaMedida(idPresent);
+
+})
 
 
 </script>
@@ -464,7 +583,7 @@ function edit(val) {
 <script src="https://cdn.datatables.net/1.13.2/js/jquery.dataTables.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.2/moment.min.js"></script>
 <script src="https://cdn.datatables.net/datetime/1.3.0/js/dataTables.dateTime.min.js"></script>
-
+<script src="https://cdn.jsdelivr.net/npm/bs-custom-file-input/dist/bs-custom-file-input.js"></script>
 
 </body>
 </html>

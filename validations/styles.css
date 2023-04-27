@@ -18,7 +18,7 @@ main {
 
 
 .formulario__label {
-	display: block;
+	display: inline;
 	font-weight: 700;
 	padding: 10px;
 	cursor: pointer;
@@ -30,12 +30,12 @@ main {
 
 
 .formulario__grupo-input {
+	display: inline;
 	position: relative;
 
 }
 
 .formulario__input {
-	width: 100%;
 	background: #fafafaec;
 	border: 0.5px solid rgba(150, 150, 150, 0.596);
 	border-radius: 5px;
@@ -68,7 +68,7 @@ main {
 .formulario__validacion-estado {
 	position: absolute;
 	right: 10px;
-	bottom: 15px;
+	bottom: 2px;
 	z-index: 100;
 	font-size: 16px;
 	opacity: 0;

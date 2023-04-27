@@ -136,9 +136,9 @@ if ($_POST) {
 
   $formulario = new Formulario("", "formulario", "formulario");
   $formulario->setHeader("Ingrese los siguientes datos por favor:");
-  $formulario->setInput("text", "usuario", "Nombre de usuario", "Pedro Pérez");
-  $formulario->setInput("email", "correo", "Correo Electrónico", "pedro@gmail.com");
-  $formulario->setInput("password", "password", "Contraseña", "********");
+  $formulario->setInput("text", "usuario", "Nombre de usuario", 12, "Pedro Pérez");
+  $formulario->setInput("email", "correo", "Correo Electrónico", 12, "pedro@gmail.com");
+  $formulario->setInput("password", "password", "Contraseña", 12, "********");
   $formulario->setButton("Enviar", "Formulario enviado exitosamente!");
   $formulario->setFoot("@Since 2021");
   $formulario->getRender();

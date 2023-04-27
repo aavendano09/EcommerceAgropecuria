@@ -15,6 +15,7 @@ class Formulario
     private $id = "Solo se pueden ingresar de 1 a 4 digitos, solo numeros sin espacios ";
     private $usuario = "Solo se permiten letras y espacios";
     private $nombre = "Solo se permiten letras y espacios";
+    private $nombre2 = "Solo se permiten letras espacios y numeros";
     private $correo = "El correo solo puede contener letras, numeros, puntos, guiones y guion bajo.";
     private $fecha = "La fecha no puede ser menor a: ";
     private $direccion = "No puede estar vacio, no se acepta ese simbolo";
@@ -26,6 +27,10 @@ class Formulario
     private $rif= "La identificacion debe poseer 9 digitos";
     private $nro_cuenta = "Solo se perminten 20 numeros";
     private $imagen = "Solo se permiten archivos jpg, png, jpeg, jfif";
+    private $descripcion = "Solo se permiten letras espacios y numeros";
+    private $preciocosto = "Solo se permiten numeros";
+    private $precioventa = "Solo se permiten numeros";
+    private $cantidad = "Solo se permiten numeros";
     private $password = 
     "La contraseña tiene que ser:<br>
     Minimo 8 caracteres<br>
@@ -55,13 +60,15 @@ class Formulario
         ";
     }
 
-    public function setSelInput($type, $select, $input, $label, $ph, $required = 'required', $display = null, $options = array()){
+    public function setSelInput($type, $select, $input, $label, $ph, $size, $required = 'required', $display = null, $options = array()){
         $msg = $this->$input;
        
         $this->inputs .= "
             <div class='formulario__grupo mr-5 d-inline' id='grupo__$select' $display>
-                <label for='$input' class='formulario__label'>$label</label>
                 <div class='formulario__grupo-input d-inline'>
+                <label for='$input' class='formulario__label'>$label</label>
+                    <br/>
+                    <br/>
                     <select type='text' class='formulario__input col-2 d-inline' name='$select' id='$select' >
                     <option value=''>-</option>";
         for ($i=0; $i < count($options); $i++) { 
@@ -77,15 +84,17 @@ class Formulario
 
             <div class='formulario__grupo d-inline' id='grupo__$input' $display>
                 <div class='formulario__grupo-input d-inline'>
-                    <input type='$type' class='formulario__input ident col-12 ml-3' style='width: 74%;' name='$input' id='$input' placeholder='$ph' $required>
+                    <input type='$type' class='formulario__input ident col-$size ml-3' style='width: 74%;' name='$input' id='$input' placeholder='$ph' $required>
                     <i class='formulario__validacion-estado fas fa-times-circle' style='bottom: 2px;'></i>
                 </div>
                 <p id='errormsg' class='formulario__input-error'>$msg</p>
             </div>
+            <br/>
+            <br/>
         ";
     }
     
-    public function setInput($type, $input,$label, $ph, $required = 'required', $display = null){
+    public function setInput($type, $input, $label, $size, $ph, $required = 'required', $hidden = null ){
         if (!isset($this->$input)) {
             $msg = "";
         }else{
@@ -94,26 +103,87 @@ class Formulario
         
         
         $this->inputs .= "
-            <div class='formulario__grupo' id='grupo__$input' $display>
-                <label for='$input' class='formulario__label'>$label</label>
-                <div class='formulario__grupo-input'>
-                    <input type='$type' class='formulario__input d-block col-12' name='$input' id='$input' placeholder='$ph' $required>
+            <div class='formulario__grupo' id='grupo__$input' $hidden>
+                 <div class='formulario__grupo-input'>
+                    <label for='$input' class='formulario__label d-inline'>$label</label>
+                    <br/>
+                    <br/>
+                    <input type='$type' class='formulario__input col-$size' name='$input' id='$input' placeholder='$ph' $required >
                     <i class='formulario__validacion-estado fas fa-times-circle'></i>
                 </div>
                 <p class='formulario__input-error'>$msg</p>
+                <br/>
+                <br/>
             </div>
+            
+
         ";
     }
 
-    public function setSelect($input,$label, $html = null, $table = null, $value = null, $option = null){
+    public function setQuantity($type, $input, $label, $size, $display = null){
+        if (!isset($this->$input)) {
+            $msg = "";
+        }else{
+            $msg = $this->$input;
+        }
+        $this->inputs .= "
+            <div class='formulario__grupo' id='grupo__$input' $display>
+                <label for='$input' class='formulario__label d-inline'>$label</label>
+                <br/>
+                <br/>
+                <div class='input-group mb-3 formulario__grupo-input col-$size'>
+                    <input type='$type' name='$input' id='$input' class='form-control formulario__input' placeholder='40'>
+                    <i class='formulario__validacion-estado fas fa-times-circle' style='bottom: 13px; right: 145px;'></i>
+                    <span id='medidas' class='input-group-text'>KILOGRAMOS</span>
+                </div>
+                <p class='formulario__input-error'>$msg</p>
+                <br/>
+            </div>
+
+        ";
+    }
+
+    public function setImages($input, $label, $size){
+        if (!isset($this->$input)) {
+            $msg = "";
+        }else{
+            $msg = $this->$input;
+        }
+
+        $this->inputs .= "
+
+                <div class='formulario__grupo col-$size' id='grupo__$input'>
+                    <label for='$input' class='formulario__label'>$label</label>
+                    <div class='d-flex flex-row justify-content-around align-items-center'>
+                        <div class='p-2 col-8 align-items-center'>             
+                            <div class=' formulario__grupo-input col-12 d-flex'>
+                                <input type='file' class='form-control formulario__input' name='$input' id='imagen'>
+                                <i class='formulario__validacion-estado fas fa-times-circle' style='bottom: 12px; right: 20px;'></i>
+                            </div>
+                            
+                        </div>
+                        <div id='img_content' class='border text-center rounded-lg p-2 '>
+                            <img src='//placehold.it/50?text=IMAGE' maxwidth='200px' class='img-fluid' id='preview'/>
+                        </div>
+                        <p class='formulario__input-error'>$msg</p>
+                    </div>
+                    <br/>
+                </div>
+
+        ";
+    }
+
+    public function setSelect($input, $label, $size, $html = null, $table = null, $value = null, $option = null){
     
         $msg = $this->selects;
 
         $this->inputs .= "
-        <div class='formulario__grupo' id='grupo__$input'>
-            <label for='$input' class='formulario__label'>$label</label>
+        <div class='formulario__grupo col-$size' id='grupo__$input'>
             <div class='formulario__grupo-input'>
-                <select type='text' class='formulario__input col-12' name='$input' id='$input' required>
+                <label for='$input' class='formulario__label'>$label</label>
+                <br/>
+                <br/>
+                <select type='text' class='formulario__input col-$size ' name='$input' id='$input' required>
                 <option value=''>Seleccione...</option>
                 ";
         if ($table != null) {
@@ -142,9 +212,11 @@ class Formulario
        
        
         $this->inputs .= "</select>
-            <i class='formulario__validacion-estado fas fa-times-circle'></i>   
+            <i class='formulario__validacion-estado fas fa-times-circle' style='right='0''></i>   
             </div>
             <p class='formulario__input-error'>$msg</p>
+            <br/>
+            <br/>
         </div>
         ";
     }
@@ -201,4 +273,5 @@ class Formulario
 
 <script src="assets/js/jquery-3.6.0.min.js"></script>
 <script src="https://kit.fontawesome.com/2c36e9b7b1.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bs-custom-file-input/dist/bs-custom-file-input.js"></script>
 

@@ -3,12 +3,6 @@
 
 require_once('conexion.php');
 
-$sqltipoproducto = "SELECT ttpro_nametp FROM ttpro_tme";
-$tipoproducto = $conexion->query($sqltipoproducto);
-
-$sql = "SELECT tprod_idprod, tprod_fotopr, tprod_descpr, tprod_prespr, tprod_precic, tprod_preciv, tprod_fechve, tprod_fechin, tprod_cantpr,tprod_fktipp FROM tprod_tme WHERE tprod_status = 1;";
-$productos = $conexion->query($sql);
-
 
 ?>
 <!-- Modal -->
@@ -45,9 +39,9 @@ $productos = $conexion->query($sql);
                         <label>Tipo Producto</label>
                         <select name="tipoproducto" id="tipoproducto" class="form-select" required>
                           <option value="">Seleccionar...</option>
-                          <?php// while($row_producto = $tipoproducto->fetch_assoc()){ ?>
-                                <option value="<?php// echo $row_producto['ttpro_nametp']; ?>"><?= $row_producto['ttpro_nametp'] ?></option>
-                          <?php// } ?>
+                          <?php while($row_producto = $tipoproducto->fetch_assoc()){ ?>
+                                <option value="<?php echo $row_producto['ttpro_nametp']; ?>"><?= $row_producto['ttpro_nametp'] ?></option>
+                          <?php } ?>
                         </select>
             </div>
             <div class="mb-3">
@@ -78,18 +72,28 @@ $productos = $conexion->query($sql);
 
 <?php
   $formulario = new Formulario("moduloproductos/guarda.php", "formulario", "formulario");
-  $formulario->setInput("number", "id", "ID", "9999");
-  $formulario->setInput("file", "imagen", "Imagen:", "");
-  $formulario->setInput("text", "nombre", "Nombre:", "Fertilizantes");
-  $formulario->setInput("text", "descripcion", "Descripcion:", "Informacion adicional");
-  $formulario->setInput("text", "presentacion", "Presentacion:", "Sacos");
+
+  $formulario->setInput("number", "id", "ID", 12, "9999");
+  $formulario->setInput("text", "nombre2", "Nombre:", 12, "Fertilizantes");
+  $formulario->setImages("imagen", "Imagen:", 12);
+  $formulario->setInput("text", "descripcion", "Descripcion:", 12, "Informacion adicional");
+  $formulario->setSelect("tipoproducto", "Tipo Producto:", 12, null, "ttpro_tme", "ttpro_idtipp", "ttpro_nametp");
+  $formulario->setSelect("presentacion", "Presentacion:", 12, null);
+  $formulario->setQuantity("number", "cantidad", "Cantidad:", 12, "40");
+  $formulario->setInput("number", "preciocosto", "Precio Costo:", 12, "50");
+  $formulario->setInput("number", "precioventa", "Precio Venta:", 12, "80");
+  $formulario->setInput("date", "fechavencimiento", "Fecha de Vencimiento:", 12, "");
+  $formulario->setInput("date", "fechaingreso", "Fecha de Ingreso:", 12, "");
   $html = "<option value='1'>Activo</option>
           <option value='0'>Inactivo</option>
   ";
-  $formulario->setSelect("estado", "Estado", $html, null, null, null);
+  $formulario->setSelect("estado", "Estado", 12, $html, null, null, null);
   $formulario->setButton("Enviar", "Formulario enviado exitosamente!", true, "Cerrar", 1);
-  $formulario->getRender();
+   $formulario->getRender();
 ?>
+
+
+
 
       </div>
     </div>

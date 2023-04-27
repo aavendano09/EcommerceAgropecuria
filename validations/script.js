@@ -34,6 +34,7 @@ const expresiones = {
 	id: /^\d{1,4}$/,
 	usuario: /^[a-zA-ZÀ-ÿ\s]{3,40}$/, // Letras y espacios, pueden llevar acentos.
 	nombre: /^[a-zA-ZÀ-ÿ\s]{3,40}$/, // Letras y espacios, pueden llevar acentos.
+	nombre2: /^([a-zA-Z0-9_. ,-]){1,50}$/, // Letras y espacios, pueden llevar acentos.
 	descripcion: /^([a-zA-Z0-9_. ,-]){1,50}$/,
 	password: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$#!%*?&]{8,15}$/, // 4 a 12 digitos.
 	correo: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9]+\.[a-zA-Z0-9]+$/,
@@ -42,18 +43,28 @@ const expresiones = {
 	cedula: /^\d{7,8}$/,
 	rif: /^\d{9,9}$/, // 9 a 9 numeros.
 	tiprif: /^[a-zA-ZÀ-ÿ\d\-_,.#\/\s]+$/,
-	direccion: /^([a-zA-Z0-9_. ,-]){1,50}$/,
+	direccion: /^([a-zA-ZÀ-ÿ0-9_. ,-]){1,60}$/,
 	tipousuario: /^\d{1,3}$/,
 	razon: /^[a-zA-ZÀ-ÿ\.\s]{1,50}$/,
 	estado: /^\d{1,3}$/,
-	fecha: /.*/,
+	fecha: /^\d{4}\-(0?[1-9]|1[012])\-(0?[1-9]|[12][0-9]|3[01])$/,
 	extranjero: /^(\d[0-9][0-9][0-9][0-9][0-9][0-9]|[1-3][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9])$/, // 7 a 14 numeros.
 	nro_cuenta: /^\d{20,20}$/,
 	tipo_cuenta: /^[a-zA-Z\s]{3,40}$/,
 	imagen: /(png|jpg|wepg|jpeg|jfif)$/,
-	ara: /(^$)|\b(png|jpg|wepg|jpeg|jfif)\b/
+	ara: /(^$)|\b(png|jpg|wepg|jpeg|jfif)\b/,
+	cantidad: /^\d{1,4}$/,
+	preciocosto: /[0-9,]+[^.]/,
+	precioventa: /[0-9,]+[^.]/,
+	fechavencimiento: /^\d{4}\-(0?[1-9]|1[012])\-(0?[1-9]|[12][0-9]|3[01])$/,
+	fechaingreso: /^\d{4}\-(0?[1-9]|1[012])\-(0?[1-9]|[12][0-9]|3[01])$/,
+	tipoproducto: /^\d{1,3}$/,
+	presentacion: /^\d{1,3}$/,
 }
+$('#fechaingreso').on('change', function(){
 
+	console.log($('#fechaingreso').val())
+})
 
 i = 0;
 
@@ -131,7 +142,7 @@ $('#correo').keyup(function(){
 })
 
 
-$('#imagen').addClass("form-control");
+//$('#imagen').addClass("form-control");
 $('#imagen').prop("accept", "image/png, .jpeg, .jpg, image/gif, .jfif");
 $('#imagen').prop("required", "false");
 
@@ -235,6 +246,7 @@ function openModal(){
   $("#new").on(
 	"click",
 	function(){
+		$('#preview').attr('src', "//placehold.it/50?text=IMAGE").fadeIn('slow');
 		formulario.reset();
 	  $("#formulario").prop("action", modulo+"/guarda.php");
 	  $("#id").prop("readonly", false);
@@ -261,9 +273,32 @@ function openModal(){
 
 
 	function openEdit(){
+	$('#preview').attr('src', "//placehold.it/50?text=IMAGE").fadeIn('slow');
 	$("#formulario").prop("action", modulo+"/actualiza.php");
     $("#nuevoModalLabel").text("Editar "+modaltitle+":");
     $("#id").prop("readonly", 'readonly');
     $("#id").prop("tabinex", '-1');
     $("#id").css('background', '#ddddddec');
   }
+
+
+  
+$(document).ready(function(){
+    
+    // input plugin
+    bsCustomFileInput.init();
+    
+    // get file and preview image
+    $("#imagen").on('change',function(){
+        var input = $(this)[0];
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+				$('.img_content').removeAttr('hidden').fadeIn('slow');
+                $('#preview').attr('src', e.target.result).fadeIn('slow');
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
+    })
+    
+})

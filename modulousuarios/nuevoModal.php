@@ -26,17 +26,17 @@ $option = $conexion->query($sqltipousuairo);
 
 <?php
   $formulario = new Formulario("modulousuarios/guarda.php", "formulario", "formulario");
-  $formulario->setInput("number", "id", "ID", "9999");
-  $formulario->setInput("text", "usuario", "Nombre de usuario", "Pedro Pérez");
-  $formulario->setInput("email", "correo", "Correo Electrónico", "pedro@gmail.com");
-  $formulario->setInput("email", "correoOld", "Correo Electrónico", "pedro@gmail.com", '', 'hidden');
-  $formulario->setInput("password", "password", "Contraseña",  "********");
-  $formulario->setSelect("tipousuario", "Tipo usuario", null, "ttusu_tme", "ttusu_idtipu", "ttusu_descus");
+  $formulario->setInput("number", "id", "ID", 12, "9999");
+  $formulario->setInput("text", "usuario", "Nombre de usuario", 12, "Pedro Pérez");
+  $formulario->setInput("email", "correo", "Correo Electrónico", 12, "pedro@gmail.com");
+  $formulario->setInput("email", "correoOld", "Correo Electrónico", 12, "pedro@gmail.com", '', 'hidden');
+  $formulario->setInput("password", "password", "Contraseña", 12,  "********");
+  $formulario->setSelect("tipousuario", "Tipo usuario", 12,  null, "ttusu_tme", "ttusu_idtipu", "ttusu_descus");
   $html = "<option value='1'>Activo</option>
           <option value='0'>Inactivo</option>
   ";
-  $formulario->setSelect("estado", "Estado", $html, null, null, null);
-  $formulario->setInput("text", "direccion", "Direccion", "La Grita");
+  $formulario->setSelect("estado", "Estado", 12, $html, null);
+  $formulario->setInput("text", "direccion", "Direccion", 12, "La Grita");
   $formulario->setButton("Enviar", "Formulario enviado exitosamente!", true, "Cerrar", 1);
   $formulario->getRender();
 ?>

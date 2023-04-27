@@ -10,16 +10,16 @@
 
   <?php
     $formulario = new Formulario("moduloclientes/guarda.php", "formulario", "formulario");
-    $formulario->setInput("number", "id", "ID", "9999");
-    $formulario->setSelInput("number", "tiprif", "rif", "Cedula/Rif:", "407898280", 'required', 'null', ['V','J','G']);
-    $formulario->setInput("text", "tiprifOld", "Tiprif", "V", '', 'hidden');
-    $formulario->setInput("number", "rifOld", "Rif", "0000000000", '', 'hidden');
-    $formulario->setInput("text", "nombre", "Nombre: ", "Pedro Pérez");
-    $formulario->setInput("number", "telefono", "Telefono", "0416848888");
-    $formulario->setInput("email", "correo", "Correo Electrónico", "pedro@gmail.com");
-    $formulario->setInput("email", "correoOld", "Correo Electrónico", "pedro@gmail.com", '', 'hidden');
-    $formulario->setInput("text", "direccion", "Direccion", "5ta Avenida");
-    $formulario->setInput("text", "cedula", "cedula", "44444", '', 'hidden');
+    $formulario->setInput("number", "id", "ID", 12, "9999");
+    $formulario->setSelInput("number", "tiprif", "rif", "Cedula/Rif:", "407898280", 12, 'required', 'null', ['V','J','G']);
+    $formulario->setInput("text", "tiprifOld", "Tiprif", 12, "V", '', 'hidden');
+    $formulario->setInput("number", "rifOld", "Rif", 12, "0000000000", '', 'hidden');
+    $formulario->setInput("text", "nombre", "Nombre: ", 12, "Pedro Pérez");
+    $formulario->setInput("number", "telefono", "Telefono", 12, "0416848888");
+    $formulario->setInput("email", "correo", "Correo Electrónico", 12, "pedro@gmail.com");
+    $formulario->setInput("email", "correoOld", "Correo Electrónico", 12, "pedro@gmail.com", '', 'hidden');
+    $formulario->setInput("text", "direccion", "Direccion", 12, "5ta Avenida");
+    $formulario->setInput("text", "cedula", "cedula", "44444", 12, '', 'hidden');
     $formulario->setButton("Enviar", "Formulario enviado exitosamente!", true, "Cerrar", 1);
     $formulario->getRender();
   ?>
