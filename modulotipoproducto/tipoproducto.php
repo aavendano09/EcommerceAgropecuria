@@ -15,7 +15,7 @@ require_once 'validations/Formulario.php';
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Presentaciones</title>
+    <title>Tipo Producto</title>
     <link href="assets/css/bootstrap.min.css" rel="stylesheet">
     <link href="assets/css/all.min.css" rel="stylesheet">
     <link href="assets/images/favicon.png" rel="icon">
@@ -49,7 +49,7 @@ require_once 'validations/Formulario.php';
         <div class="col-12">
             
     <div class="col-auto mb-3">
-        <a href="#" id="new" class="btn btn-primary" data-bs-toggle="modal"><i class="fa-solid fa-circle-plus"></i> Nueva Presentacion</a>
+        <a href="#" id="new" class="btn btn-primary" data-bs-toggle="modal"><i class="fa-solid fa-circle-plus"></i> Nuevo Tipo Producto</a>
     </div>
 
           <div class="card">
@@ -59,9 +59,9 @@ require_once 'validations/Formulario.php';
         <thead class="table-dark">
             <tr>
                 <th style="width: 150px;">Id</th>
-                <th style="width: 350px;">Descripcion</th>
-                <th style="width: 350px;">Categoria</th>
-                <th style="width: 300px;">Estado</th>
+                <th style="width: 300px;">Descripcion</th>
+                <th style="width: 250px;">Categoria</th>
+                <th style="width: 200px;">Estado</th>
                 <th>Acciones</th>
             </tr>
         </thead>

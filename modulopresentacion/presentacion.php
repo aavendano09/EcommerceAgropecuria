@@ -58,10 +58,10 @@ require_once 'validations/Formulario.php';
             <table id="example" class="table table-sm table-striped table-hover mt-4">
         <thead class="table-dark">
             <tr>
-                <th style="width: 150px;">Id</th>
-                <th style="width: 350px;">Descripcion</th>
-                <th style="width: 350px;">Medida</th>
-                <th style="width: 300px;">Estado</th>
+                <th style="width: 100px;">Id</th>
+                <th style="width: 250px;">Descripcion</th>
+                <th style="width: 250px;">Medida</th>
+                <th style="width: 150px;">Estado</th>
                 <th>Acciones</th>
             </tr>
         </thead>
