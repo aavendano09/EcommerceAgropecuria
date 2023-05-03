@@ -25,7 +25,11 @@ class Formulario
     private $password2 = "Las contraseñas no coinciden";
     private $selects= "Debes selecionar una opcion";
     private $rif= "La identificacion debe poseer 9 digitos";
-    private $nro_cuenta = "Solo se perminten 20 numeros";
+    private $nro_cuenta = "
+    Solo pueden ser numeros <br>
+    Los 4 primeros numeros deben concidir con el codigo del banco<br>
+    Debe tener 20 digitos <br>
+    El numero de cuenta no puede ser solo 0";
     private $imagen = "Solo se permiten archivos jpg, png, jpeg, jfif";
     private $descripcion = "Solo se permiten letras espacios y numeros";
     private $preciocosto = "Solo se permiten numeros";

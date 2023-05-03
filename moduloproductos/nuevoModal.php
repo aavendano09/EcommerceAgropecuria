@@ -23,9 +23,9 @@ require_once 'validations/Formulario.php';
   $formulario->setInput("text", "descripcion", "Descripcion:", 12, "Informacion adicional");
   $formulario->setSelect("tipoproducto", "Tipo Producto:", 12, null, "ttpro_tme", "ttpro_idtipp", "ttpro_nametp");
   $formulario->setSelect("presentacion", "Presentacion:", 12, null);
-  $formulario->setQuantity("number", "contenidoneto", "Contenido Neto:", 12, "40");
-  $formulario->setInput("number", "preciocosto", "Precio Costo:", 12, "50");
-  $formulario->setInput("number", "precioventa", "Precio Venta:", 12, "80");
+  $formulario->setQuantity("text", "contenidoneto", "Contenido Neto:", 12, "40");
+  $formulario->setInput("text", "preciocosto", "Precio Costo:", 12, "50");
+  $formulario->setInput("text", "precioventa", "Precio Venta:", 12, "80");
   $formulario->setInput("date", "fechavencimiento", "Fecha de Vencimiento:", 12, "");
   $formulario->setInput("date", "fechaingreso", "Fecha de Ingreso:", 12, "");
   $html = "<option value='1'>Activo</option>

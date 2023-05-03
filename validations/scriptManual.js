@@ -44,7 +44,7 @@ const expresiones_m = {
 	cedula_m: /^\d{7,8}$/,
 	rif_m: /^\d{9,9}$/, // 9 a 9 numeros.
 	tipo_rif: /^[a-zA-ZÀ-ÿ\d\-_,.#\/\s]+$/,
-	direccion_m: /^([a-zA-ZÀ-ÿ0-9_. ,-]){1,60}$/,
+	direccion_m: /^([a-zA-ZÀ-ÿ0-9#_. ,-]){1,60}$/,
 	tipousuario_m: /^\d{1,3}$/,
 	razon_m: /^[a-zA-ZÀ-ÿ\.\s]{1,50}$/,
 	estado_m: /^\d{1,3}$/,

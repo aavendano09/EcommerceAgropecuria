@@ -72,7 +72,21 @@ $proveedores = $conexion->query($sql);
         <?php while($row_proveedores = $proveedores->fetch_assoc()){ ?>
                <tr>
                  <td><?= $row_proveedores['tprov_idprov'] ?></td>
-                 <td><?= $row_proveedores['tprov_tiprif']."-".$row_proveedores['tprov_Rifpro'] ?></td>
+                 <td><?php
+                  $string = $row_proveedores['tprov_Rifpro'];
+
+                  $newString = '';
+  
+                  for ($i=0; $i < 9; $i++) { 
+                    if ($i < 8) {
+                      $newString[$i] = $row_proveedores['tprov_Rifpro'][$i];
+                    }else {
+                      $newString[$i] = '-';
+                      $newString[$i+1] = $row_proveedores['tprov_Rifpro'][$i];
+                    }
+                  }
+                 
+                 echo $row_proveedores['tprov_tiprif'].$newString ?></td>
                  <td><?= $row_proveedores['tprov_Razsoc'] ?></td>
                  <td><?= $row_proveedores['tprov_direpr'] ?></td>
                  <td><?= $row_proveedores['tprov_telepr'] ?></td>
