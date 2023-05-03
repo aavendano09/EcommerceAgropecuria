@@ -10,7 +10,7 @@ i = 0;
 var select = new Array();
 var arrSelect = new Array();
 
-$('input').each(function () {
+$('#formulario input').each(function () {
 input[this.name] = false;
 arrInput[i] = this.name;
 i++;
@@ -18,7 +18,7 @@ i++;
 
 i=0;
 
-$('select').each(function () {
+$('#formulario select').each(function () {
 
 	select[this.name] = false;
 	arrSelect[i] = this.name;
@@ -35,7 +35,7 @@ const expresiones = {
 	usuario: /^[a-zA-ZÀ-ÿ\s]{3,40}$/, // Letras y espacios, pueden llevar acentos.
 	nombre: /^[a-zA-ZÀ-ÿ\s]{3,40}$/, // Letras y espacios, pueden llevar acentos.
 	nombre2: /^([a-zA-Z0-9_. ,-]){1,50}$/, // Letras y espacios, pueden llevar acentos.
-	descripcion: /^([a-zA-Z0-9_. ,-]){1,50}$/,
+	descripcion: /^([a-zA-Z0-9_. ,-]){1,60}$/,
 	password: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$#!%*?&]{8,15}$/, // 4 a 12 digitos.
 	correo: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9]+\.[a-zA-Z0-9]+$/,
 	correoOld: /.*/,
@@ -43,7 +43,8 @@ const expresiones = {
 	cedula: /^\d{7,8}$/,
 	rif: /^\d{9,9}$/, // 9 a 9 numeros.
 	tiprif: /^[a-zA-ZÀ-ÿ\d\-_,.#\/\s]+$/,
-	direccion: /^([a-zA-ZÀ-ÿ0-9_. ,-]){1,60}$/,
+	tipo_rif: /^[a-zA-ZÀ-ÿ\d\-_,.#\/\s]+$/,
+	direccion: /^([a-zA-ZÀ-ÿ0-9_. ,-]){1,100}$/,
 	tipousuario: /^\d{1,3}$/,
 	razon: /^[a-zA-ZÀ-ÿ\.\s]{1,50}$/,
 	estado: /^\d{1,3}$/,
@@ -56,6 +57,7 @@ const expresiones = {
 	cantidad: /^\d{1,4}$/,
 	preciocosto: /[0-9,]+[^.]/,
 	precioventa: /[0-9,]+[^.]/,
+	contenidoneto: /^[0-9]+([.])?([0-9]+)?$/,
 	fechavencimiento: /^\d{4}\-(0?[1-9]|1[012])\-(0?[1-9]|[12][0-9]|3[01])$/,
 	fechaingreso: /^\d{4}\-(0?[1-9]|1[012])\-(0?[1-9]|[12][0-9]|3[01])$/,
 	tipoproducto: /^\d{1,3}$/,

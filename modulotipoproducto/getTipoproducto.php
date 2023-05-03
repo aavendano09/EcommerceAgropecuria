@@ -4,7 +4,7 @@ require 'conexion.php';
 
 $id = $conexion->real_escape_string($_POST['id']);
 
-$sql = "SELECT tpre_idpres, tpre_despre, tpre_fkmedi, tpre_status FROM tpre_tts WHERE tpre_idpres = '$id' LIMIT 1";
+$sql = "SELECT ttpro_idtipp, ttpro_nametp, ttpro_fkcat, ttpro_status FROM ttpro_tme WHERE ttpro_idtipp = '$id' LIMIT 1";
 
 $resultado = $conexion->query($sql);
 $rows = $resultado->num_rows;

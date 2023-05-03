@@ -3,7 +3,7 @@
 
 require_once('conexion.php');
 
-$sql = "SELECT tpre_idpres, tpre_despre, tpre_status FROM tpre_tts;";
+$sql = "SELECT ttpro_idtipp, ttpro_nametp, tctpr_namect, ttpro_status FROM ttpro_tme INNER JOIN tctpr_tme ON tctpr_idcatg = ttpro_fkcat;";
 $medidas = $conexion->query($sql);
 
 require_once 'validations/Formulario.php';
@@ -25,8 +25,8 @@ require_once 'validations/Formulario.php';
     <!-- ========================================================= -->
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
     <script>
-      const modulo = "modulopresentacion";
-      const modaltitle = "Presentacion";
+      const modulo = "modulotipoproducto";
+      const modaltitle = "Tipo de producto";
     </script>
 </head>
 <body>
@@ -37,7 +37,7 @@ require_once 'validations/Formulario.php';
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Presentaciones</h1>
+            <h1>Tipo Producto</h1>
           </div>
         </div>
       </div><!-- /.container-fluid -->
@@ -60,6 +60,7 @@ require_once 'validations/Formulario.php';
             <tr>
                 <th style="width: 150px;">Id</th>
                 <th style="width: 350px;">Descripcion</th>
+                <th style="width: 350px;">Categoria</th>
                 <th style="width: 300px;">Estado</th>
                 <th>Acciones</th>
             </tr>
@@ -69,10 +70,11 @@ require_once 'validations/Formulario.php';
 
 
                <tr>
-                 <td><?= $row['tpre_idpres'] ?></td>
-                 <td><?= $row['tpre_despre'] ?></td>
+                 <td><?= $row['ttpro_idtipp'] ?></td>
+                 <td><?= $row['ttpro_nametp'] ?></td>
+                 <td><?= $row['tctpr_namect'] ?></td>
                  <td>
-                  <?php if($row['tpre_status'] ): ?>
+                  <?php if($row['ttpro_status'] ): ?>
                   
                   Activo
 
@@ -84,11 +86,11 @@ require_once 'validations/Formulario.php';
                 </td>
                  <td>
 
-                  <a href="#" id="edit" class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#nuevoModal" onclick="edit(<?= $row['tpre_idpres']; ?>)"><i class="fa-solid fa-pencil"></i> Editar</a>
+                  <a href="#" id="edit" class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#nuevoModal" onclick="edit(<?= $row['ttpro_idtipp']; ?>)"><i class="fa-solid fa-pencil"></i> Editar</a>
 
-                  <?php if($row['tpre_status']): ?>
+                  <?php if($row['ttpro_status']): ?>
 
-                    <a href="#" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#eliminaModal"  data-bs-id="<?= $row['tpre_idpres']; ?>"><i class="fa-solid fa-trash"></i> Eliminar</a>
+                    <a href="#" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#eliminaModal"  data-bs-id="<?= $row['ttpro_idtipp']; ?>"><i class="fa-solid fa-trash"></i> Eliminar</a>
 
                   <?php else: ?>
 
@@ -179,9 +181,10 @@ require_once 'validations/Formulario.php';
 
         let inputId = editaModal.querySelector('.modal-body #id')
         let inputDescripcion = editaModal.querySelector('.modal-body #descripcion')
+        let inputTipoproducto = editaModal.querySelector('.modal-body #tipoproducto')
         let inputEstado = editaModal.querySelector('.modal-body #estado')
 
-        let url = "modulopresentacion/getPresentacion.php"
+        let url = "modulotipoproducto/getTipoproducto.php"
         let formData = new FormData()
         formData.append('id', id)
 
@@ -192,9 +195,10 @@ require_once 'validations/Formulario.php';
         .then(data => {
 
 
-            inputId.value = data.tpre_idpres
-            inputDescripcion.value = data.tpre_despre
-            inputEstado.value = data.tpre_status
+            inputId.value = data.ttpro_idtipp
+            inputDescripcion.value = data.ttpro_nametp
+            inputTipoproducto.value = data.ttpro_fkcat
+            inputEstado.value = data.ttpro_status
 
         }).catch(err => console.log(err))
 

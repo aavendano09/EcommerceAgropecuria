@@ -7,23 +7,25 @@ session_start();
 //BUSCAR CLIENTE
 
 if($_POST['action'] == 'searchCliente'){
-    if(!empty($_POST['cliente'] && !empty($_POST['tipo']))){
+    if(!empty($_POST['cliente'] && !empty($_POST['tipo_rif']))){
         $id = $_POST['cliente'];
-        $tipo = $_POST['tipo'];
+        $tipo = $_POST['tipo_rif'];
 
-        $query = mysqli_query($conexion, "SELECT * FROM tclic_tme WHERE tclie_identc = '$id' AND tclie_cedrif = '$tipo'");
+        $query =  "SELECT * FROM tclic_tme WHERE tclie_identc = '$id' AND tclie_cedrif = '$tipo'";
 
-        mysqli_close($conexion);
-        $resultado = mysqli_num_rows($query);
+        $resultado = $conexion->query($query);
 
-        $data = '';
-        if($resultado > 0){
-            $data = mysqli_fetch_assoc($query);
+
+        $rows = $resultado->num_rows;
+
+        $data = [];
+        if($rows > 0){
+            $data = $resultado->fetch_array();
         }else{
             $data = 0;
         }
     }
-    echo json_encode($data, JSON_UNESCAPED_UNICODE);
+   echo json_encode($data, JSON_UNESCAPED_UNICODE);
 }
 
 //Registrar cliente - venta
@@ -31,14 +33,57 @@ if($_POST['action'] == 'searchCliente'){
 if ($_POST['action'] == 'addCliente') {
 
     $id = $_POST['idcliente'];
-    $tipo = $_POST['tipo'];
-    $cedula = $_POST['ced_cliente'];
-    $nombre = $_POST['nom_cliente'];
-    $telefono = $_POST['tel_cliente'];
-    $correo = $_POST['email_cliente'];
-    $contrasena = $_POST['pass_cliente'];
-    $direccion = $_POST['dir_cliente'];
+    $tipo = $_POST['tipo_rif'];
+    if (!empty($_POST['rif_m'])) {
+        $cedula = $_POST['rif_m'];
+    }else{
+        $cedula = $_POST['cedula_m'];
+    } 
+    $nombre = $_POST['nombre_m'];
+    $telefono = $_POST['telefono_m'];
+    $correo = $_POST['correo_m'];
+    $contrasena = $_POST['password_m'];
+    $direccion = $_POST['direccion_m'];
    
+
+    $sqlCorreo= "SELECT tclie_emailc FROM tclic_tme WHERE tclie_emailc = '$correo'";
+
+    $request = $conexion->query($sqlCorreo);
+
+    if(mysqli_num_rows($request) == 0){
+        
+        $sqlcliente = "INSERT INTO tclic_tme (tclie_idclie, tclie_identc, tclie_namecl, tclie_telecl, tclie_emailc,tclie_passcl,tclie_direcl,tclie_cedrif) 
+        VALUES ('$id','$cedula','$nombre','$telefono','$correo','$contrasena','$direccion', '$tipo');";
+
+        if($conexion->query($sqlcliente)){
+            $codCliente = mysqli_insert_id($conexion);
+            $msg = [
+                'msg'=>'exito', 
+                'cod'=>$codCliente
+                ];
+            echo json_encode($msg);
+            exit;
+        }else{
+            $msg = [
+                'msg'=>'Ha ocurrido un error al registrar.', 
+                ];
+                echo json_encode($msg);
+                exit;
+        }
+
+
+    } else {
+        $msg = [
+            'msg'=>'El correo electronico ya se encuentra registrado', 
+            ];
+            echo json_encode($msg);
+            exit;
+    }
+
+
+
+
+
 
     $sqlclientes = mysqli_query($conexion, "INSERT INTO tclic_tme (tclie_idclie, tclie_identc, tclie_namecl, tclie_telecl, tclie_emailc,tclie_passcl,tclie_direcl,tclie_cedrif) 
     VALUES ('$id','$cedula','$nombre','$telefono','$correo','$contrasena','$direccion', '$tipo');");

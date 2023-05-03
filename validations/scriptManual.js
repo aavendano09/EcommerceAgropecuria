@@ -1,121 +1,136 @@
 
-const formulario = document.getElementById('formulario');
-const inputs = document.querySelectorAll('#formulario input');
-const selects = document.querySelectorAll('#formulario select');
+const formulario_m = document.getElementById('formulario_m');
+const inputs_m = document.querySelectorAll('#formulario_m input');
+const factura = document.querySelectorAll('#nofactura');
+const selects_m = document.querySelectorAll('#formulario_m select');
 
-var input = new Array();
-var arrInput = new Array();
+var input_m = new Array();
+var arrInput_m = new Array();
 i = 0;
 
-var select = new Array();
-var arrSelect = new Array();
+var select_m = new Array();
+var arrSelect_m = new Array();
 
-$('input').each(function () {
-input[this.name] = false;
-arrInput[i] = this.name;
+$('#formulario_m input').each(function () {
+input_m[this.name] = false;
+arrInput_m[i] = this.name;
 i++;
 });
 
 i=0;
 
-$('select').each(function () {
+$('#formulario_m select').each(function () {
 
-	select[this.name] = false;
-	arrSelect[i] = this.name;
+	select_m[this.name] = false;
+	arrSelect_m[i] = this.name;
 	i++;
 });
 
-// console.log(input);
-// console.log(select);
-// console.log(arrInput);
-// console.log(arrSelect);
+console.log(input_m);
+console.log(select_m);
+console.log(arrInput_m);
+console.log(arrSelect_m);
 
-const expresiones = {
-	id: /^\d{1,4}$/,
-	usuario: /^[a-zA-ZÀ-ÿ\s]{3,40}$/, // Letras y espacios, pueden llevar acentos.
-	nombre: /^[a-zA-ZÀ-ÿ\s]{3,40}$/, // Letras y espacios, pueden llevar acentos.
-	descripcion: /^([a-zA-Z0-9_. ,-]){1,50}$/,
-	password: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$#!%*?&]{8,15}$/, // 4 a 12 digitos.
-	correo: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9]+\.[a-zA-Z0-9]+$/,
-	correoOld: /.*/,
-	telefono: /^\d{11,11}$/, // 7 a 14 numeros.
-	cedula: /^\d{7,8}$/,
-	rif: /^\d{9,9}$/, // 9 a 9 numeros.
-	tiprif: /^[a-zA-ZÀ-ÿ\d\-_,.#\/\s]+$/,
-	direccion: /^([a-zA-Z0-9_. ,-]){1,50}$/,
-	tipousuario: /^\d{1,3}$/,
-	razon: /^[a-zA-ZÀ-ÿ\.\s]{1,50}$/,
-	estado: /^\d{1,3}$/,
-	fecha: /.*/,
-	extranjero: /^(\d[0-9][0-9][0-9][0-9][0-9][0-9]|[1-3][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9])$/, // 7 a 14 numeros.
-	nro_cuenta: /^\d{20,20}$/,
-	tipo_cuenta: /^[a-zA-Z\s]{3,40}$/,
-	imagen: /(png|jpg|wepg|jpeg|jfif)$/
+const expresiones_m = {
+	id_m: /^\d{1,4}$/,
+	usuario_m: /^[a-zA-ZÀ-ÿ\s]{3,40}$/, // Letras y espacios, pueden llevar acentos.
+	nombre_m: /^[a-zA-ZÀ-ÿ\s]{3,40}$/, // Letras y espacios, pueden llevar acentos.
+	nombre2_m: /^([a-zA-Z0-9_. ,-]){1,50}$/, // Letras y espacios, pueden llevar acentos.
+	descripcion_m: /^([a-zA-Z0-9_. ,-]){1,50}$/,
+	password_m: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$#!%*?&]{8,15}$/, // 4 a 12 digitos.
+	correo_m: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9]+\.[a-zA-Z0-9]+$/,
+	correoOld_m: /.*/,
+	telefono_m: /^\d{11,11}$/, // 7 a 14 numeros.
+	cedula_m: /^\d{7,8}$/,
+	rif_m: /^\d{9,9}$/, // 9 a 9 numeros.
+	tipo_rif: /^[a-zA-ZÀ-ÿ\d\-_,.#\/\s]+$/,
+	direccion_m: /^([a-zA-ZÀ-ÿ0-9_. ,-]){1,60}$/,
+	tipousuario_m: /^\d{1,3}$/,
+	razon_m: /^[a-zA-ZÀ-ÿ\.\s]{1,50}$/,
+	estado_m: /^\d{1,3}$/,
+	fecha_m: /^\d{4}\-(0?[1-9]|1[012])\-(0?[1-9]|[12][0-9]|3[01])$/,
+	extranjero_m: /^(\d[0-9][0-9][0-9][0-9][0-9][0-9]|[1-3][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9])$/, // 7 a 14 numeros.
+	nro_cuenta_m: /^\d{20,20}$/,
+	tipo_cuenta_m: /^[a-zA-Z\s]{3,40}$/,
+	imagen_m: /(png|jpg|wepg|jpeg|jfif)$/,
+	ara_m: /(^$)|\b(png|jpg|wepg|jpeg|jfif)\b/,
+	cantidad_m: /^\d{1,4}$/,
+	preciocosto_m: /[0-9,]+[^.]/,
+	precioventa_m: /[0-9,]+[^.]/,
+	fechavencimiento_m: /^\d{4}\-(0?[1-9]|1[012])\-(0?[1-9]|[12][0-9]|3[01])$/,
+	fechaingreso_m: /^\d{4}\-(0?[1-9]|1[012])\-(0?[1-9]|[12][0-9]|3[01])$/,
+	tipoproducto_m: /^\d{1,3}$/,
+	presentacion_m: /^\d{1,3}$/,
 }
+$('#fechaingreso').on('change', function(){
 
+	console.log($('#fechaingreso').val())
+})
 
 i = 0;
 
-const validarFormulario = (e) => {
+const validarFormulario_m = (e) => {
 
 	if (!$('#'+e.target.name).prop("readonly") && !$('#'+e.target.name).prop("hidden")) {
 		var iname = e.target.name
 		if ((iname == 'password' || iname == 'password2') && $('#password2').length > 0) {
-			validarCampo(expresiones.password, e.target, iname)
-			validarPassword2();
+			validarCampo_m(expresiones_m.password, e.target, iname)
+			validarPassword2_m();
 		}else{
-			validarCampo(expresiones[iname], e.target, iname)
+			validarCampo_m(expresiones_m[iname], e.target, iname)
 		}
 	}
 		
 }
 
-function validarFormularioSubmit(campo){
+function validarFormularioSubmit_m(campo){
 	object = document.getElementById(campo)
-	validarCampo(expresiones[campo], object, campo)
+	validarCampo_m(expresiones_m[campo], object, campo)
 }
 
-const validarCampo = (expresion, Oinput, campo) => {
-
+const validarCampo_m = (expresion, Oinput, campo) => {
+	console.log(Oinput);
 	if(expresion.test(Oinput.value)){
-		input[campo] = true;
-		select[campo] = true;
-		document.getElementById(`grupo__${campo}`).classList.remove('formulario__grupo-incorrecto');
-		document.getElementById(`grupo__${campo}`).classList.add('formulario__grupo-correcto');
+		input_m[campo] = true;
+		select_m[campo] = true;
+		//console.log(input_m[campo]);
+		document.getElementById(`grupo__${campo}`).classList.remove('formulario-m__grupo-incorrecto');
+		document.getElementById(`grupo__${campo}`).classList.add('formulario-m__grupo-correcto');
 		document.querySelector(`#grupo__${campo} i`).classList.add('fa-check-circle');
 		document.querySelector(`#grupo__${campo} i`).classList.remove('fa-times-circle');
-		document.querySelector(`#grupo__${campo} .formulario__input-error`).classList.remove('formulario__input-error-activo');
+		document.querySelector(`#grupo__${campo} .formulario-m__input-error`).classList.remove('formulario-m__input-error-activo');
 		
 
 	} else {
-		input[campo] = false;
-		select[campo] = false;
-		document.getElementById(`grupo__${campo}`).classList.add('formulario__grupo-incorrecto');
-		document.getElementById(`grupo__${campo}`).classList.remove('formulario__grupo-correcto');
+		input_m[campo] = false;
+		select_m[campo] = false;
+		//console.log(input_m[campo]);
+		document.getElementById(`grupo__${campo}`).classList.add('formulario-m__grupo-incorrecto');
+		document.getElementById(`grupo__${campo}`).classList.remove('formulario-m__grupo-correcto');
 		document.querySelector(`#grupo__${campo} i`).classList.add('fa-times-circle');
 		document.querySelector(`#grupo__${campo} i`).classList.remove('fa-check-circle');
-		document.querySelector(`#grupo__${campo} .formulario__input-error`).classList.add('formulario__input-error-activo');
+		document.querySelector(`#grupo__${campo} .formulario-m__input-error`).classList.add('formulario-m__input-error-activo');
 		
 	}
 }
 
-const validarPassword2 = () => {
+const validarPassword2_m = () => {
 	const inputPassword1 = document.getElementById('password');
 	const inputPassword2 = document.getElementById('password2');
 
 	if(inputPassword1.value !== inputPassword2.value){
-		document.getElementById(`grupo__password2`).classList.add('formulario__grupo-incorrecto');
-		document.getElementById(`grupo__password2`).classList.remove('formulario__grupo-correcto');
+		document.getElementById(`grupo__password2`).classList.add('formulario-m__grupo-incorrecto');
+		document.getElementById(`grupo__password2`).classList.remove('formulario-m__grupo-correcto');
 		document.querySelector(`#grupo__password2 i`).classList.add('fa-times-circle');
 		document.querySelector(`#grupo__password2 i`).classList.remove('fa-check-circle');
-		document.querySelector(`#grupo__password2 .formulario__input-error`).classList.add('formulario__input-error-activo');
+		document.querySelector(`#grupo__password2 .formulario-m__input-error`).classList.add('formulario-m__input-error-activo');
 		campos['password'] = false;
 	} else {
-		document.getElementById(`grupo__password2`).classList.remove('formulario__grupo-incorrecto');
-		document.getElementById(`grupo__password2`).classList.add('formulario__grupo-correcto');
+		document.getElementById(`grupo__password2`).classList.remove('formulario-m__grupo-incorrecto');
+		document.getElementById(`grupo__password2`).classList.add('formulario-m__grupo-correcto');
 		document.querySelector(`#grupo__password2 i`).classList.remove('fa-times-circle');
 		document.querySelector(`#grupo__password2 i`).classList.add('fa-check-circle');
-		document.querySelector(`#grupo__password2 .formulario__input-error`).classList.remove('formulario__input-error-activo');
+		document.querySelector(`#grupo__password2 .formulario-m__input-error`).classList.remove('formulario-m__input-error-activo');
 		campos['password'] = true;
 	}
 }
@@ -125,34 +140,43 @@ $('#correo').keyup(function(){
 	$('#correo').val(string.replace(/ /g, ""));
 })
 
-
-$('#imagen').addClass("form-control");
+//$('#imagen').addClass("form-control");
 $('#imagen').prop("accept", "image/png, .jpeg, .jpg, image/gif, .jfif");
+$('#imagen').prop("required", "false");
 
-inputs.forEach((input) => {
-	input.addEventListener('keyup', validarFormulario);
-	input.addEventListener('blur', validarFormulario);
+factura.forEach((input) => {
+	input.addEventListener('keyup', validarFormulario_m);
+	input.addEventListener('blur', validarFormulario_m);
 });
 
-inputs.forEach((input) => {
-	input.addEventListener('change', validarFormulario);
-	input.addEventListener('blur', validarFormulario);
+inputs_m.forEach((input) => {
+	input.addEventListener('keyup', validarFormulario_m);
+	input.addEventListener('blur', validarFormulario_m);
 });
 
-selects.forEach((select) => {
-	select.addEventListener('change', validarFormulario);
-	select.addEventListener('blur', validarFormulario);
+inputs_m.forEach((input) => {
+	input.addEventListener('change', validarFormulario_m);
+	input.addEventListener('blur', validarFormulario_m);
+});
+
+selects_m.forEach((select) => {
+	select.addEventListener('change', validarFormulario_m);
+	select.addEventListener('blur', validarFormulario_m);
 });
 
 
-formulario.addEventListener('submit', (event) => {
-	event.preventDefault();
+function submit(input, arrInput, select, arrSelect, form = null) {
 
+	console.log(input)
+	console.log(arrInput)
+	console.log(select)
+	console.log(arrSelect)
 	band = true;
 	
 	for (let i = 0; i < arrInput.length; i++) {
 		
-		if (($("#"+arrInput[i]).prop('required') == false) ||  ($("#"+arrInput[i]).prop('readonly'))) {
+		if ( (($("#"+arrInput[i]).prop('required') == false) ||  ($("#"+arrInput[i]).prop('readonly'))) ) {
+			//console.log(arrInput[i]+" "+"input")
 			input[arrInput[i]] = true;
 		}		
 	}
@@ -160,9 +184,24 @@ formulario.addEventListener('submit', (event) => {
 	//console.log(input)
 	for (let i = 0; i < arrInput.length; i++) {
 		//console.log(arrInput[i]+"input")
-		if (!($("#"+arrInput[i]).prop('required') == false) && !($("#"+arrInput[i]).prop('readonly')) && $("#"+arrInput[i]).length > 0){
+		if ( !($("#"+arrInput[i]).prop('required') == false) && ($("#"+arrInput[i]).length > 0) && !(($("#"+arrInput[i]).prop('required') == false)) ){
 			//console.log(arrInput[i]+" "+"input")
-			validarFormularioSubmit(arrInput[i]);
+			if ( $("#"+arrInput[i]).attr("name") === "ara") {
+				input['imagen']=true;
+				if (form == 'proveedor') {
+					validarFormularioSubmit_m(arrInput[i]);					
+				}else{
+					validarFormularioSubmit(arrInput[i]);	
+				}
+			}else{
+				//console.log(arrInput[i]+" "+"input")
+				if (form == 'proveedor') {
+					validarFormularioSubmit_m(arrInput[i]);					
+				}else{
+					validarFormularioSubmit(arrInput[i]);	
+				}
+			}
+			
 			
 		}
 	}
@@ -170,17 +209,21 @@ formulario.addEventListener('submit', (event) => {
 	for (let i = 0; i < arrSelect.length; i++) {
 		if (!($("#"+arrSelect[i]).prop('required') == false) && !($("#"+arrSelect[i]).prop('readonly'))){
 			//console.log(arrSelect[i]+" "+"select")
-			validarFormularioSubmit(arrSelect[i]);
+			if (form == 'proveedor') {
+				validarFormularioSubmit_m(arrSelect[i]);					
+			}else{
+				validarFormularioSubmit(arrSelect[i]);	
+			}
 		}
 		
 	}
-	console.log(input);
+
 	for (let i = 0; i < arrInput.length; i++) {
 		//console.log(input[arrInput[i]] + arrInput[i])
 		if (!input[arrInput[i]] &&  $("#"+arrInput[i]).length > 0) {
+			//console.log(arrInput[i])
 			band = false;
 		}
-		//console.log(band+"input")
 		
 	}
 	
@@ -195,23 +238,26 @@ formulario.addEventListener('submit', (event) => {
 
 	if(band){
 
-		document.getElementById('formulario__mensaje-exito').classList.add('formulario__mensaje-exito-activo');
+		document.getElementById('formulario-m__mensaje-exito').classList.add('formulario-m__mensaje-exito-activo');
 		
 		setTimeout(() => {
-			document.getElementById('formulario__mensaje-exito').classList.remove('formulario__mensaje-exito-activo');
+			document.getElementById('formulario-m__mensaje-exito').classList.remove('formulario-m__mensaje-exito-activo');
 		}, 3500);
 
-		document.querySelectorAll('.formulario__grupo-correcto').forEach((icono) => {
-			icono.classList.remove('formulario__grupo-correcto');
+		document.querySelectorAll('.formulario-m__grupo-correcto').forEach((icono) => {
+			icono.classList.remove('formulario-m__grupo-correcto');
 		});
 
-		$('#formulario').submit();
+		return true;
+
+		//$('#formulario-m').submit();
 	} else {
 		
-
-		document.getElementById('formulario__mensaje').classList.add('formulario__mensaje-activo');
+		document.getElementById('formulario-m__mensaje').classList.add('formulario-m__mensaje-activo');
+		
+		return false;
 	}
-});
+}
 
 
 function openModal(){
@@ -221,51 +267,45 @@ function openModal(){
   $("#new").on(
 	"click",
 	function(){
-	  $("#formulario").prop("action", modulo+"/guarda.php");
-	  $("#id").prop("readonly", false);
-	  $("#id").css('background', '#fafafaec');
-	  $("#nuevoModalLabel").text("Agregar "+modaltitle+":");
-	  formulario.reset();
-	  validRefresh();
-	  openModal();
+		$('body').addClass('modal-open');
+		$('#preview').attr('src', "//placehold.it/50?text=IMAGE").fadeIn('slow');
+		formulario_m.reset();
+		$("#formulario-m").prop("action", modulo+"/guarda.php");
+		$("#id").prop("readonly", false);
+		$("#id").css('background', '#fafafaec');
+		$("#nuevoModalLabel").text("Agregar "+modaltitle+":");
+		openModal();
+		validRefresh();
 	}
   )
 
 
   function validRefresh(){
-	for (let i = 0; i < arrInput.length; i++) {
-		if ($("#"+arrInput[i]).length > 0) {
-			//console.log(arrInput[i]);
-			document.getElementById(`grupo__${arrInput[i]}`).classList.remove('formulario__grupo-incorrecto');
-			document.querySelector(`#grupo__${arrInput[i]} i`).classList.remove('fa-times-circle');
-			document.getElementById(`grupo__${arrInput[i]}`).classList.remove('formulario__grupo-correcto');
-			document.querySelector(`#grupo__${arrInput[i]} i`).classList.remove('fa-check-circle');
-			document.querySelector(`#grupo__${arrInput[i]} .formulario__input-error`).classList.remove('formulario__input-error-activo');
-		}
-		
-		
-	}
 	
-	for (let i = 0; i < arrSelect.length; i++) {
-		//console.log(arrSelect[i]);
-		document.getElementById(`grupo__${arrSelect[i]}`).classList.remove('formulario__grupo-incorrecto');
-		document.getElementById(`grupo__${arrSelect[i]}`).classList.remove('formulario__grupo-correcto');
-		document.querySelector(`#grupo__${arrSelect[i]} i`).classList.remove('fa-check-circle');
-		document.querySelector(`#grupo__${arrSelect[i]} .formulario__input-error`).classList.remove('formulario__input-error-activo');
-		document.querySelector(`#grupo__${arrSelect[i]} i`).classList.remove('fa-times-circle');
 		
-	}
+	$(".formulario-m__grupo-incorrecto").removeClass('formulario-m__grupo-incorrecto')
+	$(".fa-times-circle").removeClass('fa-times-circle')
+	$(".formulario-m__grupo-correcto").removeClass('formulario-m__grupo-correcto')
+	$(".fa-check-circle").removeClass('fa-check-circle')
+	$(".formulario-m__input-error-activo").removeClass('formulario-m__input-error-activo')
+	
 
 
   }
 
 
 	function openEdit(){
-	$("#formulario").prop("action", modulo+"/actualiza.php");
+	$('#preview').attr('src', "//placehold.it/50?text=IMAGE").fadeIn('slow');
+	$("#formulario-m").prop("action", modulo+"/actualiza.php");
     $("#nuevoModalLabel").text("Editar "+modaltitle+":");
     $("#id").prop("readonly", 'readonly');
     $("#id").prop("tabinex", '-1');
     $("#id").css('background', '#ddddddec');
-	
-
   }
+
+
+  
+
+
+$('#guardar').prop('type', 'button');
+$('.formulario').prop('id', 'hola');

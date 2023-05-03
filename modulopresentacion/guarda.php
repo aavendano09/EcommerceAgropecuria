@@ -4,28 +4,29 @@ require 'conexion.php';
 
 $id = $conexion->real_escape_string($_POST['id']);
 $descripcion = $conexion->real_escape_string($_POST['descripcion']);
+$medida = $conexion->real_escape_string($_POST['tipoproducto']);
 $estado = $conexion->real_escape_string($_POST['estado']);
 
 
 
 
-$sqlIdMoneda = "SELECT tmpro_idmedi FROM tmpro_tme WHERE tmpro_idmedi = '$id'";
+$sql = "SELECT tpre_idpres FROM tpre_tts WHERE tpre_idpres = '$id'";
 
-$request = $conexion->query($sqlIdMoneda);
+$request = $conexion->query($sql);
 
 if (mysqli_num_rows($request) == 0) {
 
-    $sqlmedidas = "INSERT INTO tmpro_tme (tmpro_idmedi, tmpro_descmd, tmpro_status) 
-    VALUES ('$id','$descripcion','$estado')";
+    $sql = "INSERT INTO tpre_tts (tpre_idpres, tpre_despre, tpre_fkmedi, tpre_status) 
+    VALUES ('$id','$descripcion','$medida','$estado')";
     
-    if($conexion->query($sqlmedidas)){
+    if($conexion->query($sql)){
     
     }
     
-    header('Location: ../paneladmin.php?modulo=medidas');
+    header('Location: ../paneladmin.php?modulo=presentacion');
 
 }else{
-    echo "<script>alert('El id de la medida ya se encuentra registrado, porfavor ingrese otro'); window.location.href = '../paneladmin.php?modulo=medidas';</script>";
+    echo "<script>alert('El id de la presentacion ya se encuentra registrado, porfavor ingrese otro'); window.location.href = '../paneladmin.php?modulo=presentacion;</script>";
     
 }
 

@@ -4,6 +4,8 @@ error_reporting(0);
    if(isset($_SESSION['tidAdmin'])==false){
     header("location:login.php");
    }
+   require_once 'validations/FormularioManual.php';
+   require_once 'validations/Formulario.php';
 ?>
 
 
@@ -22,7 +24,10 @@ error_reporting(0);
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
     <!-- ========================================================= -->
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
-    <script src="validaciones.js"></script>
+    <script>
+      const modulo = "moduloventas";
+      const modaltitle = "Venta";
+    </script>
 </head>
 <body>
 <style>
@@ -43,18 +48,21 @@ error_reporting(0);
             <h4 class="text-center">Datos del Cliente:</h4>
             <a href="#" class="btn_new btn_new_cliente"><i class="fas fa-plus">Nuevo Cliente</i></a>
           </div>
+          <div class="col-12 d-flex justify-content-end">
+            <a href="#" id="new" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#nuevoModal"><i class="fa-solid fa-circle-plus"></i> Nuevo Producto</a>
+          </div>
          </div>
 
          <!-- Datos del Cliente -->
 
   <div style="margin-top: 20px; margin-right: 10px;">
-  <form name="form_new_cliente_venta" id="form_new_cliente_venta" class="row g-3 datos">
+  <!-- <form name="form_new_cliente_venta" id="form_new_cliente_venta" class="row g-3 datos">
   <input type="hidden" name="action" value="addCliente">
   <input type="hidden" id="idcliente" name="idcliente" value="" required>
 
   <div class="col-md-2">
-    <label class="form-label">Tipo de identificacion</label>
-    <select class="form-select" name="tipo" id="tipo">
+    <label class="form-label">tipo_rif de identificacion</label>
+    <select class="form-select" name="tipo_rif" id="tipo_rif">
             <option value="">Seleccionar...</option>
             <option value="V">V</option>
             <option value="J">J</option>
@@ -64,32 +72,48 @@ error_reporting(0);
 
   <div class="col-md-3">
     <label class="form-label">Cedula</label>
-    <input placeholder="28654495" onkeypress="return CedRif(event, 'ced_cliente', 'tipo');" type="text" min="1000000" class="form-control" name="ced_cliente" id="ced_cliente">
+    <input placeholder="28654495" onkeypress="return CedRif(event, 'rif_m', 'tipo_rif');" type="text" min="1000000" class="form-control" name="rif_m" id="rif_m">
   </div>
   <div class="col-md-3">
     <label class="form-label">Nombre</label>
-    <input placeholder="Pedro Pérez" onkeypress="return SoloLetras(event, true);" type="text" name="nom_cliente" id="nom_cliente" disabled required class="form-control">
+    <input placeholder="Pedro Pérez" onkeypress="return SoloLetras(event, true);" type="text" name="nombre_m" id="nombre_m" disabled required class="form-control">
   </div>
   <div class="col-3">
     <label for="inputAddress" class="form-label">Telefono</label>
-    <input placeholder="04165026559" onkeypress="return SoloNumeros(event, 'tel_cliente', 11);" type="number" name="tel_cliente" id="tel_cliente" disabled required class="form-control">
+    <input placeholder="04165026559" onkeypress="return SoloNumeros(event, 'telefono_m', 11);" type="number" name="telefono_m" id="telefono_m" disabled required class="form-control">
   </div>
   <div class="col-7">
     <label class="form-label">Correo electronico</label>
-    <input onkeypress="return ValidarNotEspacios(event)" placeholder="pedro@gmail.com" type="email" name="email_cliente" id="email_cliente" disabled required class="form-control">
+    <input onkeypress="return ValidarNotEspacios(event)" placeholder="pedro@gmail.com" type="email" name="correo_m" id="correo_m" disabled required class="form-control">
   </div>
   <div class="col-4">
     <label class="form-label">Contraseña</label>
-    <input placeholder="********" onkeypress="return Pass(event)" type="text" name="pass_cliente" id="pass_cliente" disabled required class="form-control">
+    <input placeholder="********" onkeypress="return Pass(event)" type="text" name="password_m" id="password_m" disabled required class="form-control">
   </div>
   <div class="col-8">
     <label class="form-label">Direccion</label>
-    <input placeholder="La Grita estado Táchira" type="text" name="dir_cliente" id="dir_cliente" disabled required class="form-control">
+    <input placeholder="La Grita estado Táchira" type="text" name="direccion_m" id="direccion_m" disabled required class="form-control">
   </div>
   <div id="div_registro_cliente" class="col-12">
     <button type="submit" class=" btn btn-primary btn_save"><i class="far fa-save fa-lg"></i> Guardar</button>
   </div>
-</form>
+</form> -->
+
+
+<?php
+  $formulario_m = new FormularioManual("formulario_m", "formulario_m", "idcliente");
+  $formulario_m->setSelInput("number", "tipo_rif", "rif_m", "Rif", "407898280", 3, "required", null, ['V','G','J']);
+  $formulario_m->setInput("text", "nombre_m", "Nombre", 4, "Pedro Perez");
+  $formulario_m->setInput("number", "telefono_m", "Telefono", 4, "0416848888");
+  $formulario_m->setInput("email", "correo_m", "Correo Electrónico", 8, "pedro@gmail.com");
+  $formulario_m->setInput("password", "password_m", "Contraseña", 4, "**********");
+  $formulario_m->setInput("text", "direccion_m", "Direccion", 12, "5ta Avenida");
+  $html = "<option value='1'>Activo</option>
+          <option value='0'>Inactivo</option>
+  ";
+  $formulario_m->setButton("Guardar", "Formulario enviado exitosamente!", false, "Cerrar", 'cliente');
+  $formulario_m->getRender();
+?>
   </div>
 
 
@@ -125,10 +149,10 @@ error_reporting(0);
       <th>Accion</th>
     </tr>
     <tr>
-      <td><input onkeypress="return SoloNumeros(event, 'txt_cod_producto', 4);" type="text" name="txt_cod_producto" id="txt_cod_producto"></td>
+      <td><input onkeypress="return SoloNumeros(event, 'txt_cod_producto', 3)" type="number" name="txt_cod_producto" id="txt_cod_producto"></td>
       <td id="txt_descripcion">-</td>
       <td id="txt_existencia">-</td>
-      <td><input type="text" name="txt_cant_producto" id="txt_cant_producto" value="0" min="1" disabled></td>
+      <td><input type="number" onkeypress="return SoloNumeros(event, 'txt_cant_producto', 9)" name="txt_cant_producto" id="txt_cant_producto" value="0" min="1" disabled></td>
       <td id="txt_precio" class="textright">0.00</td>
       <td id="txt_precio_total" class="textright">0.00</td>
       <td> <a href="#" id="add_product_venta" class="link_add"><i class="fas fa-plus"></i> Agregar</a></td>
@@ -149,8 +173,13 @@ error_reporting(0);
     <!-- Contenido ajax -->
   </tfoot>
 </table>
-     </section>
+</section>
 </div>
+
+<?php
+  include 'moduloproductos/nuevoModal.php';
+?>
+
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
@@ -158,9 +187,31 @@ error_reporting(0);
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 
 <script>
+input["cedula_m"] = false;
 
-$('#tipo').change(function(){
-    $('#ced_cliente').val('');
+arrInput[8] = "cedula_m";
+
+
+$('#tipo_rif').change(
+    function(){
+      $('.ident').val('');
+    if ($('#tipo_rif').val()=="V") {
+      $('.ident').prop('name', 'cedula_m');
+      $('.ident').prop('id', 'cedula_m');
+      $('.ident').prop('placeholder', '15862175');
+      $('#grupo__rif_m').prop('id', 'grupo__cedula_m');
+      $('#errormsg').text('La identificacion debe poseer 7 u 8 digitos');
+    }else{
+      $('.ident').prop('name', 'rif_m');
+      $('.ident').prop('id', 'rif_m');
+      $('#grupo__cedula_m').prop('id', 'grupo__rif_m');
+      $('.ident').prop('placeholder', '407898280');
+      $('#errormsg').text('La identificacion debe poseer 9 digitos');
+    }
+  })
+
+$('#tipo_rif').change(function(){
+    $('#rif_m').val('');
 });
  
    //funcion para mantener los registros en el detalle de orden de entrega
@@ -174,11 +225,11 @@ $('#tipo').change(function(){
   $(document).ready(function () {
     $('.btn_new_cliente').click(function(e){
       e.preventDefault();
-      $('#nom_cliente').removeAttr('disabled');
-      $('#tel_cliente').removeAttr('disabled');
-      $('#email_cliente').removeAttr('disabled');
-      $('#pass_cliente').removeAttr('disabled');
-      $('#dir_cliente').removeAttr('disabled');
+      $('#nombre_m').removeAttr('disabled');
+      $('#telefono_m').removeAttr('disabled');
+      $('#correo_m').removeAttr('disabled');
+      $('#password_m').removeAttr('disabled');
+      $('#direccion_m').removeAttr('disabled');
   
       $('#div_registro_cliente').slideDown();
    
@@ -192,56 +243,59 @@ $('#tipo').change(function(){
 
 
     
-  $('#ced_cliente').keyup(function(){
-    var tipo = $('#tipo').val();
+  $('#rif_m').keyup(function(){
+    var tipo_rif = $('#tipo_rif').val();
     var cl = $(this).val();
-    searchCliente(tipo,cl);
+    searchCliente(tipo_rif,cl);
   });
 
-  $('#tipo').change(function(){
-    var tipo = $(this).val();
-    var cl = $('#ced_cliente').val();
-    searchCliente(tipo,cl);
+  $('#tipo_rif').change(function(){
+    var tipo_rif = $(this).val();
+    var cl = $('#rif_m').val();
+    searchCliente(tipo_rif,cl);
   });
 
 
-   function searchCliente(tipo, cedula){
+   function searchCliente(tipo_rif, cedula){
      var action = 'searchCliente';
+
+    //  console.log(tipo_rif)
+    //  console.log(cedula)
 
       $.ajax({
         url: 'moduloventas/ajaxventas.php',
         type: "POST",
         async: true,
-        data: {action:action,cliente:cedula,tipo:tipo},
+        data: {action:action,cliente:cedula,tipo_rif:tipo_rif},
 
         success: function(response)
         {
           if(response == 0){
             $('#idcliente').val('');
-            $('#nom_cliente').val('');
-            $('#tel_cliente').val('');
-            $('#email_cliente').val('');
-            $('#pass_cliente').val('');
-            $('#dir_cliente').val('');
+            $('#nombre_m').val('');
+            $('#telefono_m').val('');
+            $('#correo_m').val('');
+            $('#password_m').val('');
+            $('#direccion_m').val('');
             //mostrar boton de Agregar
             $('.btn_new_cliente').slideDown();
           }else{
             var data = $.parseJSON(response);
             $('#idcliente').val(data.tclie_idclie);
-            $('#nom_cliente').val(data.tclie_namecl);
-            $('#tel_cliente').val(data.tclie_telecl);
-            $('#email_cliente').val(data.tclie_emailc);
-            $('#pass_cliente').val(data.tclie_passcl);
-            $('#dir_cliente').val(data.tclie_direcl);
+            $('#nombre_m').val(data.tclie_namecl);
+            $('#telefono_m').val(data.tclie_telecl);
+            $('#correo_m').val(data.tclie_emailc);
+            $('#password_m').val(data.tclie_passcl);
+            $('#direccion_m').val(data.tclie_direcl);
             //ocultar boton de Agregar
             $('.btn_new_cliente').slideUp();
 
             //Bloque de campos
-            $('#nom_cliente').attr('disabled','disabled');
-            $('#tel_cliente').attr('disabled','disabled');
-            $('#email_cliente').attr('disabled','disabled');
-            $('#pass_cliente').attr('disabled','disabled');
-            $('#dir_cliente').attr('disabled','disabled');
+            $('#nombre_m').attr('disabled','disabled');
+            $('#telefono_m').attr('disabled','disabled');
+            $('#correo_m').attr('disabled','disabled');
+            $('#password_m').attr('disabled','disabled');
+            $('#direccion_m').attr('disabled','disabled');
 
             //oculta boton Guardar
             $('#div_registro_cliente').slideUp();
@@ -256,31 +310,35 @@ $('#tipo').change(function(){
 
    //Crear Cliente - Ventas
 
-   $('#form_new_cliente_venta').submit(function(e){
+   $('#enviar').on('click',function(e){
      e.preventDefault();
      $.ajax({
         url: 'moduloventas/ajaxventas.php',
         type: "POST",
         async: true,
-        data: $('#form_new_cliente_venta').serialize(),
+        data: $('#formulario').serialize(),
 
         success: function(response)
         {
-          if(response != 'error'){
+            var data = $.parseJSON(response);
+            console.log(data.msg);
+          if(data.msg == 'exito'){
             //agregar id a input hiden
             $('#idcliente').val(response);
             //bloque campos
-            $('#nom_cliente').attr('disabled','disabled');
-            $('#tel_cliente').attr('disabled','disabled');
-            $('#email_cliente').attr('disabled','disabled');
-            $('#pass_cliente').attr('disabled','disabled');
-            $('#dir_cliente').attr('disabled','disabled');
+            $('#nombre_m').attr('disabled','disabled');
+            $('#telefono_m').attr('disabled','disabled');
+            $('#correo_m').attr('disabled','disabled');
+            $('#password_m').attr('disabled','disabled');
+            $('#direccion_m').attr('disabled','disabled');
 
             //ocultar boton agregar
             $('.btn_new_cliente').slideUp();
             //oculta boton guardar
             $('#div_registro_cliente').slideUp();
 
+          }else{
+            alert(data.msg);
           }
           
         },

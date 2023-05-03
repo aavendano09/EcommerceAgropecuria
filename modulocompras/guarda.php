@@ -55,28 +55,58 @@ if (mysqli_num_rows($request) == 0) {
 
             if ($band) {
                 if($conexion->query($sqlproductos)){
-
+                    $codProducto = mysqli_insert_id($conexion);
+                    $msg = [
+                        'msg'=>'exito', 
+                        'cod'=>$id
+                        ];
+                    echo json_encode($msg);
+                    exit;
+                }else{
+                    $msg = [
+                        'msg'=>'Ha ocurrido un error al registrar.', 
+                        ];
+                        echo json_encode($msg);
+                        exit;
                 }
-                header('Location: ../paneladmin.php?modulo=productos');
 
             }else{
-                echo "<script>alert('La imagen supera el tamaño maximo permitido de 1MB'); window.location.href = '../paneladmin.php?modulo=productos';</script>";
 
+                $msg = [
+                    'msg'=>'La imagen supera el tamaño maximo permitido de 1MB',
+                    'input'=>'imagen' 
+                    ];
+                    echo json_encode($msg);
+                    exit;
+                
             }
         }else{
-            echo "<script>alert('El precio de venta no puede ser menor al precio de compra'); window.location.href = '../paneladmin.php?modulo=productos';</script>";
+            $msg = [
+                'msg'=>'El precio de venta no puede ser menor al precio de compra', 
+                'input'=>'precioventa' 
+                ];
+                echo json_encode($msg);
+                exit;
         }
        
         
 
     } else {
-        echo "<script>alert('La fecha de vencimiento del producto no puede ser menor a 30 dias'); window.location.href = '../paneladmin.php?modulo=productos';</script>"; 
-
+        $msg = [
+            'msg'=>'La fecha de vencimiento del producto no puede ser menor a 30 dias', 
+            'input'=>'fechavencimiento' 
+            ];
+            echo json_encode($msg);
+            exit;
     }
 
 }else{
-    echo "<script>alert('El id de producto ya se encuentra registrado, porfavor ingrese otro'); window.location.href = '../paneladmin.php?modulo=productos';</script>";
-
+    $msg = [
+        'msg'=>'El id de producto ya se encuentra registrado, porfavor ingrese otro', 
+        'input'=>'id' 
+        ];
+        echo json_encode($msg);
+        exit;
 }
 
 

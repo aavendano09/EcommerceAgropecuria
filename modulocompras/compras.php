@@ -5,7 +5,8 @@ error_reporting(0);
     header("location:login.php");
    }
 
-  include_once 'validations/FormulariosManual.php';
+ require_once 'validations/FormularioManual.php';
+ require_once 'validations/Formulario.php';
 ?>
 
 
@@ -24,6 +25,7 @@ error_reporting(0);
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
     <!-- ========================================================= -->
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <script src="validations/minivalid.js"></script>
     <script>
       const modulo = "modulocompras";
       const modaltitle = "Compra";
@@ -32,7 +34,7 @@ error_reporting(0);
 <body>
 <style>
 
-#div_registro_cliente, #add_product_venta{
+#div_registro_proveedor, #add_product_compra{
   display: none;
 }
 
@@ -48,12 +50,15 @@ error_reporting(0);
             <h4 class="text-center">Datos del Proveedor:</h4>
             <a href="#" class="btn_new btn_new_proveedor"><i class="fas fa-plus">Nuevo Proveedor</i></a>
           </div>
+          <div class="col-12 d-flex justify-content-end">
+            <a href="#" id="new" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#nuevoModal"><i class="fa-solid fa-circle-plus"></i> Nuevo Producto</a>
+          </div>
          </div>
 
          <!-- Datos del Proveedor -->
 
   <div style="margin-top: 20px; margin-right: 10px;">
-  <form name="form_new_cliente_venta" id="form_new_cliente_venta" class="row g-3 datos">
+  <!-- <form name="form_new_cliente_venta" id="form_new_cliente_venta" class="row g-3 datos">
   <input type="hidden" name="action" value="addCliente">
   <input type="hidden" id="idproveedor" name="idproveedor" value="" required>
 
@@ -68,7 +73,7 @@ error_reporting(0);
   </div>
   <div class="col-md-2">
     <label class="form-label">RIF</label>
-    <input placeholder="28654495" onkeypress="return CedRifE(event, 'rif_proveedor', 'tipo_rif'); " type="number" min="100000000"  type="number" class="form-control" name="rif_proveedor" id="rif_proveedor" required>
+    <input placeholder="28654495" onkeypress="return CedRifE(event, 'rif', 'tipo_rif'); " type="number" min="100000000"  type="number" class="form-control" name="rif" id="rif" required>
   </div>
   <div class="col-md-8">
     <label class="form-label">Razon Social</label>
@@ -80,7 +85,7 @@ error_reporting(0);
   </div>
   <div class="col-7">
     <label class="form-label">Correo electronico</label>
-    <input onkeypress="return ValidarNotEspacios(event)" placeholder="pedro@gmail.com" type="email" name="email_proveedor" id="email_proveedor" disabled required class="form-control">
+    <input onkeypress="return ValidarNotEspacios(event)" placeholder="pedro@gmail.com" type="email" name="correo" id="correo" disabled required class="form-control">
   </div>
   <div class="col-11">
     <label class="form-label">Direccion</label>
@@ -89,7 +94,22 @@ error_reporting(0);
   <div id="div_registro_proveedor" class="col-12">
     <button type="submit" class=" btn btn-primary btn_save"><i class="far fa-save fa-lg"></i> Guardar</button>
   </div>
-</form>
+</form> -->
+
+<?php
+  $formulario_m = new FormularioManual("formulario_m", "formulario_m", "idproveedor");
+  $formulario_m->setSelInput("number", "tipo_rif", "rif_m", "Rif", "407898280", 3, "required", null, ['V','G','J']);
+  $formulario_m->setInput("text", "razon_m", "Razon social", 4, "Vendedor");
+  $formulario_m->setInput("number", "telefono_m", "Telefono", 4, "0416848888");
+  $formulario_m->setInput("email", "correo_m", "Correo Electrónico", 4, "pedro@gmail.com");
+  $formulario_m->setInput("text", "direccion_m", "Direccion Fiscal", 8, "5ta Avenida");
+  $html = "<option value='1'>Activo</option>
+          <option value='0'>Inactivo</option>
+  ";
+  $formulario_m->setButton("Guardar", "Formulario enviado exitosamente!", false, "Cerrar", 'proveedor');
+  $formulario_m->getRender();
+?>
+
   </div>
 
 
@@ -99,7 +119,7 @@ error_reporting(0);
              <div class="row">
                   <div class="col-8">
                   <label class="form-label">No. Factura</label>
-                  <input onkeypress="return SoloNumeros(event, 'nofactura', 20);" type="text" name="nofactura" id="nofactura" required class="form-control">
+                  <input onkeypress="return SoloNumeros(event, 'nofactura', 4)" type="number" name="nofactura" id="nofactura"  required class="form-control">
                   </div>
               <div class="col-4">
               <label class="form-label">Acciones</label>
@@ -125,13 +145,13 @@ error_reporting(0);
       <th>Accion</th>
     </tr>
     <tr>
-      <td><input onkeypress="return SoloNumeros(event, 'txt_cod_producto', 4);" type="text" name="txt_cod_producto" id="txt_cod_producto"></td>
+      <td><input type="number"  onkeypress="return SoloNumeros(event, 'txt_cod_producto', 3)" name="txt_cod_producto" id="txt_cod_producto"></td>
       <td id="txt_descripcion">-</td>
       <td id="txt_existencia">-</td>
-      <td><input type="text" name="txt_cant_producto" id="txt_cant_producto" value="0" min="1" disabled></td>
+      <td><input type="number"  onkeypress="return SoloNumeros(event, 'txt_cant_producto', 9)" name="txt_cant_producto" id="txt_cant_producto" value="0" min="1" disabled></td>
       <td id="txt_precio" class="textright">0.00</td>
       <td id="txt_precio_total" class="textright">0.00</td>
-      <td> <a href="#" id="add_product_venta" class="link_add"><i class="fas fa-plus"></i> Agregar</a></td>
+      <td> <a href="#" id="add_product_compra" class="link_add"><i class="fas fa-plus"></i> Agregar</a></td>
     </tr>
     <tr>
       <th>Codigo</th>
@@ -152,6 +172,10 @@ error_reporting(0);
      </section>
 </div>
 
+<?php
+  include 'moduloproductos/nuevoModal.php';
+?>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
@@ -160,7 +184,6 @@ error_reporting(0);
 <script>
  
    //funcion para mantener los registros en el detalle de orden de entrega
-
     $(document).ready(function(){
 		var usuarioid = "<?php echo $_SESSION['tidAdmin'];?>";
 		serchForDetalle(usuarioid);
@@ -170,10 +193,10 @@ error_reporting(0);
   $(document).ready(function () {
     $('.btn_new_proveedor').click(function(e){
       e.preventDefault();
-      $('#nom_proveedor').removeAttr('disabled');
-      $('#tel_proveedor').removeAttr('disabled');
-      $('#email_proveedor').removeAttr('disabled');
-      $('#dir_proveedor').removeAttr('disabled');
+      $('#razon_m').removeAttr('disabled');
+      $('#telefono_m').removeAttr('disabled');
+      $('#correo_m').removeAttr('disabled');
+      $('#direccion_m').removeAttr('disabled');
   
       $('#div_registro_proveedor').slideDown();
    
@@ -182,54 +205,58 @@ error_reporting(0);
 
     //  Buscar Proveedor
 
-  $('#rif_proveedor').keyup(function(){
+  $('#rif_m').keyup(function(){
     var tRif = $('#tipo_rif').val();
     var cl = $(this).val();
+    // console.log(tRif);
+    // console.log(cl);
     searchProveedor(tRif,cl);
   });
 
   $('#tipo_rif').change(function(){
     var tRif = $(this).val();
-    var cl = $('#rif_proveedor').val();
+    var cl = $('#rif_m').val();
+    // console.log(tRif);
+    // console.log(cl);
     searchProveedor(tRif,cl);
   });
 
 
-   function searchProveedor(tipo_rif, rif_proveedor){
-    
+   function searchProveedor(tipo_rif, rif){
+
      var action = 'searchProveedor';
 
      $.ajax({
         url: 'modulocompras/ajaxcompras.php',
         type: "POST",
         async: true,
-        data: {action:action,proveedor:rif_proveedor,tiporif:tipo_rif},
+        data: {action:action,proveedor:rif,tipo_rif:tipo_rif},
 
         success: function(response)
         {
           if(response == 0){
             $('#idproveedor').val('');
-            $('#nom_proveedor').val('');
-            $('#tel_proveedor').val('');
-            $('#email_proveedor').val('');
-            $('#dir_proveedor').val('');
+            $('#razon_m').val('');
+            $('#telefono_m').val('');
+            $('#correo_m').val('');
+            $('#direccion_m').val('');
             //mostrar boton de Agregar
             $('.btn_new_proveedor').slideDown();
           }else{
             var data = $.parseJSON(response);
             $('#idproveedor').val(data.tprov_idprov);
-            $('#nom_proveedor').val(data.tprov_Razsoc);
-            $('#tel_proveedor').val(data.tprov_telepr);
-            $('#email_proveedor').val(data.tprov_emailp);
-            $('#dir_proveedor').val(data.tprov_direpr);
+            $('#razon_m').val(data.tprov_Razsoc);
+            $('#telefono_m').val(data.tprov_telepr);
+            $('#correo_m').val(data.tprov_emailp);
+            $('#direccion_m').val(data.tprov_direpr);
             //ocultar boton de Agregar
             $('.btn_new_proveedor').slideUp();
 
             //Bloque de campos
-            $('#nom_proveedor').attr('disabled','disabled');
-            $('#tel_proveedor').attr('disabled','disabled');
-            $('#email_proveedor').attr('disabled','disabled');
-            $('#dir_proveedor').attr('disabled','disabled');
+            $('#razon_m').attr('disabled','disabled');
+            $('#telefono_m').attr('disabled','disabled');
+            $('#correo_m').attr('disabled','disabled');
+            $('#direccion_m').attr('disabled','disabled');
 
             //oculta boton Guardar
             $('#div_registro_proveedor').slideUp();
@@ -243,84 +270,100 @@ error_reporting(0);
 
    //Crear Proveedor - Compras
 
-   $('#form_new_cliente_venta').submit(function(e){
+   $('#enviar').on('click',function(e){
      e.preventDefault();
+    
+    if (submit(input_m, arrInput_m, select_m, arrSelect_m, 'proveedor')) {
+      
+    
      $.ajax({
         url: 'modulocompras/ajaxcompras.php',
         type: "POST",
         async: true,
-        data: $('#form_new_cliente_venta').serialize(),
-
+        data: $('#formulario_m').serialize(),
         success: function(response)
         {
-          if(response != 'error'){
-            //agregar id a input hiden
-            $('#idproveedor').val(response);
+            var data = $.parseJSON(response);
+            console.log(data.msg);
+          if(data.msg == 'exito'){
+            $('#idcliente').val(response);
             //bloque campos
-            $('#nom_proveedor').attr('disabled','disabled');
-            $('#tel_proveedor').attr('disabled','disabled');
-            $('#email_proveedor').attr('disabled','disabled');
-            $('#dir_proveedor').attr('disabled','disabled');
+            $('#tipo_rif').attr('disabled','disabled');
+            $('#rif_m').attr('disabled','disabled');
+            $('#razon_m').attr('disabled','disabled');
+            $('#telefono_m').attr('disabled','disabled');
+            $('#correo_m').attr('disabled','disabled');
+            $('#direccion_m').attr('disabled','disabled');
 
             //ocultar boton agregar
             $('.btn_new_proveedor').slideUp();
             //oculta boton guardar
             $('#div_registro_proveedor').slideUp();
 
+          }else{
+            alert(data.msg);
           }
           
         },
         error: function(error){
-
+            alert(error);
         }
      });
+
+    }else{
+      alert("fallo")
+    }
+
    });
 
     //Buscar producto - Compras manuales
 
-    $('#txt_cod_producto').keyup(function(e){
-     e.preventDefault();
-
-     var producto = $(this).val();
-     var action = 'infoProducto';
-
-     $.ajax({
-        url: 'modulocompras/ajaxcompras.php',
-        type: "POST",
-        async: true,
-        data: {action:action,producto:producto},
-
-        success: function(response)
-        {
-          if(response != 'error'){
-                 var info = JSON.parse(response);
-                 $('#txt_descripcion').html(info.tprod_namepr);
-                 $('#txt_existencia').html(info.tprod_cantpr);
-                 $('#txt_cant_producto').val('1');
-                 $('#txt_precio').html(info.tprod_precic);
-                 $('#txt_precio_total').html(info.tprod_precic);
-                 //activar cantidad producto
-                 $('#txt_cant_producto').removeAttr('disabled');
-                 //mostrar boton agregar
-                 $('#add_product_venta').slideDown();
-             }else{
-                 
-                 $('#txt_descripcion').html('-');
-                 $('#txt_existencia').html('-');
-                 $('#txt_cant_producto').val('0');
-                 $('#txt_precio').html('0.000');
-                 $('#txt_precio_total').html('0.000');
-                 //bloquear cantidad
-                 $('#txt_cant_producto').attr('disabled','disabled');
-                 //ocultar boton agregar
-                 $('#add_product_venta').slideUp();
-             }
-        },
-        error: function(error){
-
-        }
-     });
+    $('#txt_cod_producto').on('keyup', function(e){
+      searchProduct()
    });
+
+function searchProduct(){
+
+  var producto = $('#txt_cod_producto').val();
+  var action = 'infoProducto';
+
+  $.ajax({
+    url: 'modulocompras/ajaxcompras.php',
+    type: "POST",
+    async: true,
+    data: {action:action,producto:producto},
+
+    success: function(response)
+    {
+      if(response != 'error'){
+              var info = JSON.parse(response);
+              $('#txt_descripcion').html(info.tprod_namepr);
+              $('#txt_existencia').html(info.tprod_cantpr);
+              $('#txt_cant_producto').val('1');
+              $('#txt_precio').html(info.tprod_precic);
+              $('#txt_precio_total').html(info.tprod_precic);
+              //activar cantidad producto
+              $('#txt_cant_producto').removeAttr('disabled');
+              //mostrar boton agregar
+              $('#add_product_compra').slideDown();
+          }else{
+              
+              $('#txt_descripcion').html('-');
+              $('#txt_existencia').html('-');
+              $('#txt_cant_producto').val('0');
+              $('#txt_precio').html('0.000');
+              $('#txt_precio_total').html('0.000');
+              //bloquear cantidad
+              $('#txt_cant_producto').attr('disabled','disabled');
+              //ocultar boton agregar
+              $('#add_product_compra').slideUp();
+          }
+    },
+    error: function(error){
+
+    }
+  });
+}
 
    //CALCULAR CANTIDADES
    $('#txt_cant_producto').keyup(function(e){
@@ -332,9 +375,9 @@ error_reporting(0);
          //oculta el boton agregar si la cantidad es menor a 1
      
          if(($(this).val()<1 || isNaN($(this).val())) || ($(this).val() >existencia) ){
-             $('#add_product_venta').slideUp();
+             $('#add_product_compra').slideUp();
          }else{
-             $('#add_product_venta').slideDown();
+             $('#add_product_compra').slideDown();
          }
          });
 
@@ -342,7 +385,7 @@ error_reporting(0);
 
     //AGREGAR PRODUCTO AL DETALLE
 
-        $('#add_product_venta').click(function(e){
+        $('#add_product_compra').click(function(e){
          e.preventDefault();
          if($('#txt_cant_producto').val() > 0){
      
@@ -374,7 +417,7 @@ error_reporting(0);
      
                          //Ocultar boton agregar
      
-                         $('#add_product_venta').slideUp();
+                         $('#add_product_compra').slideUp();
                          
                      }else{
                          console.log('no data');
@@ -524,7 +567,7 @@ error_reporting(0);
      
                          //Ocultar boton agregar
      
-                         $('#add_product_venta').slideUp();
+                         $('#add_product_compra').slideUp();
                  }else{
                      $('#detalle_venta').html('');
                      $('#detalle_totales').html('');
@@ -545,6 +588,192 @@ error_reporting(0);
              $('#btn_facturar_venta').hide();
          }
      }
+
+     
+
+  //    $('#guardar').on('click',function(e){
+  //    e.preventDefault();
+  //    $.ajax({
+  //       url: 'modulocompras/ajaxcompras.php',
+  //       type: "POST",
+  //       async: true,
+  //       data: $('#formulario_m').serialize(),
+
+  //       success: function(response)
+  //       {
+  //           var data = $.parseJSON(response);
+  //           console.log(data.msg);
+  //         if(data.msg == 'exito'){
+  //           //agregar id a input hiden
+  //           $('#idproveedor').val(data.cod);
+  //           //bloque campos
+  //           $('#razon_m').attr('disabled','disabled');
+  //           $('#telefono_m').attr('disabled','disabled');
+  //           $('#correo_m').attr('disabled','disabled');
+  //           $('#direccion_m').attr('disabled','disabled');
+
+  //           //ocultar boton agregar
+  //           $('.btn_new_proveedor').slideUp();
+  //           //oculta boton guardar
+  //           $('#div_registro_proveedor').slideUp();
+
+  //         }else{
+  //           alert(data.msg);
+  //         }
+          
+  //       },
+  //       error: function(error){
+  //           alert(error);
+  //       }
+  //    });
+  //  });
+  
+   
+   $('#guardar').on('click',function(e){
+    e.preventDefault();
+
+    if (submit(input, arrInput, select, arrSelect, 'producto')) {
+
+     
+      var formData = new FormData(formulario)
+      
+      console.log(formData);
+
+      $.ajax({
+          url: 'modulocompras/guarda.php',
+          type: "POST",
+          data: formData,
+          contentType: false,
+          processData: false,
+          async: true,
+          data: formData,
+
+          success: function(response)
+          {
+              var data = $.parseJSON(response);
+              console.log(data.msg);
+            if(data.msg == 'exito'){
+              $('body').removeClass('modal-open');//eliminamos la clase del body para poder hacer scroll
+              $('.modal-backdrop').remove();//eliminamos el backdrop del modal
+              $("#nuevoModal").modal('hide');//ocultamos el modal
+              $("#nuevoModal").modal('hide');//ocultamos el modal
+              formulario.reset();
+              alert("El producto fue agregado exitosamente! con el ID:"+data.cod)
+              $('#txt_cod_producto').val(data.cod)
+              searchProduct()
+
+            }else{
+              alert(data.msg);
+              console.log(data.input)
+              document.getElementById(`grupo__${data.input}`).classList.add('formulario__grupo-incorrecto');
+              document.getElementById(`grupo__${data.input}`).classList.remove('formulario__grupo-correcto');
+              document.querySelector(`#grupo__${data.input} i`).classList.add('fa-times-circle');
+              document.querySelector(`#grupo__${data.input} i`).classList.remove('fa-check-circle');
+              
+              var position = $('#' + data.input).position();
+              // scroll modal to position top
+              $("#nuevoModal").scrollTop(position);
+              
+              //$('#nuevoModal').scrollTo('#'+data.input);
+
+            }
+            
+          },
+          error: function(error){
+              alert(error);
+          }
+      });
+    }
+  });
+
+
+function cargaPresent(id, value = ""){
+
+
+let sql = "SELECT tpre_idpres, tpre_despre FROM tpre_tts INNER JOIN tprp_tts ON tpre_idpres = tprp_fkpres INNER JOIN ttpro_tme ON tprp_fktpro = ttpro_idtipp WHERE ttpro_idtipp = '"+id+"'";
+
+if (id > 0) {
+   
+   
+   $.ajax({
+       type: "post",
+       url: "moduloproductos/carga.php",
+       data: {"sql": sql},
+       asycn:true,
+       dataType: "json",
+   }).done(function(resp){
+       var data = resp
+       var cadena = "<option value=''>Seleccione...</option>";
+       
+
+       
+       if (data.length > 0) {
+           for (var i = 0; i < data.length; i++) {
+            if (data[i]["tpre_idpres"] == value) {
+                cadena +="<option selected='true' value='"+data[i]["tpre_idpres"]+"'>"+data[i]["tpre_despre"]+"</option>";
+               
+            }else{
+                cadena +="<option value='"+data[i]["tpre_idpres"]+"'>"+data[i]["tpre_despre"]+"</option>";
+            }
+
+           }
+           $("#presentacion").html(cadena);
+       } else {
+           cadena +="<option value=''>No se encontraron registros</option>";
+           $("presentacion").html(cadena);
+       }
+   })
+}else{
+
+   $("#presentacion").html("<option value=''>Seleccione...</option>");
+}
+
+}
+
+
+function cargaMedida(id){
+
+let sql = "SELECT tmpro_descmd FROM tmpro_tme INNER JOIN tpre_tts ON tmpro_idmedi = tpre_fkmedi WHERE tpre_idpres = '"+id+"' LIMIT 1; ";
+
+$.ajax({
+    type: "post",
+    url: "moduloproductos/carga.php",
+    data: {"sql":sql},
+    asycn:true,
+    dataType: "json",
+}).done(function(resp){
+var data = resp
+
+
+if (data.length > 0) {
+        
+
+    $("#medidas").text(data[0]['tmpro_descmd']);
+} else {
+    cadena +="<option value=''>No se encontraron registros</option>";
+    $("presentacion").html("N/A");
+}
+})
+}
+
+$("#tipoproducto").on("change", function(){
+
+idTipoProducto = $('#tipoproducto').val();
+
+cargaPresent(idTipoProducto);
+
+})
+
+
+$("#presentacion").on("change", function(){
+
+idPresent = $('#presentacion').val();
+
+cargaMedida(idPresent);
+
+})
+
+
 
 </script>
 

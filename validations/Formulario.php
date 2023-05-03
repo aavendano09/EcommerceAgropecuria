@@ -120,7 +120,7 @@ class Formulario
         ";
     }
 
-    public function setQuantity($type, $input, $label, $size, $display = null){
+    public function setQuantity($type, $input, $label, $size, $display = null, $required = 'required'){
         if (!isset($this->$input)) {
             $msg = "";
         }else{
@@ -132,7 +132,7 @@ class Formulario
                 <br/>
                 <br/>
                 <div class='input-group mb-3 formulario__grupo-input col-$size'>
-                    <input type='$type' name='$input' id='$input' class='form-control formulario__input' placeholder='40'>
+                    <input type='$type' name='$input' id='$input' class='form-control formulario__input' placeholder='40' $required>
                     <i class='formulario__validacion-estado fas fa-times-circle' style='bottom: 13px; right: 145px;'></i>
                     <span id='medidas' class='input-group-text'>KILOGRAMOS</span>
                 </div>
@@ -226,13 +226,13 @@ class Formulario
         $this->inputs .= $html;
     }
 
-    public function setButton($value, $msg, $formCrud = null, $secondary = null, $id = null){
+    public function setButton($value, $msg, $formCrud = null, $secondary = null, $id = null, $ident = null){
 
         if (!$formCrud) {
             $this->inputs .= "
             <br>
             <div class='formulario__grupo formulario__grupo-btn-enviar'>
-                <button value='$id' type='submit' class='btn btn-primary btn-block mb-4 col-6'>$value</button>
+                <button value='$id' type='submit' id='$ident' class='btn btn-primary btn-block mb-4 col-6'>$value</button>
                 <p class='formulario__mensaje-exito' id='formulario__mensaje-exito'>$msg</p>
             </div>
             ";
@@ -242,7 +242,7 @@ class Formulario
             <br>
             <div class='formulario__grupo '>
                 <button type='button' class='btn btn-secondary' data-bs-dismiss='modal'>$secondary</button>
-                <button value='$id' type='submit' class='btn btn-primary'><i class='fa-solid fa-floppy-disk'></i>$value</button>
+                <button value='$id' type='submit' id='$ident' class='btn btn-primary'><i class='fa-solid fa-floppy-disk'></i>$value</button>
                 <p class='formulario__mensaje-exito' id='formulario__mensaje-exito'>$msg</p>
             </div>
             ";

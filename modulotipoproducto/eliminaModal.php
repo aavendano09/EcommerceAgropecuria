@@ -10,7 +10,7 @@
         ¿Desea eliminar la medida?
       </div>
       <div class="modal-footer">
-      <form action="modulopresentacion/elimina.php" method="post">
+      <form action="modulotipoproducto/elimina.php" method="post">
         <input type="hidden" name="id" id="id">
                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                <button type="submit" class="btn btn-primary"><i class="fa-solid fa-trash"></i></i> Eliminar</button>

@@ -7,18 +7,19 @@ session_start();
 //BUSCAR PROVEEDOR
 
 if($_POST['action'] == 'searchProveedor'){
-    if(!empty($_POST['proveedor'] && !empty($_POST['tiporif']))){
+    if(!empty($_POST['proveedor'] && !empty($_POST['tipo_rif']))){
         $id = $_POST['proveedor'];
-        $tiporif = $_POST['tiporif'];
+        $tiprif = $_POST['tipo_rif'];
 
-        $query = mysqli_query($conexion, "SELECT * FROM tdprv_tme WHERE tprov_Rifpro = '$id' AND tprov_tiprif = '$tiporif'");
+        $query = "SELECT * FROM tdprv_tme WHERE tprov_Rifpro = '$id' AND tprov_tiprif = '$tiprif'";
 
-        mysqli_close($conexion);
-        $resultado = mysqli_num_rows($query);
+        $resultado = $conexion->query($query);
 
-        $data = '';
-        if($resultado > 0){
-            $data = mysqli_fetch_assoc($query);
+        $rows = $resultado->num_rows;
+
+        $data = [];
+        if($rows > 0){
+            $data = $resultado->fetch_array();
         }else{
             $data = 0;
         }
@@ -32,25 +33,60 @@ if ($_POST['action'] == 'addCliente') {
 
     $id = $_POST['idproveedor'];
     $tipo = $_POST['tipo_rif'];
-    $Rif = $_POST['rif_proveedor'];
-    $nombre = $_POST['nom_proveedor'];
-    $telefono = $_POST['tel_proveedor'];
-    $correo = $_POST['email_proveedor'];
-    $direccion = $_POST['dir_proveedor'];
-   
+    $Rif = $_POST['rif_m'];
+    $nombre = $_POST['razon_m'];
+    $telefono = $_POST['telefono_m'];
+    $correo = $_POST['correo_m'];
+    $direccion = $_POST['direccion_m'];
 
-    $sqlproveedor = mysqli_query($conexion, "INSERT INTO tdprv_tme (tprov_idprov, tprov_Rifpro, tprov_Razsoc, tprov_direpr, tprov_telepr, tprov_emailp, tprov_tiprif) 
-    VALUES ('$id','$Rif','$nombre','$direccion','$telefono','$correo','$tipo');");
+    $sqlRifProv = "SELECT tprov_Rifpro FROM tdprv_tme WHERE tprov_Rifpro = '$Rif' AND tprov_tiprif = '$tipo'";
 
-    if($sqlproveedor){
-        $codProveedor = mysqli_insert_id($conexion);
-        $msg = $codProveedor;
-    }else{
-        $msg = 'error';
+    $request = $conexion->query($sqlRifProv);
+
+    if(mysqli_num_rows($request) == 0){
+    
+        $sqlCorreo= "SELECT tprov_emailp FROM tdprv_tme WHERE tprov_emailp = '$correo'";
+
+        $request = $conexion->query($sqlCorreo);
+    
+        if(mysqli_num_rows($request) == 0){
+            
+            $sqlproveedor = "INSERT INTO tdprv_tme (tprov_idprov, tprov_Rifpro, tprov_Razsoc, tprov_direpr, tprov_telepr, tprov_emailp, tprov_tiprif)  
+            VALUES ('$id','$Rif','$nombre','$direccion','$telefono','$correo','$tipo');";
+
+            if($conexion->query($sqlproveedor)){
+                $codProveedor = mysqli_insert_id($conexion);
+                $msg = [
+                    'msg'=>'exito', 
+                    'cod'=>$codProveedor
+                    ];
+                echo json_encode($msg);
+                exit;
+            }else{
+                $msg = [
+                    'msg'=>'Ha ocurrido un error al registrar.', 
+                    ];
+                    echo json_encode($msg);
+                    exit;
+            }
+
+
+        } else {
+            $msg = [
+                'msg'=>'El correo electronico ya se encuentra registrado', 
+                ];
+                echo json_encode($msg);
+                exit;
+        }
+
+    } else {
+        $msg = [
+            'msg'=>'El RIF ya se encuentra registrado', 
+            ];
+            echo json_encode($msg);
+            exit;
     }
-    mysqli_close($conexion);
-    echo $msg;
-    exit;
+   
 
 }
 

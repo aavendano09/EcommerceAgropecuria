@@ -159,9 +159,14 @@ error_reporting(0);
 
 <script>
 
+
+
 $('#tipo').change(function(){
     $('#ced_cliente').val('');
 });
+
+
+
  
    //funcion para mantener los registros en el detalle de orden de entrega
 
@@ -574,6 +579,9 @@ $('#tipo').change(function(){
              $('#btn_facturar_venta').hide();
          }
      }
+
+
+    
 
 </script>
 

@@ -42,13 +42,17 @@ $valiVencimiento = date("Y-m-d", strtotime($fecha_actual."+ 30 days"));
 if(empty($_FILES['ara']['tmp_name'])){
 
     if($fechavencimiento >= $valiVencimiento){
-        $sqlproducto = "UPDATE tprod_tme 
-        SET tprod_namepr = '$nombre', tprod_descpr = '$descripcion', tprod_fktprp = '$idtprp', tprod_precic = '$tprod_precic', tprod_preciv = '$tprod_preciv', tprod_fechve = '$fechavencimiento', tprod_fechin = '$fechaingreso', tprod_connet = '$contnet', tprod_status = '$status'
-        WHERE tprod_idprod='$id'";
-    
-        if($conexion->query($sqlproducto)){
+        if($fechavencimiento >= $valiVencimiento){
+            $sqlproducto = "UPDATE tprod_tme 
+            SET tprod_namepr = '$nombre', tprod_descpr = '$descripcion', tprod_fktprp = '$idtprp', tprod_precic = '$tprod_precic', tprod_preciv = '$tprod_preciv', tprod_fechve = '$fechavencimiento', tprod_fechin = '$fechaingreso', tprod_connet = '$contnet', tprod_status = '$status'
+            WHERE tprod_idprod='$id'";
+        
+            if($conexion->query($sqlproducto)){
+            }
+            header('Location: ../paneladmin.php?modulo=productos');
+        }else{
+            echo "<script>alert('El precio de venta no puede ser menor al precio de compra'); window.location.href = '../paneladmin.php?modulo=productos';</script>";
         }
-        header('Location: ../paneladmin.php?modulo=productos');
    
     }else{
         echo "<script>alert('La fecha de vencimiento del producto no puede ser menor a 30 dias'); window.location.href = '../paneladmin.php?modulo=productos';</script>"; 
@@ -59,23 +63,27 @@ if(empty($_FILES['ara']['tmp_name'])){
 }else{
 
     if($fechavencimiento >= $valiVencimiento){
-        $imagen = addslashes(file_get_contents($_FILES['ara']['tmp_name']));
-        $sqlproducto = "UPDATE tprod_tme 
-        SET tprod_namepr = '$nombre', tprod_fotopr = '$imagen', tprod_descpr = '$descripcion', tprod_fktprp = '$idtprp', tprod_precic = '$tprod_precic', tprod_preciv = '$tprod_preciv', tprod_fechve = '$fechavencimiento', tprod_fechin = '$fechaingreso', tprod_connet = '$contnet', tprod_status = '$status'
-        WHERE tprod_idprod='$id'";
+        if($fechavencimiento >= $valiVencimiento){
+            $imagen = addslashes(file_get_contents($_FILES['ara']['tmp_name']));
+            $sqlproducto = "UPDATE tprod_tme 
+            SET tprod_namepr = '$nombre', tprod_fotopr = '$imagen', tprod_descpr = '$descripcion', tprod_fktprp = '$idtprp', tprod_precic = '$tprod_precic', tprod_preciv = '$tprod_preciv', tprod_fechve = '$fechavencimiento', tprod_fechin = '$fechaingreso', tprod_connet = '$contnet', tprod_status = '$status'
+            WHERE tprod_idprod='$id'";
+        
+            if ($band) {
     
-        if ($band) {
-
-            if($conexion->query($sqlproducto)){
-
+                if($conexion->query($sqlproducto)){
+    
+                }
+    
+                header('Location: ../paneladmin.php?modulo=productos');
+    
+            }else{
+    
+                echo "<script>alert('La imagen supera el tamaño maximo permitido de 1MB'); window.location.href = '../paneladmin.php?modulo=productos';</script>";
+    
             }
-
-            header('Location: ../paneladmin.php?modulo=productos');
-
         }else{
-
-            echo "<script>alert('La imagen supera el tamaño maximo permitido de 1MB'); window.location.href = '../paneladmin.php?modulo=productos';</script>";
-
+            echo "<script>alert('El precio de venta no puede ser menor al precio de compra'); window.location.href = '../paneladmin.php?modulo=productos';</script>";
         }
 
     }else{
