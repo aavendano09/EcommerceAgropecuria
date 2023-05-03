@@ -24,6 +24,7 @@ error_reporting(0);
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
     <!-- ========================================================= -->
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <script src="validations/minivalid.js"></script>
     <script>
       const modulo = "moduloventas";
       const modaltitle = "Venta";
@@ -197,13 +198,13 @@ $('#tipo_rif').change(
       $('.ident').val('');
     if ($('#tipo_rif').val()=="V") {
       $('.ident').prop('name', 'cedula_m');
-      $('.ident').prop('id', 'cedula_m');
+      //$('.ident').prop('id', 'cedula_m');
       $('.ident').prop('placeholder', '15862175');
       $('#grupo__rif_m').prop('id', 'grupo__cedula_m');
       $('#errormsg').text('La identificacion debe poseer 7 u 8 digitos');
     }else{
       $('.ident').prop('name', 'rif_m');
-      $('.ident').prop('id', 'rif_m');
+     // $('.ident').prop('id', 'rif_m');
       $('#grupo__cedula_m').prop('id', 'grupo__rif_m');
       $('.ident').prop('placeholder', '407898280');
       $('#errormsg').text('La identificacion debe poseer 9 digitos');
@@ -312,6 +313,9 @@ $('#tipo_rif').change(function(){
 
    $('#enviar').on('click',function(e){
      e.preventDefault();
+
+    if(submit(input_m, arrInput_m, select_m, arrSelect_m, 'cliente')) {
+      
      $.ajax({
         url: 'moduloventas/ajaxventas.php',
         type: "POST",
@@ -326,6 +330,8 @@ $('#tipo_rif').change(function(){
             //agregar id a input hiden
             $('#idcliente').val(response);
             //bloque campos
+            $('#tipo_rif').attr('disabled','disabled');
+            $('#rif_m').attr('disabled','disabled');
             $('#nombre_m').attr('disabled','disabled');
             $('#telefono_m').attr('disabled','disabled');
             $('#correo_m').attr('disabled','disabled');
@@ -346,14 +352,20 @@ $('#tipo_rif').change(function(){
 
         }
      });
+    }else{
+      alert("fallo")
+    }
+   });
+
+   $('#txt_cod_producto').on('keyup', function(e){
+      searchProduct()
    });
 
     //Buscar producto - Ventas manuales
 
-    $('#txt_cod_producto').keyup(function(e){
-     e.preventDefault();
+    function searchProduct(){
 
-     var producto = $(this).val();
+     var producto = $('#txt_cod_producto').val();
      var action = 'infoProducto';
 
      $.ajax({
@@ -392,7 +404,7 @@ $('#tipo_rif').change(function(){
 
         }
      });
-   });
+   };
 
    //CALCULAR CANTIDADES
    $('#txt_cant_producto').keyup(function(e){
@@ -631,7 +643,152 @@ $('#tipo_rif').change(function(){
          }else{
              $('#btn_facturar_venta').hide();
          }
-     }
+        }
+        
+  $('#guardar').on('click',function(e){
+      e.preventDefault();
+  
+      if (submit(input, arrInput, select, arrSelect, 'producto')) {
+  
+        
+        var formData = new FormData(formulario)
+        
+        console.log(formData);
+  
+        $.ajax({
+            url: 'moduloventas/guarda.php',
+            type: "POST",
+            data: formData,
+            contentType: false,
+            processData: false,
+            async: true,
+            data: formData,
+  
+            success: function(response)
+            {
+                var data = $.parseJSON(response);
+                console.log(data.msg);
+              if(data.msg == 'exito'){
+                $('body').removeClass('modal-open');//eliminamos la clase del body para poder hacer scroll
+                $('.modal-backdrop').remove();//eliminamos el backdrop del modal
+                $("#nuevoModal").modal('hide');//ocultamos el modal
+                $("#nuevoModal").modal('hide');//ocultamos el modal
+                formulario.reset();
+                alert("El producto fue agregado exitosamente! con el ID:"+data.cod)
+                $('#txt_cod_producto').val(data.cod)
+                searchProduct()
+  
+              }else{
+                alert(data.msg);
+                console.log(data.input)
+                document.getElementById(`grupo__${data.input}`).classList.add('formulario__grupo-incorrecto');
+                document.getElementById(`grupo__${data.input}`).classList.remove('formulario__grupo-correcto');
+                document.querySelector(`#grupo__${data.input} i`).classList.add('fa-times-circle');
+                document.querySelector(`#grupo__${data.input} i`).classList.remove('fa-check-circle');
+                
+                var position = $('#' + data.input).position();
+                // scroll modal to position top
+                $("#nuevoModal").scrollTop(position);
+                
+                //$('#nuevoModal').scrollTo('#'+data.input);
+  
+              }
+              
+            },
+            error: function(error){
+                alert(error);
+            }
+        });
+      }
+    });
+
+    
+function cargaPresent(id, value = ""){
+
+
+let sql = "SELECT tpre_idpres, tpre_despre FROM tpre_tts INNER JOIN tprp_tts ON tpre_idpres = tprp_fkpres INNER JOIN ttpro_tme ON tprp_fktpro = ttpro_idtipp WHERE ttpro_idtipp = '"+id+"'";
+
+if (id > 0) {
+   
+   
+   $.ajax({
+       type: "post",
+       url: "moduloproductos/carga.php",
+       data: {"sql": sql},
+       asycn:true,
+       dataType: "json",
+   }).done(function(resp){
+       var data = resp
+       var cadena = "<option value=''>Seleccione...</option>";
+       
+
+       
+       if (data.length > 0) {
+           for (var i = 0; i < data.length; i++) {
+            if (data[i]["tpre_idpres"] == value) {
+                cadena +="<option selected='true' value='"+data[i]["tpre_idpres"]+"'>"+data[i]["tpre_despre"]+"</option>";
+               
+            }else{
+                cadena +="<option value='"+data[i]["tpre_idpres"]+"'>"+data[i]["tpre_despre"]+"</option>";
+            }
+
+           }
+           $("#presentacion").html(cadena);
+       } else {
+           cadena +="<option value=''>No se encontraron registros</option>";
+           $("presentacion").html(cadena);
+       }
+   })
+}else{
+
+   $("#presentacion").html("<option value=''>Seleccione...</option>");
+}
+
+}
+
+
+function cargaMedida(id){
+
+let sql = "SELECT tmpro_descmd FROM tmpro_tme INNER JOIN tpre_tts ON tmpro_idmedi = tpre_fkmedi WHERE tpre_idpres = '"+id+"' LIMIT 1; ";
+
+$.ajax({
+    type: "post",
+    url: "moduloproductos/carga.php",
+    data: {"sql":sql},
+    asycn:true,
+    dataType: "json",
+}).done(function(resp){
+var data = resp
+
+
+if (data.length > 0) {
+        
+
+    $("#medidas").text(data[0]['tmpro_descmd']);
+} else {
+    cadena +="<option value=''>No se encontraron registros</option>";
+    $("presentacion").html("N/A");
+}
+})
+}
+
+$("#tipoproducto").on("change", function(){
+
+idTipoProducto = $('#tipoproducto').val();
+
+cargaPresent(idTipoProducto);
+
+})
+
+
+$("#presentacion").on("change", function(){
+
+idPresent = $('#presentacion').val();
+
+cargaMedida(idPresent);
+
+})
+
 
 </script>
 

@@ -188,14 +188,14 @@ function submit(input, arrInput, select, arrSelect, form = null) {
 			//console.log(arrInput[i]+" "+"input")
 			if ( $("#"+arrInput[i]).attr("name") === "ara") {
 				input['imagen']=true;
-				if (form == 'proveedor') {
+				if (form == 'proveedor' || form == 'cliente') {
 					validarFormularioSubmit_m(arrInput[i]);					
 				}else{
 					validarFormularioSubmit(arrInput[i]);	
 				}
 			}else{
 				//console.log(arrInput[i]+" "+"input")
-				if (form == 'proveedor') {
+				if (form == 'proveedor' || form == 'cliente') {
 					validarFormularioSubmit_m(arrInput[i]);					
 				}else{
 					validarFormularioSubmit(arrInput[i]);	
@@ -209,7 +209,7 @@ function submit(input, arrInput, select, arrSelect, form = null) {
 	for (let i = 0; i < arrSelect.length; i++) {
 		if (!($("#"+arrSelect[i]).prop('required') == false) && !($("#"+arrSelect[i]).prop('readonly'))){
 			//console.log(arrSelect[i]+" "+"select")
-			if (form == 'proveedor') {
+			if (form == 'proveedor' || form == 'cliente') {
 				validarFormularioSubmit_m(arrSelect[i]);					
 			}else{
 				validarFormularioSubmit(arrSelect[i]);	

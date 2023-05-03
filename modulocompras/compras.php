@@ -273,7 +273,7 @@ error_reporting(0);
    $('#enviar').on('click',function(e){
      e.preventDefault();
     
-    if (submit(input_m, arrInput_m, select_m, arrSelect_m, 'proveedor')) {
+    if(submit(input_m, arrInput_m, select_m, arrSelect_m, 'proveedor')) {
       
     
      $.ajax({
