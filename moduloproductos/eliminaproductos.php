@@ -5,7 +5,7 @@ require_once('conexion.php');
 $sqltipoproducto = "SELECT ttpro_nametp FROM ttpro_tme";
 $productos = $conexion->query($sqltipoproducto);
 
-$sql = "SELECT tprod_idprod, tprod_fotopr, tprod_descpr, tprod_prespr, tprod_precic, tprod_preciv, tprod_fechve, tprod_fechin, tprod_cantpr,tprod_fktipp FROM tprod_tme WHERE tprod_status = 1;";
+$sql = "SELECT tprod_idprod, tprod_fotopr, tprod_descpr, tpre_despre, tprod_precic, tprod_preciv, tprod_fechve, tprod_fechin, tprod_cantpr, ttpro_nametp FROM tprod_tme INNER JOIN tprp_tts ON tprp_idtprp = tprod_fktprp INNER JOIN tpre_tts ON tpre_idpres = tprp_fkpres INNER JOIN ttpro_tme ON ttpro_idtipp = tprp_fktpro  WHERE tprod_status = 1;";
 $productos = $conexion->query($sql);
 
 ?>
@@ -72,8 +72,8 @@ $productos = $conexion->query($sql);
                  <td><?= $row_productos['tprod_idprod'] ?></td>
                  <td><img style="width: 100px;" src="data:image/jpg;base64,<?php echo base64_encode($row_productos['tprod_fotopr']) ?>" alt=""></td>
                  <td><?= $row_productos['tprod_descpr'] ?></td>
-                 <td><?= $row_productos['tprod_prespr'] ?></td>
-                 <td><?= $row_productos['tprod_fktipp'] ?></td>
+                 <td><?= $row_productos['tpre_despre'] ?></td>
+                 <td><?= $row_productos['ttpro_nametp'] ?></td>
                  <td><?= $row_productos['tprod_preciv'] ?></td>
                  <td><?= $row_productos['tprod_cantpr'] ?></td>
                  <td>
