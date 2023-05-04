@@ -172,16 +172,23 @@
                             </div>
                         </div>
                     </form> -->
-                    <?php
+                     <?php
                         $formulario_m = new FormularioManual("formulario_m", "formulario_m", "idproveedor");
-                        $formulario_m->setSelInput("number", "tipo_rif", "rif_m", "Rif", "407898280", 3, "required", null, ['V','G','J']);
-                        $formulario_m->setInput("text", "razon_m", "Razon social", 4, "Vendedor", 'required', null, null);
-                        $formulario_m->setInput("number", "telefono_m", "Telefono", 4, "0416848888", 'required', null, null);
-                        $formulario_m->setInput("email", "correo_m", "Correo Electrónico", 4, "pedro@gmail.com", 'required', null, null);
-                        $formulario_m->setInput("text", "direccion_m", "Direccion Fiscal", 8, "5ta Avenida", 'required', null, null);
-                        $formulario_m->setButton("Guardar", "Formulario enviado exitosamente!", false, "Cerrar", 'proveedor');
+                        $formulario_m->setInput("text", "name_m", "Su nombre", 6, "Pedro", 'required', null, null);
+                        $formulario_m->setInput("number", "telefono_m", "Su telefono", 6, "0416848888", 'required', null, null);
+                        $formulario_m->setInput("email", "correo_m", "Su correo", 12, "pedro@gmail.com", 'required', null, null);
+                        $formulario_m->setInput("text", "descripcion_m", "Asunto", 12, "5ta Avenida", 'required', null, null);
+                        $formulario_m->setInput("text", "mensaje_m", "Mensaje", 12, "5ta Avenida", 'required', null, null);
+                        $formulario_m->setButton("Enviar", "Formulario enviado exitosamente!", false, "Cerrar", 'proveedor');
                         $formulario_m->getRender();
                     ?>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+
 
                 </div>
             </div>

@@ -36,6 +36,7 @@ const expresiones_m = {
 	nombre_m: /^[a-zA-ZÀ-ÿ\s]{3,40}$/, // Letras y espacios, pueden llevar acentos.
 	nombre2_m: /^([a-zA-Z0-9_. ,-]){1,50}$/, // Letras y espacios, pueden llevar acentos.
 	descripcion_m: /^([a-zA-Z0-9_. ,-]){1,50}$/,
+	asunto: /^([a-zA-Z0-9_. ,-]){1,50}$/,
 	password_m: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$#!%*?&]{8,15}$/, // 4 a 12 digitos.
 	correo_m: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9]+\.[a-zA-Z0-9]+$/,
 	correoOld_m: /.*/,
@@ -134,9 +135,9 @@ const validarPassword2_m = () => {
 	}
 }
 
-$('#correo').keyup(function(){
-	let string = $('#correo').val();
-	$('#correo').val(string.replace(/ /g, ""));
+$('#correo_m').keyup(function(){
+	let string = $('#correo_m').val();
+	$('#correo_m').val(string.replace(/ /g, ""));
 })
 
 //$('#imagen').addClass("form-control");
