@@ -36,7 +36,8 @@ const expresiones_m = {
 	nombre_m: /^[a-zA-ZÀ-ÿ\s]{3,40}$/, // Letras y espacios, pueden llevar acentos.
 	nombre2_m: /^([a-zA-Z0-9_. ,-]){1,50}$/, // Letras y espacios, pueden llevar acentos.
 	descripcion_m: /^([a-zA-Z0-9_. ,-]){1,50}$/,
-	asunto: /^([a-zA-Z0-9_. ,-]){1,50}$/,
+	mensaje_m: /^([a-zA-Z0-9_. ,-]){1,50}$/,
+	asunto_m: /^([a-zA-Z0-9_. ,-]){1,30}$/,
 	password_m: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$#!%*?&]{8,15}$/, // 4 a 12 digitos.
 	correo_m: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9]+\.[a-zA-Z0-9]+$/,
 	correoOld_m: /.*/,

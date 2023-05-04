@@ -33,6 +33,8 @@ class FormularioManual
     private $preciocosto_m = "<i class='fa-solid fa-xmark'> </i> Solo se permiten numeros";
     private $precioventa_m = "<i class='fa-solid fa-xmark'> </i> Solo se permiten numeros";
     private $cantidad_m = "<i class='fa-solid fa-xmark'> </i> Solo se permiten numeros";
+    private $asunto_m = "<i class='fa-solid fa-xmark'> </i> Solo se permiten letras espacios y numeros";
+    private $mensaje_m = "<i class='fa-solid fa-xmark'> </i> Solo se permiten letras espacios y numeros";
     private $password_m = 
     "<i class='fa-solid fa-xmark'> </i> La contraseña tiene que ser:<br>
     <i class='fa-solid fa-xmark'> </i> Minimo 8 caracteres<br>

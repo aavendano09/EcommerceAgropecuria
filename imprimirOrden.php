@@ -282,7 +282,7 @@ p, label, span, table{
 <?php $html= ob_get_clean(); ?>
 <?php
 
-include_once "dompdf/autoload.inc.php";
+require_once 'vendor/autoload.php';
 use Dompdf\Dompdf;
 
 $pdf = new Dompdf();

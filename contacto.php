@@ -174,10 +174,10 @@
                     </form> -->
                      <?php
                         $formulario_m = new FormularioManual("formulario_m", "formulario_m", "idproveedor");
-                        $formulario_m->setInput("text", "name_m", "Su nombre", 6, "Pedro", 'required', null, null);
+                        $formulario_m->setInput("text", "nombre_m", "Su nombre", 6, "Pedro", 'required', null, null);
                         $formulario_m->setInput("number", "telefono_m", "Su telefono", 6, "0416848888", 'required', null, null);
                         $formulario_m->setInput("email", "correo_m", "Su correo", 12, "pedro@gmail.com", 'required', null, null);
-                        $formulario_m->setInput("text", "descripcion_m", "Asunto", 12, "5ta Avenida", 'required', null, null);
+                        $formulario_m->setInput("text", "asunto_m", "Asunto", 12, "5ta Avenida", 'required', null, null);
                         $formulario_m->setInput("text", "mensaje_m", "Mensaje", 12, "5ta Avenida", 'required', null, null);
                         $formulario_m->setButton("Enviar", "Formulario enviado exitosamente!", false, "Cerrar", 'proveedor');
                         $formulario_m->getRender();
@@ -208,6 +208,66 @@
 
     <!-- Template Javascript -->
     <script src="fronted/js/main.js"></script>
+
+    <script>
+        
+   $('#guardar').on('click',function(e){
+    e.preventDefault();
+
+    if (submit(input, arrInput, select, arrSelect, 'producto')) {
+
+     
+      var formData = new FormData(formulario)
+      
+      console.log(formData);
+
+      $.ajax({
+          url: 'modulocompras/guarda.php',
+          type: "POST",
+          data: formData,
+          contentType: false,
+          processData: false,
+          async: true,
+          data: formData,
+
+          success: function(response)
+          {
+              var data = $.parseJSON(response);
+              console.log(data.msg);
+            if(data.msg == 'exito'){
+              $('body').removeClass('modal-open');//eliminamos la clase del body para poder hacer scroll
+              $('.modal-backdrop').remove();//eliminamos el backdrop del modal
+              $("#nuevoModal").modal('hide');//ocultamos el modal
+              $("#nuevoModal").modal('hide');//ocultamos el modal
+              formulario.reset();
+              alert("El producto fue agregado exitosamente! con el ID:"+data.cod)
+              $('#txt_cod_producto').val(data.cod)
+              searchProduct()
+
+            }else{
+              alert(data.msg);
+              console.log(data.input)
+              document.getElementById(`grupo__${data.input}`).classList.add('formulario__grupo-incorrecto');
+              document.getElementById(`grupo__${data.input}`).classList.remove('formulario__grupo-correcto');
+              document.querySelector(`#grupo__${data.input} i`).classList.add('fa-times-circle');
+              document.querySelector(`#grupo__${data.input} i`).classList.remove('fa-check-circle');
+              
+              var position = $('#' + data.input).position();
+              // scroll modal to position top
+              $("#nuevoModal").scrollTop(position);
+              
+              //$('#nuevoModal').scrollTo('#'+data.input);
+
+            }
+            
+          },
+          error: function(error){
+              alert(error);
+          }
+      });
+    }
+  });
+    </script>
 </body>
 
 </html>

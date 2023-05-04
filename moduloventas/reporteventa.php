@@ -5,7 +5,7 @@ require_once('conexion.php');
 $sql = "SELECT
 dv.tdven_fkcodp,
 dv.tdven_cantpr,
-dv.tdven_fktpmo,
+mon.tmone_namemo,
 v.tvent_idvent,
 v.tvent_fkclie,
 v.tvent_fechav,
@@ -17,7 +17,9 @@ tvenn_tts AS v
 INNER JOIN tclic_tme AS cl 
 ON cl.tclie_idclie = v.tvent_fkclie
 INNER JOIN tdevt_tts AS dv 
-ON dv.tdven_fkidvt = v.tvent_idvent";
+ON dv.tdven_fkidvt = v.tvent_idvent
+INNER JOIN tmone_tme AS mon
+ON tmone_idmone = tdven_fktpmo";
 $productos = $conexion->query($sql);
 
 ?>
@@ -237,7 +239,7 @@ $productos = $conexion->query($sql);
                  <td><?= $row_ventas['tvent_fechav'] ?></td>
                  <td class="estado"><?php echo $estado; ?></td>
                  <td><span>$.</span><?= $row_ventas['tvent_totalv'] ?></td>
-                 <td><?= $row_ventas['tdven_fktpmo'] ?></td>
+                 <td><?= $row_ventas['tmone_namemo'] ?></td>
                  
                </tr>
      
