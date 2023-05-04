@@ -374,7 +374,7 @@ function searchProduct(){
      
          //oculta el boton agregar si la cantidad es menor a 1
      
-         if(($(this).val()<1 || isNaN($(this).val())) || ($(this).val() >existencia) ){
+         if(($(this).val()<1 || isNaN($(this).val())) ){
              $('#add_product_compra').slideUp();
          }else{
              $('#add_product_compra').slideDown();
