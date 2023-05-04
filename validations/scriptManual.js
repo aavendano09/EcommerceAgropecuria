@@ -1,4 +1,3 @@
-
 const formulario_m = document.getElementById('formulario_m');
 const inputs_m = document.querySelectorAll('#formulario_m input');
 const factura = document.querySelectorAll('#nofactura');
@@ -167,28 +166,32 @@ selects_m.forEach((select) => {
 
 function submit(input, arrInput, select, arrSelect, form = null) {
 
-	console.log(input)
-	console.log(arrInput)
-	console.log(select)
-	console.log(arrSelect)
+	// console.log(input)
+	// console.log(arrInput)
+	// console.log(select)
+	// console.log(arrSelect)
 	band = true;
 	
+	//console.log(input)
 	for (let i = 0; i < arrInput.length; i++) {
 		
-		if ( (($("#"+arrInput[i]).prop('required') == false) ||  ($("#"+arrInput[i]).prop('readonly'))) ) {
+		if ( (($("#"+arrInput[i]).prop('required') == false) ||  ($("#"+arrInput[i]).prop('readonly')))  ) {
 			//console.log(arrInput[i]+" "+"input")
 			input[arrInput[i]] = true;
 		}		
 	}
+
+	
 	
 	//console.log(input)
 	for (let i = 0; i < arrInput.length; i++) {
-		//console.log(arrInput[i]+"input")
+		console.log(arrInput[i]+"input")
 		if ( !($("#"+arrInput[i]).prop('required') == false) && ($("#"+arrInput[i]).length > 0) && !(($("#"+arrInput[i]).prop('required') == false)) ){
 			//console.log(arrInput[i]+" "+"input")
 			if ( $("#"+arrInput[i]).attr("name") === "ara") {
 				input['imagen']=true;
 				if (form == 'proveedor' || form == 'cliente') {
+					//console.log(arrInput[i]+" "+"input")
 					validarFormularioSubmit_m(arrInput[i]);					
 				}else{
 					validarFormularioSubmit(arrInput[i]);	
@@ -196,6 +199,7 @@ function submit(input, arrInput, select, arrSelect, form = null) {
 			}else{
 				//console.log(arrInput[i]+" "+"input")
 				if (form == 'proveedor' || form == 'cliente') {
+					console.log(arrInput[i]+" "+"input")
 					validarFormularioSubmit_m(arrInput[i]);					
 				}else{
 					validarFormularioSubmit(arrInput[i]);	

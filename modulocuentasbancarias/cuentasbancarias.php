@@ -72,7 +72,28 @@ require_once 'validations/Formulario.php';
                  <td><?= $row_cuentas['tcuba_idcuBa'] ?></td>
                  <td><?= $row_cuentas['tcuba_nameba'] ?></td>
                  <td><?= $row_cuentas['tcuba_Nocuba'] ?></td>
-                 <td><?= $row_cuentas['tcuba_rifba'] . "-" .$row_cuentas['tcuba_identi']?></td>
+
+                 <td><?php
+                 if ($row_cuentas['tcuba_rifba'] == 'V') {
+                  echo $row_cuentas['tcuba_rifba'] . "-" .$row_cuentas['tcuba_identi'];
+                 }else {
+                  $string = $row_cuentas['tcuba_identi'];
+
+                  $newString = '';
+  
+                  for ($i=0; $i < 9; $i++) { 
+                    if ($i < 8) {
+                      $newString[$i] = $string[$i];
+                    }else {
+                      $newString[$i] = '-';
+                      $newString[$i+1] = $string[$i];
+                    }
+                  }
+                 
+                   echo $row_cuentas['tcuba_rifba'].$newString;
+                 }
+                  
+                 ?></td>
                  <td><?= $row_cuentas['tcuba_tpcuba'] ?></td>
                  <td>
 

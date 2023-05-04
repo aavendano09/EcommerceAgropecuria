@@ -8,7 +8,7 @@
 	
 
 	include_once "../conexion.php";
-	require_once '../pdf/vendor/autoload.php';
+	require_once '../vendor/autoload.php';
 	use Dompdf\Dompdf;
 
 	if(empty($_REQUEST['cl']) || empty($_REQUEST['f']))
@@ -44,8 +44,8 @@
 
 			if($factura['tvent_status'] == 'Anulada'){
 				
-				$nombreImage =  "img/anulado.png";
-				$imageBase64 = "data:image/png;base64," . base64_encode(file_get_contents($nombreImage));
+				 $nombreImage =  "img/anulado.png";
+				 $imageBase64 = "data:image/png;base64," . base64_encode(file_get_contents($nombreImage));
 			
 
 				$anulada = "<img class='anulada' src='$imageBase64' alt='Anulada'>";

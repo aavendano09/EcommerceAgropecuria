@@ -112,7 +112,7 @@ if(!empty($_POST)){
 
     $query = mysqli_query($conexion, "SELECT tprod_idprod,tprod_namepr,tprod_preciv,tprod_cantpr 
     FROM tprod_tme 
-    WHERE tprod_idprod = $producto_id AND tprod_status = '1'");
+    WHERE tprod_idprod = $producto_id AND tprod_status = '1' AND tprod_cantpr > 0");
 
     mysqli_close($conexion);
 
@@ -305,7 +305,7 @@ if($_POST['action'] == 'delProductoDetalle'){
         $id_detalle = $_POST['id_detalle'];
         $token      = md5($_SESSION['tidAdmin']);
         
-        $query_iva = mysqli_query($conexion, "SELECT tbiva_valiva FROM tbiva_tts");
+        $query_iva = mysqli_query($conexion, "SELECT tbiva_valiva FROM tbiva_tme");
         $result_iva = mysqli_num_rows($query_iva);
 
         $query_det_temp = mysqli_query($conexion,"CALL del_tdtem_tts($id_detalle, '$token')");

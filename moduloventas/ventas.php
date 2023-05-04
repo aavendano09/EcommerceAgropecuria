@@ -188,9 +188,10 @@ error_reporting(0);
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 
 <script>
-input["cedula_m"] = false;
+input_m["cedula_m"] = false;
 
-arrInput[8] = "cedula_m";
+arrInput_m[8] = "cedula_m";
+input_m['cedula_m'] = true;
 
 
 $('#tipo_rif').change(
@@ -198,16 +199,21 @@ $('#tipo_rif').change(
       $('.ident').val('');
     if ($('#tipo_rif').val()=="V") {
       $('.ident').prop('name', 'cedula_m');
-      //$('.ident').prop('id', 'cedula_m');
+      $('.ident').prop('id', 'cedula_m');
       $('.ident').prop('placeholder', '15862175');
       $('#grupo__rif_m').prop('id', 'grupo__cedula_m');
       $('#errormsg').text('La identificacion debe poseer 7 u 8 digitos');
+
+		  input_m['rif_m'] = true;
+      input_m['cedula_m'] = false;
     }else{
       $('.ident').prop('name', 'rif_m');
-     // $('.ident').prop('id', 'rif_m');
+      $('.ident').prop('id', 'rif_m');
       $('#grupo__cedula_m').prop('id', 'grupo__rif_m');
       $('.ident').prop('placeholder', '407898280');
       $('#errormsg').text('La identificacion debe poseer 9 digitos');
+      input_m['cedula_m'] = true;
+      input_m['rif_m'] = false;
     }
   })
 
@@ -238,11 +244,7 @@ $('#tipo_rif').change(function(){
     });
 
     //  Buscar Cliente
-
     
-
-
-
     
   $('#rif_m').keyup(function(){
     var tipo_rif = $('#tipo_rif').val();
@@ -320,8 +322,7 @@ $('#tipo_rif').change(function(){
         url: 'moduloventas/ajaxventas.php',
         type: "POST",
         async: true,
-        data: $('#formulario').serialize(),
-
+        data: $('#formulario_m').serialize(),
         success: function(response)
         {
             var data = $.parseJSON(response);
@@ -332,6 +333,7 @@ $('#tipo_rif').change(function(){
             //bloque campos
             $('#tipo_rif').attr('disabled','disabled');
             $('#rif_m').attr('disabled','disabled');
+            $('#cedula_m').attr('disabled','disabled');
             $('#nombre_m').attr('disabled','disabled');
             $('#telefono_m').attr('disabled','disabled');
             $('#correo_m').attr('disabled','disabled');
@@ -344,6 +346,7 @@ $('#tipo_rif').change(function(){
             $('#div_registro_cliente').slideUp();
 
           }else{
+            console.log("ha ocurrido un error al registrarlo")
             alert(data.msg);
           }
           
@@ -529,7 +532,7 @@ $('#tipo_rif').change(function(){
                          
                          generarPDF(info.tvent_fkclie,info.tvent_idvent)
 
-                         location.reload();
+                        location.reload();
                       
                      }else{
                          console.log('no data');
@@ -557,11 +560,11 @@ $('#tipo_rif').change(function(){
          var alto = 800;
          //calcular posicion x,y para centrar la ventana
 
-         var x = parseInt((window.screen.width/2) - (ancho / 2));
-         var y = parseInt((window.screen.height/2) - (alto / 2));
+        var x = parseInt((window.screen.width/2) - (ancho / 2));
+        var y = parseInt((window.screen.height/2) - (alto / 2));
      
-         $url = './factura/generaFactura.php?cl='+cliente+'&f='+factura;
-         window.open($url, "Factura","left="+x+",top="+y+",height="+alto+",width="+ancho+",scrollbar=si,location=no,resizable=si,menubar=no")
+        $url = './factura/generaFactura.php?cl='+cliente+'&f='+factura;
+        window.open($url, "Factura","left="+x+",top="+y+",height="+alto+",width="+ancho+",scrollbar=si,location=no,resizable=si,menubar=no")
      
      }
 
@@ -675,8 +678,6 @@ $('#tipo_rif').change(function(){
                 $("#nuevoModal").modal('hide');//ocultamos el modal
                 formulario.reset();
                 alert("El producto fue agregado exitosamente! con el ID:"+data.cod)
-                $('#txt_cod_producto').val(data.cod)
-                searchProduct()
   
               }else{
                 alert(data.msg);

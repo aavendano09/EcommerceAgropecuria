@@ -14,34 +14,34 @@ class FormularioManual
     private $inputsCounts = 0;
 
     //Mensajes de error
-    private $id_m = "Solo se pueden ingresar de 1 a 4 digitos, solo numeros sin espacios ";
-    private $usuario_m = "Solo se permiten letras y espacios";
-    private $nombre_m = "Solo se permiten letras y espacios";
-    private $nombre2_m = "Solo se permiten letras espacios y numeros";
-    private $correo_m = "El correo solo puede contener letras, numeros, puntos, guiones y guion bajo.";
-    private $fecha_m = "La fecha no puede ser menor a: ";
-    private $direccion_m = "No puede estar vacio, no se acepta ese simbolo";
-    private $razon_m = "Solo se permiten letras y puntos";
-    private $telefono_m = "Solo se permiten numeros de 11 digitos, sin espacios";
-    private $cedula_m = "Debe contener minimo 7 digitos y maximo 8";
-    private $password2_m = "Las contraseñas no coinciden";
-    private $selects_m= "Debes selecionar una opcion";
-    private $rif_m= "La identificacion debe poseer 9 digitos";
-    private $nro_cuenta_m = "Solo se perminten 20 numeros";
-    private $imagen_m = "Solo se permiten archivos jpg, png, jpeg, jfif";
-    private $descripcion_m = "Solo se permiten letras espacios y numeros";
-    private $preciocosto_m = "Solo se permiten numeros";
-    private $precioventa_m = "Solo se permiten numeros";
-    private $cantidad_m = "Solo se permiten numeros";
+    private $id_m = "<i class='fa-solid fa-xmark'> </i> Solo se pueden ingresar de 1 a 4 digitos, solo numeros sin espacios ";
+    private $usuario_m = "<i class='fa-solid fa-xmark'> </i> Solo se permiten letras y espacios";
+    private $nombre_m = "<i class='fa-solid fa-xmark'> </i> Solo se permiten letras y espacios";
+    private $nombre2_m = "<i class='fa-solid fa-xmark'> </i> Solo se permiten letras espacios y numeros";
+    private $correo_m = "<i class='fa-solid fa-xmark'> </i> El correo solo puede contener letras, numeros, puntos, guiones y guion bajo.";
+    private $fecha_m = "<i class='fa-solid fa-xmark'> </i> La fecha no puede ser menor a: ";
+    private $direccion_m = "<i class='fa-solid fa-xmark'> </i> No puede estar vacio, no se acepta ese simbolo";
+    private $razon_m = "<i class='fa-solid fa-xmark'> </i> Solo se permiten letras y puntos";
+    private $telefono_m = "<i class='fa-solid fa-xmark'> </i> Solo se permiten numeros de 11 digitos, sin espacios";
+    private $cedula_m = "<i class='fa-solid fa-xmark'> </i> Debe contener minimo 7 digitos y maximo 8";
+    private $password2_m = "<i class='fa-solid fa-xmark'> </i> Las contraseñas no coinciden";
+    private $selects_m= "<i class='fa-solid fa-xmark'> </i> Debes selecionar una opcion";
+    private $rif_m= "<i class='fa-solid fa-xmark'> </i> La identificacion debe poseer 9 digitos";
+    private $nro_cuenta_m = "<i class='fa-solid fa-xmark'> </i> Solo se perminten 20 numeros";
+    private $imagen_m = "<i class='fa-solid fa-xmark'> </i> Solo se permiten archivos jpg, png, jpeg, jfif";
+    private $descripcion_m = "<i class='fa-solid fa-xmark'> </i> Solo se permiten letras espacios y numeros";
+    private $preciocosto_m = "<i class='fa-solid fa-xmark'> </i> Solo se permiten numeros";
+    private $precioventa_m = "<i class='fa-solid fa-xmark'> </i> Solo se permiten numeros";
+    private $cantidad_m = "<i class='fa-solid fa-xmark'> </i> Solo se permiten numeros";
     private $password_m = 
-    "La contraseña tiene que ser:<br>
-    Minimo 8 caracteres<br>
-    Maximo 15 caracteres<br>
-    Al menos una letra mayúscula<br>
-    Al menos una letra minucula<br>
-    Al menos un dígito<br>
-    No espacios en blanco<br>
-    Al menos 1 caracter especial.<br>";
+    "<i class='fa-solid fa-xmark'> </i> La contraseña tiene que ser:<br>
+    <i class='fa-solid fa-xmark'> </i> Minimo 8 caracteres<br>
+    <i class='fa-solid fa-xmark'> </i> Maximo 15 caracteres<br>
+    <i class='fa-solid fa-xmark'> </i> Al menos una letra mayúscula<br>
+    <i class='fa-solid fa-xmark'> </i> Al menos una letra minucula<br>
+    <i class='fa-solid fa-xmark'> </i> Al menos un dígito<br>
+    <i class='fa-solid fa-xmark'> </i> No espacios en blanco<br>
+    <i class='fa-solid fa-xmark'> </i> Al menos 1 caracter especial.<br>";
     
 
     public function __construct($class, $id, $idrazon)

@@ -134,7 +134,7 @@ $modulo=$_REQUEST['modulo'];
             <a href="#" class="nav-link">
               <i class="far fa-user nav-icon"></i>
               <p>Usuarios</p>
-            </a>
+            </a>           
             <ul class="nav nav-treeview">
             <li class="nav-item">
                 <a href="paneladmin.php?modulo=usuarios" class="nav-link <?php echo ($modulo=="usuarios" )?" active ":" "; ?><?php echo ($modulo=="crearUsuario" )?" active ":" "; ?><?php echo ($modulo=="editarUsuario" )?" active ":" "; ?>">
@@ -193,6 +193,32 @@ $modulo=$_REQUEST['modulo'];
              </li>
             </ul>
             </ul>
+
+
+
+            <li class="nav-item menu-open">
+            <a href="#" class="nav-link">
+              <i class="far fa-user nav-icon"></i>
+              <p>Tipo producto</p>
+            </a>           
+            <ul class="nav nav-treeview">
+            <li class="nav-item">
+                <a href="paneladmin.php?modulo=tipoproducto" class="nav-link <?php echo ($modulo=="tipoproducto" )?" active ":" "; ?>">
+                  <i class="fas fa-chevron-right nav-icon"></i>
+                  <p>Añadir</p>
+                </a>
+             </li>
+             <li class="nav-item">
+                <a href="paneladmin.php?modulo=presentaciontipoproducto" class="nav-link <?php echo ($modulo=="presentaciontipoproducto" )?" active ":" "; ?>">
+                  <i class="fas fa-chevron-right nav-icon"></i>
+                  <p>presentacion</p>
+                </a>
+             </li>
+            </ul>
+
+
+
+
             <li class="nav-item menu-open">
             <a href="#" class="nav-link <?php echo ($modulo=="productos" )?" active ":" "; ?>">
               <i class="fa fa-shopping-bag nav-icon"></i>
@@ -215,12 +241,6 @@ $modulo=$_REQUEST['modulo'];
                 <a href="paneladmin.php?modulo=presentacion" class="nav-link <?php echo ($modulo=="presentacion" )?" active ":" "; ?>">
                   <i class="fas fa-chevron-right nav-icon"></i>
                   <p>Presentaciones</p>
-                </a>
-             </li>
-             <li class="nav-item">
-                <a href="paneladmin.php?modulo=tipoproducto" class="nav-link <?php echo ($modulo=="tipoproducto" )?" active ":" "; ?>">
-                  <i class="fas fa-chevron-right nav-icon"></i>
-                  <p>Tipo Producto</p>
                 </a>
              </li>
              <li class="nav-item">
@@ -361,6 +381,10 @@ $modulo=$_REQUEST['modulo'];
 
   if($modulo=="tipoproducto"){
     include_once "modulotipoproducto/tipoproducto.php";
+  }
+
+  if($modulo=="presentaciontipoproducto"){
+    include_once "modulopresentaciontipoproducto/presentaciontipoproducto.php";
   }
 
   if($modulo=="eliminaproductos"){

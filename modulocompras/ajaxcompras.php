@@ -292,16 +292,19 @@ if($_POST['action'] == 'delProductDetalle'){
         echo 'error';
     }else{
 
+
         $id_detalle = $_POST['id_detalle'];
         $token      = md5($_SESSION['tidAdmin']);
         
-        $query_iva = mysqli_query($conexion, "SELECT tbiva_valiva FROM tbiva_tts");
+        $query_iva = mysqli_query($conexion, "SELECT tbiva_valiva FROM tbiva_tme");
         $result_iva = mysqli_num_rows($query_iva);
-
+        
         $query_det_temp = mysqli_query($conexion,"CALL del_tdtec_tts($id_detalle, '$token')");
         $resultt = mysqli_num_rows($query_det_temp);
 
-        
+        // echo $result_iva,"<br>\n";
+        // echo $resultt;
+
         $detalleTabla = '';
         $sub_total = 0;
         $iva = 0;

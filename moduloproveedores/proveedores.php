@@ -79,10 +79,10 @@ $proveedores = $conexion->query($sql);
   
                   for ($i=0; $i < 9; $i++) { 
                     if ($i < 8) {
-                      $newString[$i] = $row_proveedores['tprov_Rifpro'][$i];
+                      $newString[$i] = $string[$i];
                     }else {
                       $newString[$i] = '-';
-                      $newString[$i+1] = $row_proveedores['tprov_Rifpro'][$i];
+                      $newString[$i+1] = $string[$i];
                     }
                   }
                  

@@ -134,7 +134,8 @@ p, label, span, table{
 		<tr>
 			<td class="logo_factura">
 				<div>
-					<?php $nombreImage =  "img/logotipo.jpg";
+					<?php 
+					$nombreImage =  "img/logotipo.jpg";
 					$imageBase64 = "data:image/png;base64," . base64_encode(file_get_contents($nombreImage));
 					?>
 					<img style="width: 200px; height: 170px;" src="<?=$imageBase64?>">

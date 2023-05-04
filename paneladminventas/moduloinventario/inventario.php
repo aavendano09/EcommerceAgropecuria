@@ -2,7 +2,13 @@
 
 require_once('conexion.php');
 
-$sql = "SELECT tprod_idprod, tprod_descpr, tprod_prespr, tprod_fechin, tprod_cantpr FROM tprod_tme;";
+$sql = "SELECT tprod_idprod, tprod_descpr, tpre_despre, tprod_fechin, tprod_cantpr FROM tprod_tme 
+INNER JOIN tprp_tts ON tprp_idtprp = tprod_fktprp
+INNER JOIN tpre_tts ON tpre_idpres = tprp_fkpres
+INNER JOIN ttpro_tme ON tprp_fktpro = ttpro_idtipp;";
+
+
+
 $productos = $conexion->query($sql);
 
 ?>
@@ -102,7 +108,7 @@ $productos = $conexion->query($sql);
                <tr>
                  <td><?= $row_productos['tprod_idprod'] ?></td>
                  <td><?= $row_productos['tprod_descpr'] ?></td>
-                 <td><?= $row_productos['tprod_prespr'] ?></td>
+                 <td><?= $row_productos['tpre_despre'] ?></td>
                  <td><?= $row_productos['tprod_fechin'] ?></td>
                  <td><?= $row_productos['tprod_cantpr'] ?></td>
                </tr>
