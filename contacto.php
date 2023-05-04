@@ -1,3 +1,5 @@
+<?php  require_once 'validations/FormularioManual.php';?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -31,6 +33,8 @@
 
 <!-- Template Stylesheet -->
 <link href="fronted/css/style.css" rel="stylesheet">
+
+
 </head>
 
 <body>
@@ -132,7 +136,7 @@
                     </div>
                 </div>
                 <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.5s">
-                    <form action="https://formsubmit.co/ferreagro.elagricultor@gmail.com" method="POST">
+                    <!-- <form action="https://formsubmit.co/ferreagro.elagricultor@gmail.com" method="POST">
                         <div class="row g-3">
                             <div class="col-md-6">
                                 <div class="form-floating">
@@ -167,7 +171,18 @@
                                 <button class="btn btn-primary py-3 px-5" type="submit" name="enviar">Enviar Mensaje</button>
                             </div>
                         </div>
-                    </form>
+                    </form> -->
+                    <?php
+                        $formulario_m = new FormularioManual("formulario_m", "formulario_m", "idproveedor");
+                        $formulario_m->setSelInput("number", "tipo_rif", "rif_m", "Rif", "407898280", 3, "required", null, ['V','G','J']);
+                        $formulario_m->setInput("text", "razon_m", "Razon social", 4, "Vendedor", 'required', null, null);
+                        $formulario_m->setInput("number", "telefono_m", "Telefono", 4, "0416848888", 'required', null, null);
+                        $formulario_m->setInput("email", "correo_m", "Correo Electrónico", 4, "pedro@gmail.com", 'required', null, null);
+                        $formulario_m->setInput("text", "direccion_m", "Direccion Fiscal", 8, "5ta Avenida", 'required', null, null);
+                        $formulario_m->setButton("Guardar", "Formulario enviado exitosamente!", false, "Cerrar", 'proveedor');
+                        $formulario_m->getRender();
+                    ?>
+
                 </div>
             </div>
         </div>

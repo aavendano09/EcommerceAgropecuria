@@ -100,7 +100,7 @@ class FormularioManual
         ";
     }
     
-    public function setInput($type, $input, $label, $size, $ph, $required = 'required', $hidden = null ){
+    public function setInput($type, $input, $label, $size, $ph, $required = 'required', $hidden = null, $disabled = 'disabled'){
         if (!isset($this->$input)) {
             $msg = "";
         }else{
@@ -112,7 +112,7 @@ class FormularioManual
             <div class='formulario-m__grupo d-flex flex-column' id='grupo__$input'>
                 <label for='$input' class='formulario-m__label form-label  pt-0'>$label</label>
                 <div class='formulario-m__grupo-input'>
-                    <input type='$type' class='formulario-m__input form-control input-$this->inputsCounts' name='$input' id='$input' placeholder='$ph' disabled $required >
+                    <input type='$type' class='formulario-m__input form-control input-$this->inputsCounts' name='$input' id='$input' placeholder='$ph' $disabled $required >
                     <i class='formulario-m__validacion-estado fas fa-times-circle'></i>
                 </div>
                 <p class='formulario-m__input-error'>$msg</p>
