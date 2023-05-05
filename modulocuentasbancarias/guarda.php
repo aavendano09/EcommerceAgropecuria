@@ -6,7 +6,13 @@ $id = $conexion->real_escape_string($_POST['id']);
 $nombre = $conexion->real_escape_string($_POST['nombre']);
 $numero = $conexion->real_escape_string($_POST['nro_cuenta']);
 $tiprif = $conexion->real_escape_string($_POST['tiprif']);
-$identificacion = $conexion->real_escape_string($_POST['rif']);
+if (isset($_POST['rif'])) {
+
+    $identificacion = $conexion->real_escape_string($_POST['rif']);
+}else{
+    $identificacion = $conexion->real_escape_string($_POST['cedula']);
+    echo $identificacion;
+}
 $tipocuenta = $conexion->real_escape_string($_POST['tipo_cuenta']);
 
 $sqlIdCuenta = "SELECT tcuba_idcuBa FROM tcuba_tme WHERE tcuba_idcuBa = '$id'";
