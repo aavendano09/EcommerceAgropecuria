@@ -97,6 +97,11 @@ if(isset($_SESSION['idCliente'])==false){
 <a href="" class="dropdown-item">
  <i class="fas fa-user mr-2 text-primary"></i>Hola <?php echo $_SESSION['usernameCliente']; ?>
 </a>
+<div class="dropdown-divider"></div>
+<a href="home.php?modulo=historialcompras" class="dropdown-item">
+ <i class="fa fa-cart-arrow-down mr-2 text-primary"></i> Historial de compras
+</a>
+<div class="dropdown-divider"></div>
 <form action="home.php?modulo=productos" method="post">
 <button name="accion" class="btn btn-danger dropdown-item" type="submit" value="cerrar">
      <i class="fas fa-door-closed mr-2 text-danger"></i>Cerrar Sesion
@@ -107,8 +112,8 @@ if(isset($_SESSION['idCliente'])==false){
 ?>
           </ul>
         </li>
-        <li class="nav-item">
-          <a class="nav-link btn btn-primary " href="fronted/tipoadmin.php" tabindex="-1" aria-disabled="true">Iniciar Sesion</a>
+        <li class="nav-item rounded">
+          <a class="nav-link btn btn-primary p-2" style=" border-radius: 3px; margin-top: 10px;" href="fronted/tipoadmin.php" tabindex="-1" aria-disabled="true">Iniciar Sesion</a>
         </li>
       </ul>
     </div>
@@ -116,6 +121,7 @@ if(isset($_SESSION['idCliente'])==false){
 </nav>
 
     <!-- JavaScript Libraries -->
+    
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="fronted/lib/wow/wow.min.js"></script>

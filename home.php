@@ -96,6 +96,10 @@ include_once "conexion.php";
     include_once "ordendeentrega.php";
   }
 
+  if($modulo=="historialcompras"|| $modulo==""){
+    include_once "historialcompras.php";
+  }
+
 
   ?>
   </div>
@@ -155,7 +159,7 @@ include_once "conexion.php";
 <!-- ./wrapper -->
 
 <!-- jQuery -->
-
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
   <!-- jQuery UI 1.11.4 -->
   <script src="plugins/jquery-ui/jquery-ui.min.js"></script>
   <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
@@ -188,8 +192,8 @@ include_once "conexion.php";
   <script src="js/carritocompra.js"></script>
 
    <!-- JavaScript Libraries -->
-   <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+
+
     <script src="fronted/lib/wow/wow.min.js"></script>
     <script src="fronted/lib/easing/easing.min.js"></script>
     <script src="fronted/lib/waypoints/waypoints.min.js"></script>
