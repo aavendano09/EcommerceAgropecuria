@@ -386,10 +386,15 @@ $('#tipo_rif').change(function(){
                  $('#txt_cant_producto').val('1');
                  $('#txt_precio').html(info.tprod_preciv);
                  $('#txt_precio_total').html(info.tprod_preciv);
-                 //activar cantidad producto
-                 $('#txt_cant_producto').removeAttr('disabled');
-                 //mostrar boton agregar
-                 $('#add_product_venta').slideDown();
+                if (info.tprod_cantpr < 1) {
+                  $('#add_product_venta').slideUp();
+                  $('#txt_cant_producto').prop('disabled', 'disabled');
+                }else{
+                  $('#txt_cant_producto').removeAttr('disabled');
+                  //mostrar boton agregar
+                  $('#add_product_venta').slideDown();
+                }
+
              }else{
                  
                  $('#txt_descripcion').html('-');
@@ -397,10 +402,11 @@ $('#tipo_rif').change(function(){
                  $('#txt_cant_producto').val('0');
                  $('#txt_precio').html('0.000');
                  $('#txt_precio_total').html('0.000');
-                 //bloquear cantidad
-                 $('#txt_cant_producto').attr('disabled','disabled');
-                 //ocultar boton agregar
-                 $('#add_product_venta').slideUp();
+                 
+                  //bloquear cantidad
+                  $('#txt_cant_producto').attr('disabled','disabled');
+                  //ocultar boton agregar
+                  $('#add_product_venta').slideUp();
              }
         },
         error: function(error){
@@ -431,10 +437,15 @@ $('#tipo_rif').change(function(){
 
         $('#add_product_venta').click(function(e){
          e.preventDefault();
-         if($('#txt_cant_producto').val() > 0){
-     
-             var codproducto = $('#txt_cod_producto').val();
-             var cantidad = $('#txt_cant_producto').val();
+
+
+         var codproducto = $('#txt_cod_producto').val();
+         var cantidad = $('#txt_cant_producto').val();
+         console.log($('#product_info'+codproducto).length);
+        if($('#txt_cant_producto').val() > 0){
+          if ($('#product_info'+codproducto).length == 0) {
+
+
              var action = 'addProductoDetalle';
      
              $.ajax({
@@ -472,7 +483,48 @@ $('#tipo_rif').change(function(){
                  }
           
              });
-         }
+         }else{
+            $('#product_info'+codproducto).remove();
+            
+            var action = 'updateProductoDetalle';
+
+            $.ajax({
+                 url:'moduloventas/ajaxventas.php',
+                 type:'POST',
+                 async :true,
+                 data: {action:action, producto:codproducto, cantidad:cantidad},
+                 success:function(response)
+                  {
+                     if(response != 'error')
+                     {
+                         var info = JSON.parse(response);
+                         $('#detalle_venta').html(info.detalle);
+                         $('#detalle_totales').html(info.totales);
+     
+                         $('#txt_cod_producto').val('');
+                         $('#txt_descripcion').html('-');
+                         $('#txt_existencia').html('-');
+                         $('#txt_cant_producto').val('0');
+                         $('#txt_precio').html('0.00');
+                         $('#txt_precio_total').html('0.00');
+                         //BLOQUEAR CANTIDAD
+                         $('#txt_cant_producto').attr('disabled','disabled');
+     
+                         //Ocultar boton agregar
+     
+                         $('#add_product_venta').slideUp();
+                         
+                     }else{
+                         console.log('no data');
+                     }
+                     viewProcesar();
+                 },
+                 error:function(error){
+                 }
+          
+             });
+          }
+        }
      });
 
      //anular ventas manuales
@@ -597,14 +649,14 @@ $('#tipo_rif').change(function(){
 
  //eliminar registros del detalle de venta temporal
 
- function del_product_detalle(tdtem_correl){
+ function del_product_detalle(tdtem_correl, id_prod){
          var action = 'delProductoDetalle';
          var id_detalle = tdtem_correl;
          $.ajax({
              url:'moduloventas/ajaxventas.php',
              type:'POST',
              async :true,
-             data: {action:action, id_detalle:id_detalle},
+             data: {action:action, id_detalle:id_detalle, id_prod:id_prod},
 
              success:function(response)
               {

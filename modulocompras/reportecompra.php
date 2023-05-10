@@ -2,26 +2,21 @@
 
 require_once('conexion.php');
 
-$sql = "SELECT
-dc.tdcom_fkprod,
-dc.tdcom_cantid,
-c.tcomp_numfac,
-c.tcomp_idcomp,
-c.tcomp_fkprov,
-c.tcomp_fechac,
-c.tcomp_totalc,
-c.tcomp_status,
-prv.tprov_Razsoc,
-p.tprod_namepr
-FROM
-tcomp_tts AS c
-INNER JOIN tdprv_tme AS prv
-ON prv.tprov_idprov = c.tcomp_fkprov
-INNER JOIN tdcom_tts AS dc
-ON dc.tdcom_fkidco = c.tcomp_idcomp
-INNER JOIN tprod_tme AS p
-ON p.tprod_idprod = dc.tdcom_fkprod";
+$sql = "SELECT tcomp_idcomp, tcomp_numfac, tcomp_fechac, tcomp_status, tcomp_totalc, tprov_Rifpro, tprov_Razsoc, tuser_userna 
+FROM tcomp_tts 
+INNER JOIN tdprv_tme ON tprov_idprov = tcomp_fkprov 
+INNER JOIN tuser_tme ON tuser_iduser = tcomp_userco;";
 $productos = $conexion->query($sql);
+
+$i = 0;
+
+function getDetalle($id_comp, $conexion){
+
+    $sql = "SELECT tdcom_iddeco, tprod_namepr, tdcom_cantid, tdcom_precio, tdcom_Subtot 
+    FROM tdcom_tts INNER JOIN tprod_tme ON tprod_idprod = tdcom_fkprod WHERE tdcom_fkidco = '$id_comp'";
+    $productos = $conexion->query($sql);
+    return $productos;
+}
 
 ?>
 
@@ -112,35 +107,70 @@ $productos = $conexion->query($sql);
             <table id="example" class="table table-sm table-striped table-hover mt-4">
             <thead class="table-dark">
             <tr>
-                <th style="width: 2px;">Codigo Compra</th>
                 <th style="width: 50px;">Numero Factura</th>
+                <th style="width: 50px;">RIF proveedor</th>
                 <th style="width: 150px;">Nombre Proveedor</th>
                 <th>Fecha / Hora</th>
-                <th style="width: 150px;">Producto</th>
-                <th style="width: 50px;">Cantidad</th>
-                <th style="width: 50px;">Estado</th>
+                <th style="width: 150px;">Estado</th>
                 <th>Total</th>
+                <th style="width: 150px;">detalle</th>
             </tr>
         </thead>
         <tbody>
-        <?php while($row_ventas=mysqli_fetch_assoc($productos)){ 
-
-            ?>
-
-               <tr>
-                 <td><?= $row_ventas['tcomp_idcomp'] ?></td>
+        <?php while($row_ventas=mysqli_fetch_assoc($productos)):?>
+               <tr class="position-relative" style="min-height: 0px; transition: ease, 0.5s;">
                  <td><?= $row_ventas['tcomp_numfac'] ?></td>
+                 <td><?= $row_ventas['tprov_Rifpro'] ?></td>
                  <td><?= $row_ventas['tprov_Razsoc'] ?></td>
                  <td><?= $row_ventas['tcomp_fechac'] ?></td>
-                 <td><?= $row_ventas['tprod_namepr'] ?></td>
-                 <td><?= $row_ventas['tdcom_cantid'] ?></td>
                  <td><?= $row_ventas['tcomp_status'] ?></td>
-                 <td><span>$.</span><?= $row_ventas['tcomp_totalc'] ?></td>
+                 <td><span>$</span><?= $row_ventas['tcomp_totalc'] ?></td>
+                 <td>
+                    <p>
+                    <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseWidthExample<?=$i?>"  aria-expanded="false" aria-controls="collapseWidthExample">
+                        Detalle Factura
+                    </button>
+                    </p>
+                    <div id="content_collapse<?=$i?>" class="content_detalle" >
+                        <div class="collapse collapse-vertical position-absolute start-0" id="collapseWidthExample<?=$i?>">
+                            <!-- <div class="card card-body" style="width: auto;"> -->
+                                <table>
+                                    <thead>
+                                    <tr>
+                                        <th style="width: 50px;">ID_compra</th>
+                                        <th style="width: 250px;">Producto</th>
+                                        <th style="width: 50px;">Cantidad</th>
+                                        <th style="width: 150px;">Precio</th>
+                                        <th>Subtotal</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php
+                                        $id = $row_ventas['tcomp_idcomp'];
+                                        $request = getDetalle($id, $conexion);
+                                        ?>
+                                        <?php while($row_detalle = mysqli_fetch_assoc($request)):?>
+                                                <tr>
+                                                    <td><?= $row_detalle['tdcom_iddeco']?></td>
+                                                    <td><?= $row_detalle['tprod_namepr']?></td>
+                                                    <td><?= $row_detalle['tdcom_cantid']?></td>
+                                                    <td><span>$</span><?= $row_detalle['tdcom_precio'] ?></td>
+                                                    <td><span>$</span><?= $row_detalle['tdcom_precio'] * $row_detalle['tdcom_cantid'] ?></td>
+                                                </tr>
+                                        <?php endwhile;?>
+                                    </tbody>
+                                </table>
+                            <!-- </div> -->
+                        </div>
+                    </div>
+                 </td>
                </tr>
      
-           <?php } ?>
+           <?php $i++; 
+            endwhile; ?>
 </tbody>
     </table>
+    
 
             </div>
             <!-- /.card-body -->
@@ -153,19 +183,47 @@ $productos = $conexion->query($sql);
     </section>
     <!-- /.content -->
   </div>
+  
 
     <?php
 
     ?>
 
-    <script src="assets/js/bootstrap.bundle.min.js"></script>
     <script src="assets/js/jquery-3.6.0.min.js"></script>
-    <script src="assets/js/datatables.min.js"></script>
     <script src="assets/js/pdfmake.min.js"></script>
     <script src="assets/js/vfs_fonts.js"></script>
 
     <script>
+        
       $(document).ready(function(){
+
+
+            $('.collapse').on('show.bs.collapse',function(){
+            var nfilas = $(this).find('table tr').length;
+            var size = 35 * (nfilas+2);
+            $(this).parent().parent().parent().css('height', size+'px');
+            //$(this).parent().css('min-height', size+'px');
+            $('.collapse.show').collapse('toggle');
+            
+		});
+
+
+        // $('.collapse').on('show.bs.collapse',function(){
+        //     var nfilas = $(this).find('table tr').length;
+        //     var size = 50 * nfilas;
+
+        //     //$(this).parent().css('min-height', size+'px');
+        //     $('.collapse.show').collapse('toggle');
+            
+		// });
+
+        $('.collapse').on('hide.bs.collapse',function(){
+            $(this).parent().parent().parent().css('height', '10px');
+            $('.content_detalle').css('min-height', '10px');
+        });
+
+
+        
 
         // DataTables initialisation
      var table = $('#example').DataTable({
@@ -576,7 +634,6 @@ function coloseModal(){
 
     </script>
 
-<script src="assets/js/bootstrap.bundle.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 <script src="https://cdn.datatables.net/1.13.2/js/jquery.dataTables.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.2/moment.min.js"></script>

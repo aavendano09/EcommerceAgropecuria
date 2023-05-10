@@ -1,5 +1,6 @@
 {
     "require": {
-        "barryvdh/laravel-dompdf": "dev-master"
+        "barryvdh/laravel-dompdf": "dev-master",
+        "phpmailer/phpmailer": "^6.8"
     }
 }

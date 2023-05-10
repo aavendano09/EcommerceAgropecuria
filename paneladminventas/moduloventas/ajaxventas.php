@@ -119,6 +119,11 @@ if(!empty($_POST)){
     $result = mysqli_num_rows($query);
     if($result > 0){
         $data = mysqli_fetch_assoc($query);
+        if(isset($_SESSION['productos'][$producto_id])){
+            $data['tprod_cantpr'] = $_SESSION['productos'][$producto_id]['max'];
+        }else{
+            $_SESSION['productos'][$producto_id]['max'] = $data['tprod_cantpr'];
+        }
         echo json_encode($data, JSON_UNESCAPED_UNICODE);
         exit;
     }
@@ -147,6 +152,9 @@ if($_POST['action'] == 'addProductoDetalle'){
         $query_iva = mysqli_query($conexion, "SELECT tbiva_valiva FROM tbiva_tme");
         $result_iva = mysqli_num_rows($query_iva);
 
+        $_SESSION['productos'][$codproducto]['max'] = ($_SESSION['productos'][$codproducto]['max'] - $cantidad);
+
+
         $query_detalle_temp = mysqli_query($conexion, "CALL add_tdtem_tts($codproducto, $cantidad, '$token')");
         $result_detalle = mysqli_num_rows($query_detalle_temp);
 
@@ -168,14 +176,14 @@ if($_POST['action'] == 'addProductoDetalle'){
                 $total = round($total + $preciototal, 2);
                 
                 $detalleTabla .= 
-                '<tr>
-                    <td>'.$data1['tdtem_idprod'].'</td>
+                '<tr id="product_info'.$data1['tdtem_idprod'].'">
+                    <td class="id_producto" id="id_producto'.$data1['tdtem_idprod'].'">'.$data1['tdtem_idprod'].'</td>
                     <td colspan="2">'.$data1['tprod_namepr'].'</td>
                     <td ALIGN="center">'.$data1['tdtem_cantid'].'</td>
                     <td ALIGN="right">'.$data1['tdtem_preciv'].'</td>
                     <td ALIGN="right">'.$preciototal.'</td>
                     <td class="">
-                        <a class="btn_anular link_delete" href="#" onclick="event.preventDefault();del_product_detalle('.$data1['tdtem_correl'].');"><i class="fa fa-trash"></i></a>
+                        <a class="btn_anular link_delete" href="#" onclick="event.preventDefault();del_product_detalle('.$data1['tdtem_correl'].', '.$data1['tdtem_idprod'].');"><i class="fa fa-trash"></i></a>
                     </td>
                 </tr>';
             }
@@ -208,6 +216,95 @@ if($_POST['action'] == 'addProductoDetalle'){
     }
     exit;
     
+}
+
+if($_POST['action'] == 'updateProductoDetalle'){
+
+    if(empty($_POST['producto']) || empty($_POST['cantidad']))
+    {
+        echo 'error';
+    }else{
+        $codproducto = $_POST['producto'];
+        $cantidad = $_POST['cantidad'];
+        $token = md5($_SESSION['idAdminVentas']);
+
+        $query_iva = mysqli_query($conexion, "SELECT tbiva_valiva FROM tbiva_tme");
+        $result_iva = mysqli_num_rows($query_iva);
+
+        $_SESSION['productos'][$codproducto]['max'] = ($_SESSION['productos'][$codproducto]['max'] - $cantidad);
+
+
+        // $query_detalle_temp = mysqli_query($conexion, "CALL add_tdtec_tts($codproducto, $cantidad, '$token')");
+        // $result_detalle = mysqli_num_rows($query_detalle_temp);
+
+        //$precio_actual = mysqli_query($conexion,"SELECT tprod_precic into precio_actual FROM tprod_tme WHERE tprod_idprod = '$codproducto'");
+        $update_detalle_temp = mysqli_query($conexion, "UPDATE tdtem_tts SET tdtem_cantid = (tdtem_cantid +'$cantidad') WHERE tdtem_idprod = '$codproducto'");
+        $query_detalle_temp = mysqli_query($conexion, "SELECT tmp.tdtem_correl, tmp.tdtem_idprod, p.tprod_namepr, tmp.tdtem_cantid, tmp.tdtem_preciv FROM tdtem_tts tmp
+        INNER JOIN tprod_tme p
+        ON tmp.tdtem_idprod = p.tprod_idprod
+        WHERE tmp.tdtem_tokuse ='$token';
+        ");
+        $result_detalle = mysqli_num_rows($query_detalle_temp);
+
+        $detalleTabla = '';
+        $sub_total = 0;
+        $iva = 0;
+        $total = 0;
+        $arraydata = array();
+
+        if($result_detalle > 0){
+            if($result_iva > 0){
+                $info_iva = mysqli_fetch_assoc($query_iva);
+                $iva = $info_iva['tbiva_valiva'];
+            }
+
+            while ($data1 = mysqli_fetch_assoc($query_detalle_temp)){
+                $preciototal = round($data1['tdtem_cantid']* $data1['tdtem_preciv'], 2);
+                $sub_total = round($sub_total + $preciototal, 2);
+                $total = round($total + $preciototal, 2);
+                
+                $detalleTabla .= 
+                '<tr id="product_info'.$data1['tdtem_idprod'].'">
+                    <td class="id_producto" id="id_producto'.$data1['tdtem_idprod'].'">'.$data1['tdtem_idprod'].'</td>
+                    <td colspan="2">'.$data1['tprod_namepr'].'</td>
+                    <td ALIGN="center">'.$data1['tdtem_cantid'].'</td>
+                    <td ALIGN="right">'.$data1['tdtem_preciv'].'</td>
+                    <td ALIGN="right">'.$preciototal.'</td>
+                    <td class="">
+                        <a class="btn_anular link_delete" href="#" onclick="event.preventDefault();del_product_detalle('.$data1['tdtem_correl'].', '.$data1['tdtem_idprod'].');"><i class="fa fa-trash"></i></a>
+                    </td>
+                </tr>';
+            }
+
+            $impuesto = round($sub_total*($iva/100), 2);
+            $tl_sniva = round($sub_total - $impuesto, 2);
+            $total = round($tl_sniva + $impuesto, 2);
+
+            $detalleTotales = '<tr>
+                                    <td colspan="5" ALIGN="right">SUBTOTAL $.</td>
+                                    <td ALIGN="right">'.$tl_sniva.'</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="5" ALIGN="right">IVA ('.$iva.'%)</td>
+                                    <td ALIGN="right">'.$impuesto.'</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="5" ALIGN="right">TOTAL $.</td>
+                                    <td ALIGN="right">'.$total.'</td>
+                                </tr>';
+
+            $arraydata['detalle'] = $detalleTabla;
+            $arraydata['totales'] = $detalleTotales;
+
+            echo json_encode($arraydata, JSON_UNESCAPED_UNICODE);
+        }else{
+            echo 'error';
+        }
+        mysqli_close($conexion);
+    }
+    exit;
+
+
 }
 
 //extraer datos del detalle temporal
@@ -253,14 +350,14 @@ if($_POST['action'] == 'serchForDetalle'){
                 $total = round($total + $preciototal, 2);
                 
                 $detalleTabla .= 
-                '<tr>
-                    <td>'.$data1['tprod_idprod'].'</td>
+                '<tr id="product_info'.$data1['tprod_idprod'].'">
+                    <td class="id_producto" id="id_producto'.$data1['tprod_idprod'].'">'.$data1['tprod_idprod'].'</td>
                     <td colspan="2">'.$data1['tprod_namepr'].'</td>
                     <td ALIGN="center">'.$data1['tdtem_cantid'].'</td>
                     <td ALIGN="right">'.$data1['tdtem_preciv'].'</td>
                     <td ALIGN="right">'.$preciototal.'</td>
                     <td class="">
-                        <a class="btn_anular link_delete" href="#" onclick="event.preventDefault();del_product_detalle('.$data1['tdtem_correl'].');"><i class="fa fa-trash"></i></a>
+                        <a class="btn_anular link_delete" href="#" onclick="event.preventDefault();del_product_detalle('.$data1['tdtem_correl'].', '.$data1['tprod_idprod'].');"><i class="fa fa-trash"></i></a>
                     </td>
                 </tr>';
             }
@@ -303,6 +400,7 @@ if($_POST['action'] == 'delProductoDetalle'){
     }else{
 
         $id_detalle = $_POST['id_detalle'];
+        $id_prod = $_POST['id_prod'];
         $token      = md5($_SESSION['idAdminVentas']);
         
         $query_iva = mysqli_query($conexion, "SELECT tbiva_valiva FROM tbiva_tme");
@@ -311,7 +409,8 @@ if($_POST['action'] == 'delProductoDetalle'){
         $query_det_temp = mysqli_query($conexion,"CALL del_tdtem_tts($id_detalle, '$token')");
         $resultt = mysqli_num_rows($query_det_temp);
 
-        
+        unset($_SESSION['productos'][$id_prod]);
+
         $detalleTabla = '';
         $sub_total = 0;
         $iva = 0;
@@ -330,14 +429,14 @@ if($_POST['action'] == 'delProductoDetalle'){
                 $total = round($total + $preciototal, 2);
                 
                 $detalleTabla .= 
-                '<tr>
-                    <td>'.$data1['tdtem_idprod'].'</td>
+                '<tr id="product_info'.$data1['tdtem_idprod'].'">
+                    <td class="id_producto" id="id_producto'.$data1['tdtem_idprod'].'">'.$data1['tdtem_idprod'].'</td>
                     <td colspan="2">'.$data1['tprod_namepr'].'</td>
                     <td ALIGN="center">'.$data1['tdtem_cantid'].'</td>
                     <td ALIGN="right">'.$data1['tdtem_preciv'].'</td>
                     <td ALIGN="right">'.$preciototal.'</td>
                     <td class="">
-                        <a class="btn_anular link_delete" href="#" onclick="event.preventDefault();del_product_detalle('.$data1['tdtem_correl'].');"><i class="fa fa-trash"></i></a>
+                        <a class="btn_anular link_delete" href="#" onclick="event.preventDefault();del_product_detalle('.$data1['tdtem_correl'].', '.$data1['tdtem_idprod'].');"><i class="fa fa-trash"></i></a>
                     </td>
                 </tr>';
             }
@@ -376,6 +475,8 @@ if($_POST['action'] == 'delProductoDetalle'){
 if($_POST['action'] == 'anularVenta'){
 
     $token = md5($_SESSION['idAdminVentas']);
+
+    unset($_SESSION['productos']);
 
     $query_eliminar = mysqli_query($conexion, "DELETE FROM tdtem_tts WHERE tdtem_tokuse='$token'");
     mysqli_close($conexion);

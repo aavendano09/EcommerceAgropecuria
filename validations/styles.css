@@ -74,6 +74,15 @@ main {
 	opacity: 0;
 }
 
+.nombre.fa-check-circle,.correo.fa-check-circle{
+	position: relative;
+	right: -515px;
+	bottom: 35px;
+	z-index: 100;
+	font-size: 16px;
+	opacity: 0;
+}
+
 .formulario__checkbox {
 	margin-right: 10px;
 }
