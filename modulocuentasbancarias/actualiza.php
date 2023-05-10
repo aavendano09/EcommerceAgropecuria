@@ -6,7 +6,13 @@ $id = $conexion->real_escape_string($_POST['id']);
 $nombre = $conexion->real_escape_string($_POST['nombre']);
 $numero = $conexion->real_escape_string($_POST['nro_cuenta']);
 $oldnumero = $conexion->real_escape_string($_POST['nro_cuentahide']);
-$identificacion = $conexion->real_escape_string($_POST['rif']);
+if (isset($_POST['rif'])) {
+
+    $identificacion = $conexion->real_escape_string($_POST['rif']);
+}else{
+    $identificacion = $conexion->real_escape_string($_POST['cedula']);
+
+}
 $cedrif = $conexion->real_escape_string($_POST['tiprif']);
 $tipocuenta = $conexion->real_escape_string($_POST['tipo_cuenta']);
 

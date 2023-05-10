@@ -213,6 +213,7 @@ $('#cedula').prop('name', 'cedulaHidden');
         let inputtiprif = editaModal.querySelector('.modal-body #tiprif')
         let inputidentificacion = editaModal.querySelector('.modal-body #rif')
         let inputtipocuenta = editaModal.querySelector('.modal-body #tipo_cuenta')
+        let inputidentificacionC = editaModal.querySelector('.modal-body #cedula')
 
         let url = "modulocuentasbancarias/getMoneda.php"
         let formData = new FormData()
@@ -228,8 +229,25 @@ $('#cedula').prop('name', 'cedulaHidden');
             inputNombre.value = data.tcuba_nameba
             inputnumero.value = data.tcuba_Nocuba
             inputhidenumero.value = data.tcuba_Nocuba
-            inputidentificacion.value = data.tcuba_identi
             inputtiprif.value = data.tcuba_rifba
+            if (data.tcuba_rifba == 'V') {
+              $('.ident').prop('name', 'cedula');
+              $('.ident').prop('id', 'cedula');
+              $('.ident').prop('placeholder', '15862175');
+              $('#grupo__rif').prop('id', 'grupo__cedula');
+              $('#errormsg').text('La identificacion debe poseer 7 u 8 digitos');
+              inputidentificacionC = editaModal.querySelector('.modal-body #cedula')
+              inputidentificacionC.value = data.tcuba_identi
+            }else{
+              $('.ident').prop('name', 'rif');
+              $('.ident').prop('id', 'rif');
+              $('#grupo__cedula').prop('id', 'grupo__rif');
+              $('.ident').prop('placeholder', '407898280');
+              $('#errormsg').text('La identificacion debe poseer 9 digitos');
+              let inputidentificacion = editaModal.querySelector('.modal-body #rif')
+              inputidentificacion.value = data.tcuba_identi
+            }
+
             inputtipocuenta.value = data.tcuba_tpcuba
 
         }).catch(err => console.log(err))

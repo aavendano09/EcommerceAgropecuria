@@ -147,6 +147,7 @@ $('#correo').keyup(function(){
 })
 
 
+
 //$('#imagen').addClass("form-control");
 $('#imagen').prop("accept", "image/png, .jpeg, .jpg, image/gif, .jfif");
 $('#imagen').prop("required", "false");
