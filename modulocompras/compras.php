@@ -288,6 +288,7 @@ error_reporting(0);
           if(data.msg == 'exito'){
             $('#idcliente').val(response);
             //bloque campos
+            $('#idproveedor').val(data.cod);
             $('#tipo_rif').attr('disabled','disabled');
             $('#rif_m').attr('disabled','disabled');
             $('#razon_m').attr('disabled','disabled');

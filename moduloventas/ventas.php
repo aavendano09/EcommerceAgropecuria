@@ -329,7 +329,7 @@ $('#tipo_rif').change(function(){
             console.log(data.msg);
           if(data.msg == 'exito'){
             //agregar id a input hiden
-            $('#idcliente').val(response);
+            $('#idcliente').val(data.cod);
             //bloque campos
             $('#tipo_rif').attr('disabled','disabled');
             $('#rif_m').attr('disabled','disabled');
