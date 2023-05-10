@@ -256,7 +256,7 @@ function submit(input, arrInput, select, arrSelect, form = null) {
 
 		return true;
 
-		//$('#formulario-m').submit();
+		$('#formulario-m').submit();
 	} else {
 		
 		document.getElementById('formulario-m__mensaje').classList.add('formulario-m__mensaje-activo');

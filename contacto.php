@@ -211,10 +211,10 @@
 
     <script>
         
-   $('#guardar').on('click',function(e){
+   $('#enviar').on('click',function(e){
     e.preventDefault();
 
-    if (submit(input, arrInput, select, arrSelect, 'producto')) {
+    if (submit(input_m, arrInput_m, select_m, arrSelect_m, 'proveedor')) {
 
      
       var formData = new FormData(formulario)
