@@ -76,7 +76,7 @@
                  $inicio = (($pagina - 1) * $registros);
              else
                  $inicio = 0;
-             $busqueda = mysqli_query($conexion, "SELECT * FROM tprod_tme INNER JOIN tprp_tts ON tprp_idtprp = tprod_fktprp INNER JOIN tpre_tts ON tpre_idpres = tprp_fkpres WHERE tprod_status = '1' AND tprod_cantpr > '0' LIMIT $inicio,$registros;");
+             $busqueda = mysqli_query($conexion, "SELECT * FROM tprod_tme INNER JOIN tprp_tts ON tprp_idtprp = tprod_fktprp INNER JOIN tpre_tts ON tpre_idpres = tprp_fkpres INNER JOIN tmpro_tme ON tmpro_idmedi = tpre_fkmedi WHERE tprod_status = '1' AND tprod_cantpr > '0' LIMIT $inicio,$registros;");
              $paginas = ceil($num_registros / $registros);
 
              ?>
@@ -88,8 +88,8 @@
                     <div style="margin-bottom: 10px; height: 700px;" class="card border-primary">
                           <img style="height: 400px;" class="card-img-top img-thumbnail" src="data:image/jpg;base64,<?php echo base64_encode($row['tprod_fotopr']) ?>" alt="">
                           <div class="card-body">
-                                <h4 class="card-title"><strong> <?php echo $row['tprod_descpr']  ?></strong></h4>
-                                <p class="card-text"><?php echo $row['tpre_despre']  ?></p>
+                                <h4 class="card-title"><strong> <?=  $row['tprod_descpr'];  ?></strong></h4>
+                                <p class="card-text"><?php echo $row['tpre_despre'] .' '. $row['tprod_connet'] .' '.$row['tmpro_descmd'];  ?></p>
                                 <p class="card-text"><strong>Precio:</strong><?php echo $row['tprod_preciv']  ?></p>
                                 <p class="card-text"><strong>Cantidad:</strong><?php echo $row['tprod_cantpr']  ?></p>
                                 <a href="home.php?modulo=detalleproducto&id=<?php echo $row['tprod_idprod'] ?>" class="btn btn-primary">Ver</a>
