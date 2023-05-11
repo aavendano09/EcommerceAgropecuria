@@ -3,9 +3,10 @@ session_start();
 
 require_once('conexion.php');
 $id_cliente = $_SESSION['idCliente'];
-$sql = "SELECT tvent_idvent, tclie_namecl, tclie_identc, tvent_fkclie, tvent_fechav, tvent_totalv, tvent_status 
+$sql = "SELECT tvent_idvent, tclie_namecl, tclie_identc, tvent_fkclie, tvent_fechav, tvent_totalv, tvent_status, tvenn_tvmone, tmone_namemo
 FROM tvenn_tts 
 INNER JOIN tclic_tme ON tclie_idclie = tvent_fkclie
+INNER JOIN tmone_tme ON tvenn_tvmone = tmone_idmone
 WHERE tvent_fkclie = '$id_cliente';";
 $productos = $conexion->query($sql);
 
@@ -13,8 +14,8 @@ $i = 0;
 
 function getDetalle($id_comp, $conexion){
 
-    $sql = "SELECT tdven_iddetv, tdven_fkidvt, tdven_fkcodp, tprod_namepr, tdven_cantpr, tdven_precio, tdven_Subtot, tmone_namemo, tdven_fktpmo
-    FROM tdevt_tts INNER JOIN tprod_tme ON tprod_idprod = tdven_fkcodp INNER JOIN tmone_tme ON tmone_idmone = tdven_fktpmo WHERE tdven_fkidvt = '$id_comp'";
+    $sql = "SELECT tdven_iddetv, tdven_fkidvt, tdven_fkcodp, tprod_namepr, tdven_cantpr, tdven_precio, tdven_Subtot
+    FROM tdevt_tts INNER JOIN tprod_tme ON tprod_idprod = tdven_fkcodp WHERE tdven_fkidvt = '$id_comp'";
     $productos = $conexion->query($sql);
     return $productos;
 }
@@ -63,8 +64,9 @@ function getDetalle($id_comp, $conexion){
                 <th style="width: 180px;">Cedula</th>
                 <th>Nombre</th>
                 <th style="width: 250px;">Fecha / Hora</th>
-                <th style="width: 350px;">Estado</th>
-                <th style="width: 150px;">Total</th>
+                <th style="width: 300px;">Estado</th>
+                <th style="width: 100px;">Total</th>
+                <th style="width: 100px;">Moneda</th>
                 <th style="width: 260px;">Detalles</th>
             </tr>
         </thead>
@@ -75,8 +77,9 @@ function getDetalle($id_comp, $conexion){
                  <td><?= $row_ventas['tclie_identc'] ?></td>
                  <td><?= $row_ventas['tclie_namecl'] ?></td>
                  <td><?= $row_ventas['tvent_fechav'] ?></td>
-                 <td><?= $row_ventas['tvent_status'] ?></td>
+                 <td><?= $row_ventas['tvent_status'] ?></td>    
                  <td><span>$</span><?= $row_ventas['tvent_totalv'] ?></td>
+                 <td><?= $row_ventas['tmone_namemo'] ?></td>
                  <td>
                     <p>
                     <button class="btn btn-primary" style=" border-radius: 3px; width: 80px;" type="button" data-bs-toggle="collapse" data-bs-target="#collapseWidthExample<?=$i?>"  aria-expanded="false" aria-controls="collapseWidthExample">
@@ -96,11 +99,10 @@ function getDetalle($id_comp, $conexion){
                                     <thead>
                                     <tr>
                                         <th style="width: 150px;">ID detalle</th>
-                                        <th style="width: 280px;">Producto</th>
+                                        <th style="width: 300px;">Producto</th>
                                         <th style="width: 120px;">Cantidad</th>
                                         <th style="width: 120px;">Precio</th>
                                         <th style="width: 120px;">Subtotal</th>
-                                        <th style="width: 120px;">Moneda</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -115,7 +117,6 @@ function getDetalle($id_comp, $conexion){
                                                     <td><?= $row_detalle['tdven_cantpr']?></td>
                                                     <td><span>$</span><?= $row_detalle['tdven_precio'] ?></td>
                                                     <td><span>$</span><?= ($row_detalle['tdven_precio'] * $row_detalle['tdven_cantpr']) ?></td>
-                                                    <td><?= $row_detalle['tmone_namemo']?></td>
                                                 </tr>
                                         <?php endwhile;?>
                                     </tbody>
@@ -160,7 +161,7 @@ function getDetalle($id_comp, $conexion){
 
             $('.collapse').on('show.bs.collapse',function(){
             var nfilas = $(this).find('table tr').length;
-            var size = 35 * (nfilas+2);
+            var size = 35 * (nfilas+2.85);
             $(this).parent().parent().parent().css('height', size+'px');
             //$(this).parent().css('min-height', size+'px');
             $('.collapse.show').collapse('toggle');

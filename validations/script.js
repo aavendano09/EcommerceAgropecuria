@@ -34,9 +34,10 @@ const expresiones = {
 	id: /^\d{1,4}$/,
 	usuario: /^[a-zA-ZÀ-ÿ\s]{3,40}$/, // Letras y espacios, pueden llevar acentos.
 	nombre: /^[a-zA-ZÀ-ÿ\s]{3,40}$/, // Letras y espacios, pueden llevar acentos.
-	nombre2: /^([a-zA-Z0-9_. ,-]){1,50}$/, // Letras y espacios, pueden llevar acentos.
+	nombre2: /^([a-zA-Z0-9_/. ,-]){1,50}$/, // Letras y espacios, pueden llevar acentos.
 	descripcion: /^([a-zA-Z0-9_. ,-]){1,60}$/,
 	password: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$#!%*?&]{8,15}$/, // 4 a 12 digitos.
+	password2: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$#!%*?&]{8,15}$/, // 
 	correo: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9]+\.[a-zA-Z0-9]+$/,
 	correoOld: /.*/,
 	telefono: /^\d{11,11}$/, // 7 a 14 numeros.

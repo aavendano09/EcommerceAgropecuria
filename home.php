@@ -51,7 +51,7 @@ header("Refresh:0");
 
 <!-- Template Stylesheet -->
 <link href="fronted/css/style.css" rel="stylesheet">
-<script src="validaciones.js"></script>
+<script src="validations/minivalid.js"></script>
 
 </head>
 <?php

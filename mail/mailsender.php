@@ -24,7 +24,7 @@ require '../vendor/autoload.php';
                 $this->phpmailer->CharSet = PHPMailer::CHARSET_UTF8;
                 $this->phpmailer->Port = 465;
                 $this->phpmailer->Username = 'kevinsaavedra55@gmail.com';
-                $this->phpmailer->Password = 'mvmsmhhrjqsnecno';    
+                $this->phpmailer->Password = 'opdzvvrocknfeles';    
     
             } catch(Exception $e){
                 echo 'Mensaje '.$this->phpmailer->ErrorInfo;
@@ -56,7 +56,8 @@ require '../vendor/autoload.php';
     }
 
     $mail = new Mailsender;
-    $mail->setDestination('kevinsaavedra00@gmail.com', 'kevin', 'asunto', 'contenido', 'html');
-    $mail->send();
+    $mail->setDestination('kevinsaavedra00@hotmail.com', 'kevin', 'asunto', 'contenido', 'html');
+    $rta = $mail->send();
+     var_dump($rta);
 
 ?>

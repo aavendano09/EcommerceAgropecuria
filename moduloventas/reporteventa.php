@@ -3,8 +3,6 @@
 require_once('conexion.php');
 
 $sql = "SELECT
-dv.tdven_fkcodp,
-dv.tdven_cantpr,
 mon.tmone_namemo,
 v.tvent_idvent,
 v.tvent_fkclie,
@@ -16,10 +14,8 @@ FROM
 tvenn_tts AS v
 INNER JOIN tclic_tme AS cl 
 ON cl.tclie_idclie = v.tvent_fkclie
-INNER JOIN tdevt_tts AS dv 
-ON dv.tdven_fkidvt = v.tvent_idvent
 INNER JOIN tmone_tme AS mon
-ON mon.tmone_idmone = dv.tdven_fktpmo";
+ON mon.tmone_idmone = v.tvenn_tvmone";
 $productos = $conexion->query($sql);
 
 ?>
@@ -187,7 +183,7 @@ $productos = $conexion->query($sql);
                 <th>Fecha / Hora</th>
                 <th style="width: 220px;">Estado</th>
                 <th>Total</th>
-                <th style="width: 50px;">Metodo</th>
+                <th style="width: 50px;">Moneda</th>
                 
             </tr>
         </thead>

@@ -74,7 +74,7 @@ $clientes = $conexion->query($consulta);
     <label for="validationTooltip04" class="form-label">Seleccione el tipo de usuario:</label>
     <select class="form-select" id="validationTooltip04" name="tipocliente" required>
       <option selected disabled value="">Seleccione la opcion de cliente:</option>
-      <option value="875">Cliente</option>
+      <option value="3">Cliente</option>
     </select>
   </div>
 </div>

@@ -222,7 +222,7 @@
       console.log(formData);
 
       $.ajax({
-          url: 'modulocompras/guarda.php',
+          url: 'mail/mailsender.php',
           type: "POST",
           data: formData,
           contentType: false,

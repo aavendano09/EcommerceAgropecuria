@@ -9,18 +9,15 @@
         $subTotal = $_REQUEST['precio'][$i] * $_REQUEST['cantidad'][$i];
         $total = $total + $subTotal;
     }
-    echo $total;
-    
 
         $idcliente = $conexion->real_escape_string($_SESSION['idCliente']);
         $estadofactura = $conexion->real_escape_string($_POST['estadofactura']);
         $tipocliente = $conexion->real_escape_string($_POST['tipocliente']);
+        $tipomoneda = $conexion->real_escape_string($_POST['tipomoneda']);
 
-
-        $queryVenta = "INSERT INTO tvenn_tts (tvent_fkclie,tvent_fechav,tvent_uservt,tvent_totalv,tvent_status)
-        VALUES ('$idcliente',now(),'$tipocliente','$total','$estadofactura');";
-
-
+        $queryVenta = "INSERT INTO tvenn_tts (tvent_fkclie,tvent_fechav,tvent_uservt,tvent_totalv,tvent_status,tvenn_tvmone)
+        VALUES ('$idcliente',now(),'$tipocliente','$total','$estadofactura', '$tipomoneda');";
+echo $tipocliente;
         $resVenta=mysqli_query($conexion,$queryVenta);
         $id=mysqli_insert_id($conexion);
         /*
@@ -30,10 +27,9 @@
         */
         $insertaDetalle="";
         $cantProd=count($_REQUEST['id']);
-        $tipomoneda = $conexion->real_escape_string($_POST['tipomoneda']);
         for($i=0;$i<$cantProd;$i++){
             $subTotal=$_REQUEST['precio'][$i]*$_REQUEST['cantidad'][$i];
-            $insertaDetalle=$insertaDetalle."('$id','".$_REQUEST['id'][$i]."','".$_REQUEST['cantidad'][$i]."','".$_REQUEST['precio'][$i]."','$subTotal','$tipomoneda'),";
+            $insertaDetalle=$insertaDetalle."('$id','".$_REQUEST['id'][$i]."','".$_REQUEST['cantidad'][$i]."','".$_REQUEST['precio'][$i]."','$subTotal'),";
             //descontar del stock
 
             $queryCantidad = "SELECT tprod_cantpr FROM tprod_tme WHERE tprod_idprod='".$_REQUEST['id'][$i]."';";
@@ -49,8 +45,9 @@
        
         $insertaDetalle=rtrim($insertaDetalle,",");
         $queryDetalle = "INSERT INTO tdevt_tts 
-        (tdven_fkidvt, tdven_fkcodp, tdven_cantpr, tdven_precio, tdven_Subtot, tdven_fktpmo) VALUES 
+        (tdven_fkidvt, tdven_fkcodp, tdven_cantpr, tdven_precio, tdven_Subtot) VALUES 
          $insertaDetalle;";
+
 
         $resDetalle=mysqli_query($conexion,$queryDetalle);
         if($resVenta && $resDetalle){
@@ -81,6 +78,7 @@
                     }
                 });
             </script>
+            
         <?php
     }
     function muestraRecibe($idVenta){
