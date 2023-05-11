@@ -1,11 +1,16 @@
 <?php
+    
+
     if($_SESSION['idCliente']==true){
-        
+    $total = 0;       
 
         $cantProd=count($_REQUEST['id']);
     for ($i = 0; $i < $cantProd; $i++) {
         $subTotal = $_REQUEST['precio'][$i] * $_REQUEST['cantidad'][$i];
+        $total = $total + $subTotal;
     }
+    echo $total;
+    
 
         $idcliente = $conexion->real_escape_string($_SESSION['idCliente']);
         $estadofactura = $conexion->real_escape_string($_POST['estadofactura']);
@@ -13,7 +18,7 @@
 
 
         $queryVenta = "INSERT INTO tvenn_tts (tvent_fkclie,tvent_fechav,tvent_uservt,tvent_totalv,tvent_status)
-        VALUES ('$idcliente',now(),'$tipocliente','$subTotal','$estadofactura');";
+        VALUES ('$idcliente',now(),'$tipocliente','$total','$estadofactura');";
 
 
         $resVenta=mysqli_query($conexion,$queryVenta);
@@ -63,6 +68,7 @@
         }
     }
     function borrarCarrito(){
+        $_SESSION['productosSession'] = array();
         ?>
             <script>
                 $.ajax({

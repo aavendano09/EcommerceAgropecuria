@@ -246,7 +246,7 @@ p, label, span, table{
                     <td class="textcenter"><?php echo $row['tdven_cantpr']; ?></td>
                     <td><?php echo $row['tprod_namepr']; ?></td>
                     <td class="textright"><?php echo $row['tdven_precio']; ?></td>
-                    <td class="textright"><?php echo $total; ?></td>
+                    <td class="textright"><?php echo $row['tdven_Subtot']; ?></td>
                 </tr>
             <?php
                     }

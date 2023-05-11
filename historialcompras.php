@@ -54,15 +54,12 @@ function getDetalle($id_comp, $conexion){
             <!-- /.card-header -->
             <div class="data_table card-body table-responsive">
   
-            
-
-
-          <hr> 
+                
 
             <table id="example" class="table table-sm table-striped table-hover mt-4">
             <thead class="table-dark">
             <tr>
-                <th style="width: 150px;">Id de venta</th>
+                <th style="width: 150px;">ID de compra</th>
                 <th style="width: 180px;">Cedula</th>
                 <th>Nombre</th>
                 <th style="width: 250px;">Fecha / Hora</th>
@@ -98,7 +95,7 @@ function getDetalle($id_comp, $conexion){
                                 <table>
                                     <thead>
                                     <tr>
-                                        <th style="width: 150px;">ID_compra</th>
+                                        <th style="width: 150px;">ID detalle</th>
                                         <th style="width: 280px;">Producto</th>
                                         <th style="width: 120px;">Cantidad</th>
                                         <th style="width: 120px;">Precio</th>
@@ -117,8 +114,8 @@ function getDetalle($id_comp, $conexion){
                                                     <td><?= $row_detalle['tprod_namepr']?></td>
                                                     <td><?= $row_detalle['tdven_cantpr']?></td>
                                                     <td><span>$</span><?= $row_detalle['tdven_precio'] ?></td>
-                                                    <td><span>$</span><?= $row_detalle['tdven_precio'] * $row_detalle['tdven_cantpr'] ?></td>
-                                                    <td><?= $row_detalle['tdven_fktpmo']?></td>
+                                                    <td><span>$</span><?= ($row_detalle['tdven_precio'] * $row_detalle['tdven_cantpr']) ?></td>
+                                                    <td><?= $row_detalle['tmone_namemo']?></td>
                                                 </tr>
                                         <?php endwhile;?>
                                     </tbody>
@@ -599,6 +596,9 @@ function coloseModal(){
 
     </script>
 
-
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.2/js/jquery.dataTables.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.2/moment.min.js"></script>
+<script src="https://cdn.datatables.net/datetime/1.3.0/js/dataTables.dateTime.min.js"></script>
 </body>
 </html>
