@@ -3,9 +3,7 @@
 require_once('conexion.php');
 
 $sql = "SELECT
-dv.tdven_fkcodp,
-dv.tdven_cantpr,
-dv.tdven_fktpmo,
+mon.tmone_namemo,
 v.tvent_idvent,
 v.tvent_fkclie,
 v.tvent_fechav,
@@ -16,8 +14,8 @@ FROM
 tvenn_tts AS v
 INNER JOIN tclic_tme AS cl 
 ON cl.tclie_idclie = v.tvent_fkclie
-INNER JOIN tdevt_tts AS dv 
-ON dv.tdven_fkidvt = v.tvent_idvent";
+INNER JOIN tmone_tme AS mon
+ON mon.tmone_idmone = v.tvenn_tvmone";
 $productos = $conexion->query($sql);
 
 ?>
@@ -179,13 +177,13 @@ $productos = $conexion->query($sql);
             <table id="example" class="table table-sm table-striped table-hover mt-4">
             <thead class="table-dark">
             <tr>
-                <th style="width: 250px;">Codigo Venta</th>
+                <th style="width: 100px;">Codigo Venta</th>
                 <th>Acciones</th>
                 <th style="width: 150px;">Nombre Cliente</th>
                 <th>Fecha / Hora</th>
                 <th style="width: 220px;">Estado</th>
                 <th>Total</th>
-                <th style="width: 50px;">Metodo</th>
+                <th style="width: 50px;">Moneda</th>
             </tr>
         </thead>
         <tbody>
@@ -231,7 +229,7 @@ $productos = $conexion->query($sql);
                  <td><?= $row_ventas['tvent_fechav'] ?></td>
                  <td class="estado"><?php echo $estado; ?></td>
                  <td><span>$.</span><?= $row_ventas['tvent_totalv'] ?></td>
-                 <td><?= $row_ventas['tdven_fktpmo'] ?></td>
+                 <td><?= $row_ventas['tmone_namemo'] ?></td>
                  
                </tr>
      
