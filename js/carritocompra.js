@@ -9,7 +9,7 @@ $(document).ready(function () {
         url: "ajax/leerCarrito.php",
         dataType: "json",
         success: function (response) {
-            llenaCarrito(response);
+            llenaCarrito();
         }
     });
     $.ajax({
@@ -202,10 +202,10 @@ $(document).ready(function () {
         var max = $(this).data('max');
         var current = $(this).data('current');
 
-        console.log(id)
-        console.log(id)
-        console.log(id)
-        console.log(id)
+        // console.log(id)
+        // console.log(id)
+        // console.log(id)
+        // console.log(id)
         $.ajax({
             type: "post",
             url: "ajax/sessionCarrito.php",
@@ -239,7 +239,7 @@ $(document).ready(function () {
                 }
             })
             .done(function(response){
-                    llenaCarrito(response);
+                    //llenaCarrito();
                     $("#badgeProducto").hide(500).show(500).hide(500).show(500).hide(500).show(500);
                     $("#iconoCarrito").click();
             });
@@ -260,7 +260,7 @@ $(document).ready(function () {
                     },
                     success: function (response) {
 
-                        llenaCarrito(response);
+                        //llenaCarrito();
                         $("#badgeProducto").hide(500).show(500).hide(500).show(500).hide(500).show(500);
                         $("#iconoCarrito").click();
                     }
@@ -291,49 +291,75 @@ $(document).ready(function () {
             }
         });
 
-
-
         
+        llenaCarrito();
     });
-    function llenaCarrito(response){
-        var cantidad=Object.keys(response).length;
-        console.log("jp")
-        $("#badgeProducto").text(cantidad);
+
+    function llenaCarrito(){
+
+        $.ajax({
+            type: "post",
+            url: "ajax/getSessionArray.php",
+            asycn:true,
+            dataType: "json",
+            beforeSend: function() {
+
+            },
+            success: function (response) {
+                var cantidad=Object.keys(response).length;
+                $("#listaCarrito").text("");
+                for (let i = 0; i < 45; i++) {
+                    
+                    if (typeof response[i] !== 'undefined') {
+                        
+                        console.log(response[i]);
+                        
+                        $("#badgeProducto").text(cantidad);
        
-        $("#listaCarrito").text("");
-        response.forEach(element => {
-            $("#listaCarrito").append(
-                `
-                <a href="home.php?modulo=detalleproducto&id=${element['id']}" class="dropdown-item">
-                    <!-- Message Start -->
-                    <div class="media">
-                        <div class="media-body">
-                            <h3 class="dropdown-item-title">
-                                ${element['nombre']}
-                                <span class="float-right text-sm text-primary"><i class="fas fa-eye"></i></span>
-                            </h3>
-                            <p class="text-sm">Cantidad ${element['cantidad']}</p>
-                        </div>
-                    </div>
-                    <!-- Message End -->
-                </a>
-                <div class="dropdown-divider"></div>
-                `
-            );
+
+
+                            console.log(response[i]['id']);
+                            $("#listaCarrito").append(
+                                `
+                                <a href="home.php?modulo=detalleproducto&id=${response[i]['id']}" class="dropdown-item">
+                                    <!-- Message Start -->
+                                    <div class="media">
+                                        <div class="media-body">
+                                            <h3 class="dropdown-item-title">
+                                                ${response[i]['nombre']}
+                                                <span class="float-right text-sm text-primary"><i class="fas fa-eye"></i></span>
+                                            </h3>
+                                            <p class="text-sm">Cantidad ${response[i]['cantidad']}</p>
+                                        </div>
+                                    </div>
+                                    <!-- Message End -->
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                `
+                            );
+
+                        
+                        
+                    }
+                    
+                }
+                $("#listaCarrito").append(
+                    `
+                    <a href="home.php?modulo=carrito" class="dropdown-item dropdown-footer text-primary">
+                        Ver carrito 
+                        <i class="fa fa-cart-plus"></i>
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <a href="#" class="dropdown-item dropdown-footer text-danger" id="borrarCarrito" onclick="window.location = 'cerrarCarrito.php'">
+                        Borrar carrito 
+                        <i class="fa fa-trash"></i>
+                    </a>
+                    `
+                );
+            }
         });
-        $("#listaCarrito").append(
-            `
-            <a href="home.php?modulo=carrito" class="dropdown-item dropdown-footer text-primary">
-                Ver carrito 
-                <i class="fa fa-cart-plus"></i>
-            </a>
-            <div class="dropdown-divider"></div>
-            <a href="#" class="dropdown-item dropdown-footer text-danger" id="borrarCarrito" onclick="window.location = 'cerrarCarrito.php'">
-                Borrar carrito 
-                <i class="fa fa-trash"></i>
-            </a>
-            `
-        );
+        
+        
     }
     $(document).on("click","#borrarCarrito",function(e){
         e.preventDefault();
@@ -342,7 +368,7 @@ $(document).ready(function () {
             url: "ajax/borrarCarrito.php",
             dataType: "json",
             success: function (response) {
-                llenaCarrito(response);
+                llenaCarrito();
             }
         });
     });

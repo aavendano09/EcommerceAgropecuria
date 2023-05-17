@@ -17,8 +17,21 @@ $clientes = $conexion->query($consulta);
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pasarela de Terminos y Condiciones</title>
+    <style>
+      .content{
+        display: flex;
+        justify-content: space-around;
+      }
+
+      @media screen and (max-width: 770px) {
+        .content{
+          flex-direction: column;
+        }
+      }
+    </style>
 </head>
 <body>
+
 
 <div class="container-fluid">
 
@@ -47,7 +60,7 @@ $clientes = $conexion->query($consulta);
      </div> 
 </div>
 
-<div class="d-flex justify-content-around">
+<div class="d-flex content">
   <div class="col-md-3 position-relative mb-3">
     <label for="validationTooltip04" class="form-label">Seleccione el tipo de moneda a pagar al momento de retirar:</label>
     <select class="form-select" id="validationTooltip04" name="tipomoneda" required>
@@ -80,7 +93,7 @@ $clientes = $conexion->query($consulta);
 </div>
   
 <div class="d-flex justify-content-between mt-5">
-   <a style="margin-left: 10px; margin-bottom: 10px;" class="btn btn-warning" href="home.php?modulo=envio" role="button">Regresar a Datos de envio</a>
+   <a style="margin-left: 10px;" class="btn btn-warning" href="home.php?modulo=envio" role="button">Regresar a Datos de envio</a>
    <button style="margin-right: 10px;" type="submit" class="btn btn-primary float-right">Generar orden de entrega</button>
 </div>
 

@@ -3,6 +3,7 @@ session_start();
 
 include 'conexion.php';
 
+
 ?>
 
 <!DOCTYPE html>
@@ -92,7 +93,7 @@ $rowProducto = mysqli_fetch_assoc($resProducto);
 
               <?php if ($_SESSION['productosSession'][$_REQUEST['id']]['cantidad'] < $rowProducto['tprod_cantpr']): ?>
                     <div class="mt-4">
-                    <button class="btn btn-primary btn-lg btn-flat" id="agregarCarrito"
+                    <button style="width: 100%;" class="btn btn-primary btn-lg btn-flat" id="agregarCarrito"
                     data-id="<?php echo $_REQUEST['id'] ?>"
                     data-nombre="<?php echo $rowProducto['tprod_namepr'] ?>"
                     data-precio="<?php echo $rowProducto['tprod_preciv'] ?>"

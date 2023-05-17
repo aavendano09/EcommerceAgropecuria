@@ -173,15 +173,60 @@
                         </div>
                     </form> -->
                      <?php
-                        $formulario_m = new FormularioManual("formulario_m", "formulario_m", "idproveedor");
-                        $formulario_m->setInput("text", "nombre_m", "Su nombre", 6, "Pedro", 'required', null, null);
-                        $formulario_m->setInput("number", "telefono_m", "Su telefono", 6, "0416848888", 'required', null, null);
-                        $formulario_m->setInput("email", "correo_m", "Su correo", 12, "pedro@gmail.com", 'required', null, null);
-                        $formulario_m->setInput("text", "asunto_m", "Asunto", 12, "5ta Avenida", 'required', null, null);
-                        $formulario_m->setInput("text", "mensaje_m", "Mensaje", 12, "5ta Avenida", 'required', null, null);
-                        $formulario_m->setButton("Enviar", "Formulario enviado exitosamente!", false, "Cerrar", 'proveedor');
-                        $formulario_m->getRender();
+                        // $formulario_m = new FormularioManual("formulario_m", "formulario_m", "idproveedor");
+                        // $formulario_m->setInput("text", "nombre_m", "Su nombre", 6, "Pedro", 'required', null, null);
+                        // $formulario_m->setInput("number", "telefono_m", "Su telefono", 6, "0416848888", 'required', null, null);
+                        // $formulario_m->setInput("email", "correo_m", "Su correo", 12, "pedro@gmail.com", 'required', null, null);
+                        // $formulario_m->setInput("text", "asunto_m", "Asunto", 12, "5ta Avenida", 'required', null, null);
+                        // $formulario_m->setInput("text", "mensaje_m", "Mensaje", 12, "5ta Avenida", 'required', null, null);
+                        // $formulario_m->setButton("Enviar", "Formulario enviado exitosamente!", false, "Cerrar", 'proveedor');
+                        // $formulario_m->getRender();
                     ?>
+
+                    <style>
+                        .socialIcon{
+                            max-width: 150px;
+                        }
+
+                        .facebook{
+                            max-height: 120px;
+                        }
+
+                        .instagram{
+                            max-height: 120px;
+                        }
+
+                        .row a{
+                            display: inline;
+                            width: 150px;
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                        }
+
+                        h2{
+                            margin-bottom: 80px;
+                        }
+                    </style>
+
+                    <h2>Contactanos por nuestras redes sociales</h2>
+
+                    <div class="row mx-auto">
+
+                            <a href="https://wa.me/584247004686" target="blank">
+                                <img class="socialIcon" src="imagenes/WhatsApp_icon.png.webp" alt="">
+                            </a>
+
+                            <a href="https://facebook.com" target="blank">
+                                <img class="socialIcon facebook" src="imagenes/Facebook_f_logo_(2019).svg.webp" alt="">
+                            </a>
+
+                            <a href="https://instagram.com/ferreagro_el_agricultor_ca?igshid=ZGUzMzM3NWJiOQ==" target="blank">
+                                <img class="socialIcon instagram" src="imagenes/instagram-icon-free-png.webp" alt="">
+                            </a>
+
+                    </div>
+
                     <br>
                     <br>
                     <br>

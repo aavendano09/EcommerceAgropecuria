@@ -17,7 +17,7 @@
 
         $queryVenta = "INSERT INTO tvenn_tts (tvent_fkclie,tvent_fechav,tvent_uservt,tvent_totalv,tvent_status,tvenn_tvmone)
         VALUES ('$idcliente',now(),'$tipocliente','$total','$estadofactura', '$tipomoneda');";
-echo $tipocliente;
+
         $resVenta=mysqli_query($conexion,$queryVenta);
         $id=mysqli_insert_id($conexion);
         /*
@@ -52,6 +52,21 @@ echo $tipocliente;
         $resDetalle=mysqli_query($conexion,$queryDetalle);
         if($resVenta && $resDetalle){
         ?>
+        <style>
+            @media screen and (max-width: 730px) {
+                .row{
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: center;
+                }
+
+                .col-6{
+                    width: 100%;
+                    margin-top: 30px;
+                }
+            }
+        </style>
         <div class="row">
             <div class="col-6">
                 <?php muestraRecibe($id); ?>
