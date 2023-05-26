@@ -100,7 +100,7 @@ if(!empty($_POST)){
    {
     $producto_id = $_POST['producto'];
 
-    $query = mysqli_query($conexion, "SELECT tprod_idprod,tprod_namepr,tprod_precic,tprod_cantpr 
+    $query = mysqli_query($conexion, "SELECT tprod_idprod,tprod_namepr,tprod_cantpr 
     FROM tprod_tme 
     WHERE tprod_idprod = $producto_id AND tprod_status = '1'");
 
