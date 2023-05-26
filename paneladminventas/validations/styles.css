@@ -68,7 +68,16 @@ main {
 .formulario__validacion-estado {
 	position: absolute;
 	right: 10px;
-	bottom: 3px;
+	bottom: 14px;
+	z-index: 100;
+	font-size: 16px;
+	opacity: 0;
+}
+
+.nombre.fa-check-circle,.correo.fa-check-circle{
+	position: relative;
+	right: -515px;
+	bottom: 35px;
 	z-index: 100;
 	font-size: 16px;
 	opacity: 0;

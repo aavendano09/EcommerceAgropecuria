@@ -13,8 +13,6 @@ $usuarios = $conexion->query($sql);
 
 require_once 'validations/Formulario.php';
 
-
-
 ?>
 
 <!DOCTYPE html>
@@ -53,6 +51,7 @@ require_once 'validations/Formulario.php';
    
     <!-- Main content -->
     <section class="content">
+
       <div class="row">
         <div class="col-12">
             

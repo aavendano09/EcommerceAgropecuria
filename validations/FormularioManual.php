@@ -187,7 +187,6 @@ class FormularioManual
             <div class='formulario-m__grupo d-flex flex-column' id='grupo__$input'>
                 <label   label for='$input' class='formulario-m__label form-label'>$label</label>
                 <div class='formulario-m__grupo-input'>
-
                     <select type='text' class='formulario-m__input col-$size form-control' disabled name='$input' id='$input' required>
                     <option value=''>Seleccione...</option>
                     ";

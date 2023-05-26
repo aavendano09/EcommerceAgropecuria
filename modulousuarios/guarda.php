@@ -1,6 +1,6 @@
 <?php
 
-require 'conexion.php';
+require '../conexion.php';
 
 $idUsuario=mysqli_real_escape_string($conexion, $_REQUEST['id']);
 $username=mysqli_real_escape_string($conexion, $_REQUEST['usuario']);

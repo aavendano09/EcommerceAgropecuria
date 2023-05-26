@@ -107,19 +107,17 @@ class Formulario
         
         
         $this->inputs .= "
-            <div class='formulario__grupo' id='grupo__$input' $hidden>
-                 <div class='formulario__grupo-input'>
-                    <label for='$input' class='formulario__label d-inline'>$label</label>
-                    <br/>
-                    <br/>
-                    <input type='$type' class='formulario__input col-$size' name='$input' id='$input' placeholder='$ph' $required >
+        <div class='col-md-$size' $hidden>
+            <div class='formulario__grupo d-flex flex-column' id='grupo__$input'>
+                <label for='$input' class='formulario__label form-label  pt-0'>$label</label>
+                <div class='formulario__grupo-input'>
+                    <input type='$type' class='formulario__input form-control' name='$input' id='$input' placeholder='$ph' $required >
                     <i class='formulario__validacion-estado fas fa-times-circle'></i>
                 </div>
                 <p class='formulario__input-error'>$msg</p>
-                <br/>
-                <br/>
             </div>
-            
+            <br>
+        </div> 
 
         ";
     }
@@ -182,45 +180,47 @@ class Formulario
         $msg = $this->selects;
 
         $this->inputs .= "
-        <div class='formulario__grupo col-$size' id='grupo__$input'>
-            <div class='formulario__grupo-input'>
+        <div class='col-md-$size'>
+            <div class='formulario__grupo d-flex flex-column col-$size' id='grupo__$input'>
                 <label for='$input' class='formulario__label'>$label</label>
-                <br/>
-                <br/>
-                <select type='text' class='formulario__input col-$size ' name='$input' id='$input' required>
-                <option value=''>Seleccione...</option>
-                ";
-        if ($table != null) {
+                <div class='formulario__grupo-input'>
 
-            $conexion = new mysqli(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_DATABASE);
-            if($conexion->connect_errno){
+                    <select type='text' class='formulario__input form-control col-$size ' name='$input' id='$input' required>
+                    <option value=''>Seleccione...</option>
+                    ";
+            if ($table != null) {
+
+                $conexion = new mysqli(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_DATABASE);
+                if($conexion->connect_errno){
+                    
+                    echo "fallo la conexion a la base de datos" . $this->conexion->connect_errno;
+                    
+                    $conexion->set_charset ("utf8");
+                } 
                 
-                echo "fallo la conexion a la base de datos" . $this->conexion->connect_errno;
+                $sql = "SELECT * FROM $table";
+                $execute = $conexion->query($sql);
                 
-                $conexion->set_charset ("utf8");
-            } 
-            
-            $sql = "SELECT * FROM $table";
-            $execute = $conexion->query($sql);
-            
-            while ($row = $execute->fetch_assoc()) {
-                $x = $row["$value"];
-                $y = $row["$option"];
-                $this->inputs .= "
-                <option value='$x'>$y</option>
-                ";
+                while ($row = $execute->fetch_assoc()) {
+                    $x = $row["$value"];
+                    $y = $row["$option"];
+                    $this->inputs .= "
+                    <option value='$x'>$y</option>
+                    ";
+                }
+            }else{
+                $this->inputs .= $html;
             }
-        }else{
-            $this->inputs .= $html;
-        }
-       
-       
-        $this->inputs .= "</select>
-            <i class='formulario__validacion-estado fas fa-times-circle' style='right='0''></i>   
+        
+        
+            $this->inputs .= "</select>
+                <i class='formulario__validacion-estado fas fa-times-circle' ></i>   
+                </div>
+                <p class='formulario__input-error'>$msg</p>
+                <br/>
+                <br/>
             </div>
-            <p class='formulario__input-error'>$msg</p>
-            <br/>
-            <br/>
+            <br>
         </div>
         ";
     }

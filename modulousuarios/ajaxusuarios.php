@@ -1,7 +1,7 @@
 <?php
 
 
-include_once "conexion.php";
+include_once "../conexion.php";
 session_start();
 
 //Eliminar Usuario Logicamente

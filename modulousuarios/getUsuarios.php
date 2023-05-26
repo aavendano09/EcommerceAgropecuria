@@ -1,6 +1,6 @@
 <?php
 
-include_once "conexion.php";
+include_once "../conexion.php";
 
 $id = $conexion->real_escape_string($_POST['id']);
 
@@ -17,6 +17,7 @@ if($rows > 0){
     $usuarios = $resultado->fetch_array();
 
 }
+
 
 echo json_encode($usuarios, JSON_UNESCAPED_UNICODE);
 

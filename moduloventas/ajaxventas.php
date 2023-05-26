@@ -476,6 +476,8 @@ if($_POST['action'] == 'anularVenta'){
 
     $token = md5($_SESSION['tidAdmin']);
 
+    unset($_SESSION['productos']);
+
     $query_eliminar = mysqli_query($conexion, "DELETE FROM tdtem_tts WHERE tdtem_tokuse='$token'");
     mysqli_close($conexion);
     if($query_eliminar){

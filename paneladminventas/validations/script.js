@@ -34,9 +34,10 @@ const expresiones = {
 	id: /^\d{1,4}$/,
 	usuario: /^[a-zA-ZÀ-ÿ\s]{3,40}$/, // Letras y espacios, pueden llevar acentos.
 	nombre: /^[a-zA-ZÀ-ÿ\s]{3,40}$/, // Letras y espacios, pueden llevar acentos.
-	nombre2: /^([a-zA-Z0-9_. ,-]){1,50}$/, // Letras y espacios, pueden llevar acentos.
+	nombre2: /^([a-zA-Z0-9_/. ,-]){1,50}$/, // Letras y espacios, pueden llevar acentos.
 	descripcion: /^([a-zA-Z0-9_. ,-]){1,60}$/,
 	password: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$#!%*?&]{8,15}$/, // 4 a 12 digitos.
+	password2: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$#!%*?&]{8,15}$/, // 
 	correo: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9]+\.[a-zA-Z0-9]+$/,
 	correoOld: /.*/,
 	telefono: /^\d{11,11}$/, // 7 a 14 numeros.
@@ -50,7 +51,7 @@ const expresiones = {
 	estado: /^\d{1,3}$/,
 	fecha: /^\d{4}\-(0?[1-9]|1[012])\-(0?[1-9]|[12][0-9]|3[01])$/,
 	extranjero: /^(\d[0-9][0-9][0-9][0-9][0-9][0-9]|[1-3][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9])$/, // 7 a 14 numeros.
-	nro_cuenta: /^(0001|0102|0104|0105|0108|0114|0115|0128|0134|0137|0138|0146|0151|0156|0157|0163|0166|0168|0169|0171|0172|0174|0175|0177|0191)(\d{15}[1-9])$/,
+	nro_cuenta: /^(0001|0102|0104|0105|0108|0114|0115|0128|0134|0137|0138|0146|0151|0156|0157|0163|0166|0168|0169|0171|0172|0174|0175|0177|0191)(\d{16})$/,
 	tipo_cuenta: /^[a-zA-Z\s]{3,40}$/,
 	imagen: /(png|jpg|wepg|jpeg|jfif)$/,
 	ara: /(^$)|\b(png|jpg|wepg|jpeg|jfif)\b/,
@@ -62,6 +63,9 @@ const expresiones = {
 	fechaingreso: /^\d{4}\-(0?[1-9]|1[012])\-(0?[1-9]|[12][0-9]|3[01])$/,
 	tipoproducto: /^\d{1,3}$/,
 	presentacion: /^\d{1,3}$/,
+	nombreRec: /^[a-zA-ZÀ-ÿ\s]{3,40}$/,
+	emailRec: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9]+\.[a-zA-Z0-9]+$/,
+	direccionRec: /^([a-zA-ZÀ-ÿ0-9_#. ,-]){1,100}$/,
 }
 $('#fechaingreso').on('change', function(){
 
@@ -144,6 +148,7 @@ $('#correo').keyup(function(){
 })
 
 
+
 //$('#imagen').addClass("form-control");
 $('#imagen').prop("accept", "image/png, .jpeg, .jpg, image/gif, .jfif");
 $('#imagen').prop("required", "false");
@@ -171,8 +176,8 @@ formulario.addEventListener('submit', (event) => {
 	
 	for (let i = 0; i < arrInput.length; i++) {
 		
-		if ( (($("#"+arrInput[i]).prop('required') == false) ||  ($("#"+arrInput[i]).prop('readonly'))) ) {
-			console.log(arrInput[i]+" "+"input")
+		if ( (($("#"+arrInput[i]).prop('required') == false) ||  ($("#"+arrInput[i]).prop('readonly')) || $("#"+arrInput[i]).attr("name") === "jalar") ) {
+			//console.log(arrInput[i]+" "+"input")
 			input[arrInput[i]] = true;
 		}		
 	}
@@ -180,8 +185,8 @@ formulario.addEventListener('submit', (event) => {
 	//console.log(input)
 	for (let i = 0; i < arrInput.length; i++) {
 		//console.log(arrInput[i]+"input")
-		if (   (!($("#"+arrInput[i]).prop('required') == false) && !($("#"+arrInput[i]).prop('readonly')) && $("#"+arrInput[i]).length > 0)   ||    $("#"+arrInput[i]).attr("name") === "ara"){
-			//console.log(arrInput[i]+" "+"input")
+		if (   (!($("#"+arrInput[i]).prop('required') == false) && !($("#"+arrInput[i]).prop('readonly')) && $("#"+arrInput[i]).length > 0 &&  !($("#"+arrInput[i]).attr("name") === "jalar"))   ||    $("#"+arrInput[i]).attr("name") === "ara"){
+			console.log(arrInput[i]+" "+"input")
 			if ( $("#"+arrInput[i]).attr("name") === "ara") {
 				input['imagen']=true;
 				validarFormularioSubmit(arrInput[i]);
@@ -218,8 +223,8 @@ formulario.addEventListener('submit', (event) => {
 		//console.log(band+"select")
 	}
 	
-console.log(band);
-console.log(input["imagen"])
+// console.log(band);
+// console.log(input["imagen"])
 	if(band){
 
 		document.getElementById('formulario__mensaje-exito').classList.add('formulario__mensaje-exito-activo');
@@ -240,6 +245,58 @@ console.log(input["imagen"])
 	}
 });
 
+function validCheck(){
+	band = true;
+	
+	for (let i = 0; i < arrInput.length; i++) {
+		
+		if ( (($("#"+arrInput[i]).prop('required') == false) ||  ($("#"+arrInput[i]).prop('readonly')) || $("#"+arrInput[i]).attr("name") === "jalar") ) {
+			//console.log(arrInput[i]+" "+"input")
+			input[arrInput[i]] = true;
+		}		
+	}
+	
+	//console.log(input)
+	for (let i = 0; i < arrInput.length; i++) {
+		//console.log(arrInput[i]+"input")
+		if (   (!($("#"+arrInput[i]).prop('required') == false) && !($("#"+arrInput[i]).prop('readonly')) && $("#"+arrInput[i]).length > 0 &&  !($("#"+arrInput[i]).attr("name") === "jalar"))   ||    $("#"+arrInput[i]).attr("name") === "ara"){
+			console.log(arrInput[i]+" "+"input")
+			if ( $("#"+arrInput[i]).attr("name") === "ara") {
+				input['imagen']=true;
+				validarFormularioSubmit(arrInput[i]);
+			}else{
+				validarFormularioSubmit(arrInput[i]);
+			}
+			
+			
+		}
+	}
+	
+	for (let i = 0; i < arrSelect.length; i++) {
+		if (!($("#"+arrSelect[i]).prop('required') == false) && !($("#"+arrSelect[i]).prop('readonly'))){
+			//console.log(arrSelect[i]+" "+"select")
+			validarFormularioSubmit(arrSelect[i]);
+		}
+		
+	}
+
+	for (let i = 0; i < arrInput.length; i++) {
+		//console.log(input[arrInput[i]] + arrInput[i])
+		if (!input[arrInput[i]] &&  $("#"+arrInput[i]).length > 0) {
+			//console.log(arrInput[i])
+			band = false;
+		}
+		
+	}
+	
+	for (let i = 0; i < arrSelect.length; i++) {
+		//console.log(!input[arrSelect[i]])
+		if (!select[arrSelect[i]]) {
+			band = false;
+		}	
+		//console.log(band+"select")
+	}
+}
 
 function openModal(){
 	$("#nuevoModal").modal('show')

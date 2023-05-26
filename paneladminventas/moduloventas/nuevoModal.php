@@ -2,7 +2,7 @@
 <?php
 
 require_once('conexion.php');
-require_once 'validations/Formulario.php';
+//require_once 'validations/Formulario.php';
 
 ?>
 <!-- Modal -->

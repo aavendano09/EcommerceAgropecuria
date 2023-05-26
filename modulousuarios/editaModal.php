@@ -1,6 +1,6 @@
 <?php
 
-include_once "conexion.php";
+include_once "../conexion.php";
 
 $sqltipousuairo = "SELECT ttusu_descus FROM ttusu_tme";
 $generos = $conexion->query($sqltipousuairo);
