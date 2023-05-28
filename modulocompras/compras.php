@@ -149,7 +149,7 @@ error_reporting(0);
       <td id="txt_descripcion">-</td>
       <td id="txt_existencia">-</td>
       <td><input type="number"  onkeypress="return SoloNumeros(event, 'txt_cant_producto', 9)" name="txt_cant_producto" id="txt_cant_producto" value="0" min="1" disabled></td>
-      <td class="textright"><input type="number"  onkeypress="return SoloNumeros(event, 'txt_cant_producto', 9)" name="txt_precio"  id="txt_precio" value="0" min="1" disabled></td>
+      <td id="txt_precio" class="textright">0.00</td>
       <td id="txt_precio_total" class="textright">0.00</td>
       <td> <a href="#" id="add_product_compra" class="link_add"><i class="fas fa-plus"></i> Agregar</a></td>
     </tr>
@@ -345,12 +345,13 @@ function searchProduct(){
               $('#txt_descripcion').html(info.tprod_namepr);
               $('#txt_existencia').html(info.tprod_cantpr);
               $('#txt_cant_producto').val('1');
+              $('#txt_precio').html(info.tprod_precic);
+              $('#txt_precio_total').html(info.tprod_precic);
               //activar cantidad producto
               if (info.tprod_cantpr < 1) {
                 $('#add_product_compra').slideUp();
               }else{
                 $('#txt_cant_producto').removeAttr('disabled');
-                $('#txt_precio').removeAttr('disabled');
                 //mostrar boton agregar
                 $('#add_product_compra').slideDown();
               }
@@ -377,31 +378,13 @@ function searchProduct(){
    //CALCULAR CANTIDADES
    $('#txt_cant_producto').keyup(function(e){
          e.preventDefault();
-         var precio_total = $(this).val() * $('#txt_precio').val();
-         console.log(precio_total);
+         var precio_total = $(this).val() * $('#txt_precio').html();
          var existencia = parseInt($('#txt_existencia').html());
          $('#txt_precio_total').html(precio_total);
      
          //oculta el boton agregar si la cantidad es menor a 1
 
-         if((($(this).val()<1 || isNaN($(this).val())))){
-             $('#add_product_compra').slideUp();
-         }else{
-            $('#add_product_compra').slideDown();
-         }
-         });
-
-         //CALCULAR CANTIDADES
-   $('#txt_precio').keyup(function(e){
-         e.preventDefault();
-         var precio_total = $(this).val() * $('#txt_cant_producto').val();
-         console.log(precio_total);
-         var existencia = parseInt($('#txt_existencia').html());
-         $('#txt_precio_total').html(precio_total);
-     
-         //oculta el boton agregar si la cantidad es menor a 1
-
-         if(($('#txt_cant_producto').val()<1 || isNaN($('#txt_cant_producto').val()))){
+         if(($(this).val()<1 || isNaN($(this).val()))){
              $('#add_product_compra').slideUp();
          }else{
             $('#add_product_compra').slideDown();
